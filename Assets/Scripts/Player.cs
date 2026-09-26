@@ -88,8 +88,67 @@ public class Player : MonoBehaviour
 
     public bool IsDaylight()
     {
-        return currentHour >= sunriseHour &&
-               currentHour < sunsetHour;
+        return currentHour >= sunriseHour && currentHour < sunsetHour;
+    }
+
+    public float GetElephantThirst()
+    {
+        return elephantThirst;
+    }
+
+    public float GetElephantHunger()
+    {
+        return elephantHunger;
+    }
+
+    public float GetElephantFatigue()
+    {
+        return elephantFatigue;
+    }
+
+    public float GetElephantTemp()
+    {
+        return elephantTemperature;
+    }
+
+    public void ChangeElephantThirst(float thirst)
+    {
+        elephantThirst += thirst;
+
+        if(elephantThirst > elephantMaxThirst)
+        {
+            elephantThirst = elephantMaxThirst;
+        }
+    }
+
+    public void ChangeElephantHunger(float hunger)
+    {
+        elephantHunger += hunger;
+
+        if(elephantHunger > elephantMaxHunger)
+        {
+            elephantHunger = elephantMaxHunger;
+        }
+    }
+
+    public void ChangeElephantFatigue(float fatigue)
+    {
+        elephantFatigue += fatigue;
+
+        if(elephantFatigue > elephantMaxFatigue)
+        {
+            elephantFatigue = elephantMaxFatigue;
+        }
+    }
+
+    public void ChangeElephantTemp(float temp)
+    {
+        elephantTemperature += temp;
+
+        if(elephantTemperature > elephantMaxTemperature)
+        {
+            elephantTemperature = elephantMaxTemperature;
+        }
     }
 
 
