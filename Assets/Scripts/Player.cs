@@ -77,8 +77,6 @@ public class Player : MonoBehaviour
             currentMinute -= 60;
             currentHour++;
         }
-
-        Debug.Log($"Time: {GetTimeString()}");
     }
 
     public string GetTimeString()
@@ -114,41 +112,60 @@ public class Player : MonoBehaviour
     public void ChangeElephantThirst(float thirst)
     {
         elephantThirst += thirst;
-
-        if(elephantThirst > elephantMaxThirst)
-        {
-            elephantThirst = elephantMaxThirst;
-        }
+        elephantThirst = Mathf.Clamp(elephantThirst, 0f, elephantMaxThirst);
     }
 
     public void ChangeElephantHunger(float hunger)
     {
         elephantHunger += hunger;
-
-        if(elephantHunger > elephantMaxHunger)
-        {
-            elephantHunger = elephantMaxHunger;
-        }
+        elephantHunger = Mathf.Clamp(elephantHunger, 0f, elephantMaxHunger);
     }
 
     public void ChangeElephantFatigue(float fatigue)
     {
         elephantFatigue += fatigue;
-
-        if(elephantFatigue > elephantMaxFatigue)
-        {
-            elephantFatigue = elephantMaxFatigue;
-        }
+        elephantFatigue = Mathf.Clamp(elephantFatigue, 0f, elephantMaxFatigue);
     }
 
     public void ChangeElephantTemp(float temp)
     {
         elephantTemperature += temp;
+        elephantTemperature = Mathf.Clamp(elephantTemperature, 0f, elephantMaxTemperature);
+    }
 
-        if(elephantTemperature > elephantMaxTemperature)
-        {
-            elephantTemperature = elephantMaxTemperature;
-        }
+
+    // Handler Stats
+    public float GetHandlerHunger()
+    {
+        return handlerHunger;
+    }
+
+    public float GetHandlerThirst()
+    {
+        return handlerThirst;
+    }
+
+    public float GetHandlerFatigue()
+    {
+        return handlerFatigue;
+    }
+
+    public void ChangeHandlerHunger(float hunger)
+    {
+        handlerHunger += hunger;
+        handlerHunger = Mathf.Clamp(handlerHunger, 0f, handlerMaxHunger);
+    }
+
+    public void ChangeHandlerThirst(float thirst)
+    {
+        handlerThirst += thirst;
+        handlerThirst = Mathf.Clamp(handlerThirst, 0f, handlerMaxThirst);
+    }
+
+    public void ChangeHandlerFatigue(float fatigue)
+    {
+        handlerFatigue += fatigue;
+        handlerFatigue = Mathf.Clamp(handlerFatigue, 0f, handlerMaxFatigue);
     }
 
 
