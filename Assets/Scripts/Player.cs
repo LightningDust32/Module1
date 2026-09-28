@@ -7,6 +7,9 @@ public class Player : MonoBehaviour
     [Header("References")]
     [SerializeField] private Transform cameraTransform;
 
+    [Header("Movement")]
+    [SerializeField] private float moveSpeed = 5f;
+
     [Header("Elephant Stats")]
     [SerializeField] private float elephantHunger = 100f;
     [SerializeField] private float elephantThirst = 100f;
@@ -44,6 +47,8 @@ public class Player : MonoBehaviour
 
     private CharacterController controller;
 
+    private EventTrigger currentTrigger;
+
     private void Awake()
     {
         controller = GetComponent<CharacterController>();
@@ -55,16 +60,68 @@ public class Player : MonoBehaviour
     {
         inputActions.Enable();
 
+        inputActions.Player.Move.performed += OnMove;
+        inputActions.Player.Move.canceled += OnMove;
+
+        inputActions.Player.Look.performed += OnLook;
+        inputActions.Player.Look.canceled += OnLook;
+
+        inputActions.Player.Interact.performed += OnInteract;
+        inputActions.Player.Interact.canceled += OnInteract;
+
+        inputActions.Player.Crouch.performed += OnCrouch;
+        inputActions.Player.Crouch.canceled += OnCrouch;
+
+        inputActions.Player.Jump.performed += OnJump;
+        inputActions.Player.Jump.canceled += OnJump;
+
+        inputActions.Player.Sprint.performed += OnSprint;
+        inputActions.Player.Sprint.canceled += OnSprint;
+
     }
 
     private void OnDisable()
     {
         inputActions.Disable();
+
+        inputActions.Player.Move.performed -= OnMove;
+        inputActions.Player.Move.canceled -= OnMove;
+
+        inputActions.Player.Look.performed -= OnLook;
+        inputActions.Player.Look.canceled -= OnLook;
+
+        inputActions.Player.Interact.performed -= OnInteract;
+        inputActions.Player.Interact.canceled -= OnInteract;
+
+        inputActions.Player.Crouch.performed -= OnCrouch;
+        inputActions.Player.Crouch.canceled -= OnCrouch;
+
+        inputActions.Player.Jump.performed -= OnJump;
+        inputActions.Player.Jump.canceled -= OnJump;
+
+        inputActions.Player.Sprint.performed -= OnSprint;
+        inputActions.Player.Sprint.canceled -= OnSprint;
+
     }
 
     private void OnDestroy()
     {
         inputActions.Dispose();
+    }
+
+    private void Update()
+    {
+        Move();
+    }
+
+    private void Move()
+    {
+        Vector3 move = new Vector3(moveInput.x, 0f, moveInput.y);
+
+        // Prevent diagonal movement from being faster
+        move = Vector3.ClampMagnitude(move, 1f);
+
+        controller.Move(moveSpeed * Time.deltaTime * move);
     }
 
     // Time
@@ -168,6 +225,11 @@ public class Player : MonoBehaviour
         handlerFatigue = Mathf.Clamp(handlerFatigue, 0f, handlerMaxFatigue);
     }
 
+    public void CurrentEventTrigger(EventTrigger trigger)
+    {
+        currentTrigger = trigger;
+    }
+
 
     //Input Stubs
 
@@ -183,7 +245,26 @@ public class Player : MonoBehaviour
 
     public void OnInteract(InputAction.CallbackContext context)
     {
-        // Stub
+        if (!context.performed)
+        {
+            return;
+        }
+
+        EventTrigger eventTrigger = currentTrigger;
+
+        if (eventTrigger == null)
+        {
+            return;
+        }
+
+        GameEvent gameEvent = eventTrigger.GetGameEvent();
+
+        if (gameEvent == null)
+        {
+            return;
+        }
+
+        Debug.Log($"Activating event: {gameEvent.eventName}");
     }
 
     public void OnCrouch(InputAction.CallbackContext context)

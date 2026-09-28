@@ -243,7 +243,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraTransform: {fileID: 330585546}
-  elephantHunger: 80
+  elephantHunger: 70
   elephantThirst: 100
   elephantFatigue: 100
   elephantTemperature: 100
@@ -251,7 +251,7 @@ MonoBehaviour:
   elephantMaxThirst: 100
   elephantMaxFatigue: 100
   elephantMaxTemperature: 100
-  handlerHunger: 100
+  handlerHunger: 60
   handlerThirst: 100
   handlerFatigue: 100
   handlerMaxHunger: 75

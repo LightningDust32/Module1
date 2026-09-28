@@ -64,6 +64,7 @@
     <Compile Include="Assets\Scripts\Player.cs" />
     <Compile Include="Assets\Scripts\Events\GameEvent.cs" />
     <Compile Include="Assets\InputSystem_Actions.cs" />
+    <Compile Include="Assets\Scripts\Events\EventTrigger.cs" />
     <Compile Include="Assets\Scripts\Events\EventManager.cs" />
   </ItemGroup>
   <ItemGroup>
