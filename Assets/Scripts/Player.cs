@@ -49,6 +49,8 @@ public class Player : MonoBehaviour
     [SerializeField] private int sunriseHour = 6;
     [SerializeField] private int sunsetHour = 18;
 
+    private int currentDay = 1;
+
     [Header("Travel Event")]
     [SerializeField] private float distanceUntilWalkEvent = 50f;
     [SerializeField] private GameEvent walkEvent;
@@ -217,6 +219,12 @@ public class Player : MonoBehaviour
             currentMinute -= 60;
             currentHour++;
         }
+
+        while (currentHour >= 24)
+        {
+            currentHour -= 24;
+            currentDay++;
+        }
     }
 
     public string GetTimeString()
@@ -224,9 +232,19 @@ public class Player : MonoBehaviour
         return $"{currentHour:00}:{currentMinute:00}";
     }
 
+    public string GetDayString()
+    {
+        return "Day: " + currentDay;
+    }
+
     public bool IsDaylight()
     {
         return currentHour >= sunriseHour && currentHour < sunsetHour;
+    }
+
+    public bool IsNight()
+    {
+        return !IsDaylight();
     }
 
     public float GetElephantThirst()

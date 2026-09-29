@@ -4,10 +4,12 @@ public class EventTrigger : MonoBehaviour
 {
     [Header("Event")]
     [SerializeField] private GameEvent[] gameEvent;
+    [SerializeField] private GameEvent restEvent;
 
     private GameEvent currentEvent;
 
     private bool playerInside;
+    private Player player;
 
     private void Start()
     {
@@ -22,8 +24,7 @@ public class EventTrigger : MonoBehaviour
         }
 
         playerInside = true;
-
-        Debug.Log($"Player entered event: {currentEvent.eventName}");
+        player = other.GetComponent<Player>();
 
         if (UIManager.Instance != null)
         {
@@ -39,8 +40,6 @@ public class EventTrigger : MonoBehaviour
         }
 
         playerInside = false;
-
-        Debug.Log($"Player left event: {currentEvent.eventName}");
 
         if (UIManager.Instance != null)
         {
@@ -64,9 +63,23 @@ public class EventTrigger : MonoBehaviour
             return;
         }
 
+        GameEvent eventToApply = currentEvent;
+
+        // After sunset, only the rest event can be activated.
+        if (player.IsNight())
+        {
+            eventToApply = restEvent;
+        }
+
+        if (eventToApply == null)
+        {
+            Debug.LogWarning("EventTrigger: No valid event available.");
+            return;
+        }
+
         if (EventManager.instance != null)
         {
-            EventManager.instance.ApplyEvent(currentEvent);
+            EventManager.instance.ApplyEvent(eventToApply);
         }
     }
 

@@ -15,7 +15,7 @@ MonoBehaviour:
   eventName: Rest
   eventDescription: 
   timeMinutes: 480
-  elephantHunger: 0
+  elephantHunger: -40
   elephantThirst: 0
   elephantFatigue: 100
   elephantTemperature: 0

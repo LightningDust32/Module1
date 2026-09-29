@@ -19,6 +19,7 @@ public class UIManager : MonoBehaviour
     [Header("Event Display")]
     [SerializeField] private TMP_Text eventText;
     [SerializeField] private TMP_Text timeText;
+    [SerializeField] private TMP_Text dayText;
 
     [Header("Event Button")]
     [SerializeField] private Button eventButton;
@@ -68,6 +69,7 @@ public class UIManager : MonoBehaviour
         fatigueFill.fillAmount = player.GetElephantFatigue() / player.GetElephantMaxFatigue();
 
         timeText.text = player.GetTimeString();
+        dayText.text = player.GetDayString();
     }
 
     public void ShowEvent(GameEvent gameEvent)

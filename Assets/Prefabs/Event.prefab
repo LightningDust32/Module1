@@ -92,7 +92,6 @@ MonoBehaviour:
   gameEvent:
   - {fileID: 11400000, guid: b3507e16326e151479ccf9cab3125ed3, type: 2}
   - {fileID: 11400000, guid: a5f110ddcd1bba649a1d285a8a803dde, type: 2}
-  - {fileID: 11400000, guid: e4545f12a9cd34f40a0251e10adf6f94, type: 2}
 --- !u!1001 &8810649577555177782
 PrefabInstance:
   m_ObjectHideFlags: 0
