@@ -9,6 +9,18 @@ public class Player : MonoBehaviour
 
     [Header("Movement")]
     [SerializeField] private float moveSpeed = 5f;
+    [SerializeField] private float turnSpeed = 120f;
+
+    [Header("Camera")]
+    [SerializeField] private float cameraDistance = 10f;
+    [SerializeField] private float cameraHeight = 5f;
+    [SerializeField] private float cameraRotationSpeed = 80f;
+    [SerializeField] private float cameraVerticalAngle = 25f;
+    [SerializeField] private float minCameraVerticalAngle = 10f;
+    [SerializeField] private float maxCameraVerticalAngle = 70f;
+
+    private float cameraYaw = 0f;
+    private float cameraPitch = 25f;
 
     [Header("Elephant Stats")]
     [SerializeField] private float elephantHunger = 100f;
@@ -46,8 +58,6 @@ public class Player : MonoBehaviour
     private InputSystem_Actions inputActions;
 
     private CharacterController controller;
-
-    private EventTrigger currentTrigger;
 
     private void Awake()
     {
@@ -112,16 +122,46 @@ public class Player : MonoBehaviour
     private void Update()
     {
         Move();
+        UpdateCamera();
     }
 
     private void Move()
     {
-        Vector3 move = new Vector3(moveInput.x, 0f, moveInput.y);
+        // A / D turn the elephant
+        float turn = moveInput.x;
 
-        // Prevent diagonal movement from being faster
-        move = Vector3.ClampMagnitude(move, 1f);
+        transform.Rotate(Vector3.up, turn * turnSpeed * Time.deltaTime);
 
-        controller.Move(moveSpeed * Time.deltaTime * move);
+        // W / S move the elephant forward/backward
+        float forward = moveInput.y;
+
+        Vector3 movement = transform.forward * forward;
+
+        movement = Vector3.ClampMagnitude(movement, 1f);
+
+        controller.Move(movement * moveSpeed * Time.deltaTime);
+    }
+
+    private void UpdateCamera()
+    {
+        if (cameraTransform == null)
+        {
+            return;
+        }
+
+        cameraYaw += lookInput.x * cameraRotationSpeed * Time.deltaTime;
+
+        cameraPitch -= lookInput.y * cameraRotationSpeed * Time.deltaTime;
+
+        cameraPitch = Mathf.Clamp(cameraPitch, minCameraVerticalAngle, maxCameraVerticalAngle);
+
+        Quaternion rotation = Quaternion.Euler(cameraPitch, cameraYaw, 0f);
+
+        Vector3 offset = rotation * new Vector3(0f, 0f, -cameraDistance);
+
+        cameraTransform.position = transform.position + offset;
+
+        cameraTransform.LookAt(transform.position);
     }
 
     // Time
@@ -164,6 +204,26 @@ public class Player : MonoBehaviour
     public float GetElephantTemp()
     {
         return elephantTemperature;
+    }
+
+    public float GetElephantMaxHunger()
+    {
+        return elephantMaxHunger;
+    }
+
+    public float GetElephantMaxThirst()
+    {
+        return elephantMaxThirst;
+    }
+
+    public float GetElephantMaxFatigue()
+    {
+        return elephantMaxFatigue;
+    }
+
+    public float GetElephantMaxTemperature()
+    {
+        return elephantMaxTemperature;
     }
 
     public void ChangeElephantThirst(float thirst)
@@ -225,11 +285,6 @@ public class Player : MonoBehaviour
         handlerFatigue = Mathf.Clamp(handlerFatigue, 0f, handlerMaxFatigue);
     }
 
-    public void CurrentEventTrigger(EventTrigger trigger)
-    {
-        currentTrigger = trigger;
-    }
-
 
     //Input Stubs
 
@@ -245,26 +300,7 @@ public class Player : MonoBehaviour
 
     public void OnInteract(InputAction.CallbackContext context)
     {
-        if (!context.performed)
-        {
-            return;
-        }
-
-        EventTrigger eventTrigger = currentTrigger;
-
-        if (eventTrigger == null)
-        {
-            return;
-        }
-
-        GameEvent gameEvent = eventTrigger.GetGameEvent();
-
-        if (gameEvent == null)
-        {
-            return;
-        }
-
-        Debug.Log($"Activating event: {gameEvent.eventName}");
+        // Stub
     }
 
     public void OnCrouch(InputAction.CallbackContext context)

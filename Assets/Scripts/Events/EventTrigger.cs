@@ -5,14 +5,7 @@ public class EventTrigger : MonoBehaviour
     [Header("Event")]
     [SerializeField] private GameEvent gameEvent;
 
-    private Player player;
-
     private bool playerInside;
-
-    private void Awake()
-    {
-        player = FindFirstObjectByType<Player>();
-    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -23,9 +16,12 @@ public class EventTrigger : MonoBehaviour
 
         playerInside = true;
 
-        player.CurrentEventTrigger(this);
+        Debug.Log($"Player entered event: {gameEvent.eventName}");
 
-        Debug.Log($"Player can interact with: {gameEvent.eventName}");
+        if (UIManager.Instance != null)
+        {
+            UIManager.Instance.ShowEventButton(this);
+        }
     }
 
     private void OnTriggerExit(Collider other)
@@ -37,19 +33,42 @@ public class EventTrigger : MonoBehaviour
 
         playerInside = false;
 
-        player.CurrentEventTrigger(null);
+        Debug.Log($"Player left event: {gameEvent.eventName}");
 
-        Debug.Log($"Player left: {gameEvent.eventName}");
+        if (UIManager.Instance != null)
+        {
+            UIManager.Instance.HideEventButton(this);
+        }
     }
 
-    public bool IsPlayerInside()
+    public void ActivateEvent()
     {
-        return playerInside;
+        if (!playerInside)
+        {
+            Debug.Log("Player is no longer inside this event trigger.");
+            return;
+        }
+
+        if (gameEvent == null)
+        {
+            Debug.LogWarning("EventTrigger has no GameEvent assigned.");
+            return;
+        }
+
+        if (EventManager.instance != null)
+        {
+            EventManager.instance.ApplyEvent(gameEvent);
+        }
     }
 
     public GameEvent GetGameEvent()
     {
         return gameEvent;
+    }
+
+    public bool IsPlayerInside()
+    {
+        return playerInside;
     }
 
 }

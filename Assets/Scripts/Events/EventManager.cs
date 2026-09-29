@@ -4,11 +4,12 @@ public class EventManager : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private Player player;
-    [SerializeField] GameEvent testEvent;
+
+    public static EventManager instance;
 
     private void Awake()
     {
-        ApplyEvent(testEvent);
+        instance = this;
     }
 
     public void ApplyEvent(GameEvent gameEvent)
@@ -39,16 +40,7 @@ public class EventManager : MonoBehaviour
         player.ChangeHandlerThirst(gameEvent.handlerThirst);
         player.ChangeHandlerFatigue(gameEvent.handlerFatigue);
 
-        Debug.Log(
-            $"EVENT: {gameEvent.eventName}\n" +
-            $"Time: {player.GetTimeString()}\n" +
-            $"Elephant - Hunger: {player.GetElephantHunger():0.0}, " +
-            $"Thirst: {player.GetElephantThirst():0.0}, " +
-            $"Fatigue: {player.GetElephantFatigue():0.0}, " +
-            $"Temperature: {player.GetElephantTemp():0.0}\n" +
-            $"Handler - Hunger: {player.GetHandlerHunger():0.0}, " +
-            $"Thirst: {player.GetHandlerThirst():0.0}, " +
-            $"Fatigue: {player.GetHandlerFatigue():0.0}"
-        );
+        UIManager.Instance.UpdateStats();
+        UIManager.Instance.ShowEvent(gameEvent);
     }
 }
