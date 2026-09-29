@@ -49,6 +49,12 @@ public class Player : MonoBehaviour
     [SerializeField] private int sunriseHour = 6;
     [SerializeField] private int sunsetHour = 18;
 
+    [Header("Travel Event")]
+    [SerializeField] private float distanceUntilWalkEvent = 50f;
+    [SerializeField] private GameEvent walkEvent;
+
+    private float distanceTravelled;
+
     // Input
     private Vector2 moveInput;
     private Vector2 lookInput;
@@ -137,7 +143,46 @@ public class Player : MonoBehaviour
 
         movement = Vector3.ClampMagnitude(movement, 1f);
 
+        Vector3 movementDelta = movement * moveSpeed * Time.deltaTime;
+
         controller.Move(movement * moveSpeed * Time.deltaTime);
+
+        Vector3 horizontalMovement = new Vector3(movementDelta.x, 0f, movementDelta.z);
+
+        distanceTravelled += horizontalMovement.magnitude;
+
+        CheckTravelEvent();
+    }
+
+    private void CheckTravelEvent()
+    {
+        if (distanceTravelled < distanceUntilWalkEvent)
+        {
+            return;
+        }
+
+        TriggerWalkEvent();
+
+        distanceTravelled = 0f;
+    }
+
+    private void TriggerWalkEvent()
+    {
+        if (EventManager.instance == null)
+        {
+            Debug.LogWarning("Player: EventManager not found.");
+            return;
+        }
+
+        if (walkEvent == null)
+        {
+            Debug.LogWarning("Player: Walk event has not been assigned.");
+            return;
+        }
+
+        Debug.Log("Travel distance reached. Triggering Walk event.");
+
+        EventManager.instance.ApplyEvent(walkEvent);
     }
 
     private void UpdateCamera()
