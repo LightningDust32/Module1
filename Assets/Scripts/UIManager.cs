@@ -83,7 +83,7 @@ public class UIManager : MonoBehaviour
             return;
         }
 
-        eventText.text = gameEvent.eventName;
+        eventText.text = gameEvent.eventDescription;
     }
 
     public void ClearEvent()

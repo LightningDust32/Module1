@@ -15,10 +15,10 @@ MonoBehaviour:
   eventName: Drink
   eventDescription: 
   timeMinutes: 10
-  elephantHunger: 0
+  elephantHunger: -10
   elephantThirst: 20
-  elephantFatigue: 0
+  elephantFatigue: -5
   elephantTemperature: 0
-  handlerHunger: 0
+  handlerHunger: -5
   handlerThirst: 10
   handlerFatigue: 0

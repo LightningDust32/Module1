@@ -3,9 +3,16 @@ using UnityEngine;
 public class EventTrigger : MonoBehaviour
 {
     [Header("Event")]
-    [SerializeField] private GameEvent gameEvent;
+    [SerializeField] private GameEvent[] gameEvent;
+
+    private GameEvent currentEvent;
 
     private bool playerInside;
+
+    private void Start()
+    {
+        currentEvent = gameEvent[Random.Range(0, gameEvent.Length)];
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -16,7 +23,7 @@ public class EventTrigger : MonoBehaviour
 
         playerInside = true;
 
-        Debug.Log($"Player entered event: {gameEvent.eventName}");
+        Debug.Log($"Player entered event: {currentEvent.eventName}");
 
         if (UIManager.Instance != null)
         {
@@ -33,12 +40,14 @@ public class EventTrigger : MonoBehaviour
 
         playerInside = false;
 
-        Debug.Log($"Player left event: {gameEvent.eventName}");
+        Debug.Log($"Player left event: {currentEvent.eventName}");
 
         if (UIManager.Instance != null)
         {
             UIManager.Instance.HideEventButton(this);
         }
+
+        currentEvent = gameEvent[Random.Range(0, gameEvent.Length)];
     }
 
     public void ActivateEvent()
@@ -57,13 +66,13 @@ public class EventTrigger : MonoBehaviour
 
         if (EventManager.instance != null)
         {
-            EventManager.instance.ApplyEvent(gameEvent);
+            EventManager.instance.ApplyEvent(currentEvent);
         }
     }
 
     public GameEvent GetGameEvent()
     {
-        return gameEvent;
+        return currentEvent;
     }
 
     public bool IsPlayerInside()

@@ -13,9 +13,7 @@ public class Player : MonoBehaviour
 
     [Header("Camera")]
     [SerializeField] private float cameraDistance = 10f;
-    [SerializeField] private float cameraHeight = 5f;
     [SerializeField] private float cameraRotationSpeed = 80f;
-    [SerializeField] private float cameraVerticalAngle = 25f;
     [SerializeField] private float minCameraVerticalAngle = 10f;
     [SerializeField] private float maxCameraVerticalAngle = 70f;
 

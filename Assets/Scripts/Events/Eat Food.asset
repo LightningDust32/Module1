@@ -17,7 +17,7 @@ MonoBehaviour:
   timeMinutes: 20
   elephantHunger: 20
   elephantThirst: 0
-  elephantFatigue: 0
+  elephantFatigue: -10
   elephantTemperature: 0
   handlerHunger: 10
   handlerThirst: 0
