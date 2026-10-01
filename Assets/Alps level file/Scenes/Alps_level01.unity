@@ -7761,7 +7761,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 12.56
+  orthographic size: 24.6
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -12313,7 +12313,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraTransform: {fileID: 1270694590}
-  moveSpeed: 5
+  moveSpeed: 20
   turnSpeed: 120
   cameraDistance: 10
   cameraRotationSpeed: 80
@@ -12337,7 +12337,7 @@ MonoBehaviour:
   currentMinute: 0
   sunriseHour: 6
   sunsetHour: 18
-  distanceUntilWalkEvent: 50
+  distanceUntilWalkEvent: 500
   walkEvent: {fileID: 11400000, guid: 9ed59a7c8d934aa4e8bf09212087d212, type: 2}
 --- !u!143 &2068752820
 CharacterController:
