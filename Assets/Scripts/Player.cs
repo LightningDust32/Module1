@@ -10,6 +10,7 @@ public class Player : MonoBehaviour
     [Header("Movement")]
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float turnSpeed = 120f;
+    [SerializeField] private float gravity = -9f;
 
     [Header("Camera")]
     [SerializeField] private float cameraDistance = 10f;
