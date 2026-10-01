@@ -158,6 +158,7 @@ public class Player : MonoBehaviour
 
     private void CheckTravelEvent()
     {
+        // Trigger time passing after walking
         if (distanceTravelled < distanceUntilWalkEvent)
         {
             return;

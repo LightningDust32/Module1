@@ -42,7 +42,7 @@ public class UIManager : MonoBehaviour
     {
         if (player == null)
         {
-            player = FindFirstObjectByType<Player>();
+            player = FindAnyObjectByType<Player>();
         }
 
         UpdateStats();
