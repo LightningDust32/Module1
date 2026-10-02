@@ -12,6 +12,8 @@ public class Player : MonoBehaviour
     [SerializeField] private float turnSpeed = 120f;
     [SerializeField] private float gravity = -9f;
 
+    private float verticalVelocity;
+
     [Header("Camera")]
     [SerializeField] private float cameraDistance = 10f;
     [SerializeField] private float cameraRotationSpeed = 80f;
@@ -146,11 +148,28 @@ public class Player : MonoBehaviour
 
         movement = Vector3.ClampMagnitude(movement, 1f);
 
-        Vector3 movementDelta = movement * moveSpeed * Time.deltaTime;
+        Vector3 horizontalMovement = movement * moveSpeed * Time.deltaTime;
 
-        controller.Move(movement * moveSpeed * Time.deltaTime);
+        // Keep the player attached to the terrain.
+        if (controller.isGrounded && verticalVelocity < 0f)
+        {
+            verticalVelocity = -2f;
+        }
 
-        Vector3 horizontalMovement = new Vector3(movementDelta.x, 0f, movementDelta.z);
+        // Apply gravity.
+        verticalVelocity += gravity * Time.deltaTime;
+
+        Vector3 movementDelta = horizontalMovement + Vector3.up * verticalVelocity * Time.deltaTime;
+
+        Vector3 previousPosition = transform.position;
+
+        controller.Move(movementDelta);
+
+        // Measure actual movement after collision resolution.
+        Vector3 actualMovement = transform.position - previousPosition;
+        actualMovement.y = 0f;
+
+        distanceTravelled += actualMovement.magnitude;
 
         distanceTravelled += horizontalMovement.magnitude;
 
