@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   eventName: Rest
   eventDescription: 
-  timeMinutes: 480
+  timeMinutes: 0
   elephantHunger: -40
   elephantThirst: 0
   elephantFatigue: 100

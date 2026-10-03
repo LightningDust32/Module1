@@ -386,6 +386,7 @@ MonoBehaviour:
   cameraTransform: {fileID: 330585546}
   moveSpeed: 5
   turnSpeed: 120
+  gravity: -9
   cameraDistance: 10
   cameraRotationSpeed: 80
   minCameraVerticalAngle: 10

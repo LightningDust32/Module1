@@ -203,8 +203,6 @@ public class Player : MonoBehaviour
             return;
         }
 
-        Debug.Log("Travel distance reached. Triggering Walk event.");
-
         EventManager.instance.ApplyEvent(walkEvent);
     }
 
@@ -246,6 +244,33 @@ public class Player : MonoBehaviour
             currentHour -= 24;
             currentDay++;
         }
+    }
+
+    public void RestUntilMorning(GameEvent restEvent)
+    {
+        if (restEvent == null)
+        {
+            Debug.LogWarning("Player: Rest event has not been assigned.");
+            return;
+        }
+
+        // If we're already in daylight, there is nothing to rest until.
+        if (IsDaylight())
+        {
+            return;
+        }
+
+        if (EventManager.instance != null)
+        {
+            EventManager.instance.ApplyEvent(restEvent);
+        }
+
+
+        // Advance to the next sunrise.
+        currentDay++;
+
+        currentHour = sunriseHour;
+        currentMinute = 0;
     }
 
     public string GetTimeString()

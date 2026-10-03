@@ -63,24 +63,19 @@ public class EventTrigger : MonoBehaviour
             return;
         }
 
-        GameEvent eventToApply = currentEvent;
-
         // After sunset, only the rest event can be activated.
         if (player.IsNight())
         {
-            eventToApply = restEvent;
+            player.RestUntilMorning(restEvent);
         }
 
-        if (eventToApply == null)
+        if (gameEvent == null)
         {
-            Debug.LogWarning("EventTrigger: No valid event available.");
+            Debug.LogWarning("EventTrigger: No game event assigned.");
             return;
         }
 
-        if (EventManager.instance != null)
-        {
-            EventManager.instance.ApplyEvent(eventToApply);
-        }
+        EventManager.instance.ApplyEvent(currentEvent);
     }
 
     public GameEvent GetGameEvent()
