@@ -260,11 +260,15 @@ public class Player : MonoBehaviour
             return;
         }
 
-        if (EventManager.instance != null)
+        if (elephantFatigue < elephantMaxFatigue)
         {
-            EventManager.instance.ApplyEvent(restEvent);
+            elephantFatigue = elephantMaxFatigue;
         }
 
+        if (handlerFatigue < handlerMaxFatigue)
+        {
+            handlerFatigue = handlerMaxFatigue;
+        }
 
         // Advance to the next sunrise.
         currentDay++;
