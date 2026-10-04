@@ -45,6 +45,15 @@ public class Player : MonoBehaviour
     [SerializeField] private float handlerMaxThirst = 75f;
     [SerializeField] private float handlerMaxFatigue = 75f;
 
+    private bool elephantHungerZeroTriggered;
+    private bool elephantThirstZeroTriggered;
+    private bool elephantFatigueZeroTriggered;
+    private bool elephantTemperatureZeroTriggered;
+
+    private bool handlerHungerZeroTriggered;
+    private bool handlerThirstZeroTriggered;
+    private bool handlerFatigueZeroTriggered;
+
     [Header("Time")]
     [SerializeField] private int currentHour = 6;
     [SerializeField] private int currentMinute = 0;
@@ -287,6 +296,11 @@ public class Player : MonoBehaviour
         return "Day: " + currentDay;
     }
 
+    public int GetDay()
+    {
+        return currentDay;
+    }
+
     public bool IsDaylight()
     {
         return currentHour >= sunriseHour && currentHour < sunsetHour;
@@ -339,8 +353,25 @@ public class Player : MonoBehaviour
 
     public void ChangeElephantThirst(float thirst)
     {
+        float previousThirst = elephantThirst;
+
         elephantThirst += thirst;
         elephantThirst = Mathf.Clamp(elephantThirst, 0f, elephantMaxThirst);
+
+        if (previousThirst > 0f && elephantThirst <= 0f)
+        {
+            elephantThirstZeroTriggered = true;
+
+            if (GameManager.instance != null)
+            {
+                GameManager.instance.ElephantThirstReachedZero();
+            }
+
+            if (elephantThirst > 0f)
+            {
+                elephantThirstZeroTriggered = false;
+            }
+        }
     }
 
     public void ChangeElephantHunger(float hunger)

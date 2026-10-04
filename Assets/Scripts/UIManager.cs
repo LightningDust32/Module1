@@ -69,7 +69,7 @@ public class UIManager : MonoBehaviour
         fatigueFill.fillAmount = player.GetElephantFatigue() / player.GetElephantMaxFatigue();
 
         timeText.text = player.GetTimeString();
-        dayText.text = player.GetDayString();
+        dayText.text = "Day: " + player.GetDay();
     }
 
     public void ShowEvent(GameEvent gameEvent)
