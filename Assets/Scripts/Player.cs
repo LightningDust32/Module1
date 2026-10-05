@@ -45,10 +45,10 @@ public class Player : MonoBehaviour
     [SerializeField] private float handlerMaxThirst = 75f;
     [SerializeField] private float handlerMaxFatigue = 75f;
 
-    private bool elephantHungerZeroTriggered;
+    private bool elephantStarved;
     private bool elephantThirstZeroTriggered;
     private bool elephantFatigueZeroTriggered;
-    private bool elephantTemperatureZeroTriggered;
+    private bool elephantFroze;
 
     private bool handlerHungerZeroTriggered;
     private bool handlerThirstZeroTriggered;
@@ -358,7 +358,7 @@ public class Player : MonoBehaviour
         elephantThirst += thirst;
         elephantThirst = Mathf.Clamp(elephantThirst, 0f, elephantMaxThirst);
 
-        if (previousThirst > 0f && elephantThirst <= 0f)
+        if (previousThirst > 0f && elephantThirst <= 0f && !elephantThirstZeroTriggered)
         {
             elephantThirstZeroTriggered = true;
 
@@ -376,20 +376,71 @@ public class Player : MonoBehaviour
 
     public void ChangeElephantHunger(float hunger)
     {
+        float previousHunger = elephantHunger;
+
         elephantHunger += hunger;
         elephantHunger = Mathf.Clamp(elephantHunger, 0f, elephantMaxHunger);
+
+        if(previousHunger > 0f && elephantHunger <= 0f && !elephantStarved)
+        {
+            elephantStarved = true;
+
+            if(GameManager.instance != null)
+            {
+                GameManager.instance.ElephantHungerReachedZero();
+            }
+
+            if(elephantHunger > 0f)
+            {
+                elephantStarved = false;
+            }
+        }
     }
 
     public void ChangeElephantFatigue(float fatigue)
     {
+        float previousFatigue = elephantFatigue;
+
         elephantFatigue += fatigue;
         elephantFatigue = Mathf.Clamp(elephantFatigue, 0f, elephantMaxFatigue);
+
+        if(previousFatigue > 0f && elephantFatigue <= 0f && !elephantFatigueZeroTriggered)
+        {
+            elephantFatigueZeroTriggered = true;
+
+            if(GameManager.instance != null)
+            {
+                GameManager.instance.ElephantFatigueReachedZero();
+            }
+
+            if(elephantFatigue > 0f)
+            {
+                elephantFatigueZeroTriggered = false;
+            }
+        }
     }
 
     public void ChangeElephantTemp(float temp)
     {
+        float previousTemp = elephantTemperature;
+
         elephantTemperature += temp;
         elephantTemperature = Mathf.Clamp(elephantTemperature, 0f, elephantMaxTemperature);
+
+        if( previousTemp > 0f && elephantTemperature <= 0f && !elephantFroze)
+        {
+            elephantFroze = true;
+
+            if(GameManager.instance != null)
+            {
+                GameManager.instance.ElephantTempReachedZero();
+            }
+
+            if( elephantTemperature > 0f)
+            {
+                elephantFroze = false;
+            }
+        }
     }
 
 

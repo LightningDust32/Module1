@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        Debug.Log("LOSS STATE: Elephant hunger reached zero.");
+        Debug.Log("LOSS STATE: Gisgo starved.");
     }
 
     public void ElephantThirstReachedZero()
@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        Debug.Log("LOSS STATE: Elephant thirst reached zero.");
+        Debug.Log("LOSS STATE: Gisgo thirst reached zero.");
     }
 
     public void ElephantFatigueReachedZero()
@@ -45,10 +45,10 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        Debug.Log("LOSS STATE: Elephant fatigue reached zero.");
+        Debug.Log("Gisgo Collapsed From Exhaustion.");
     }
 
-    public void ElephantTemperatureReachedZero()
+    public void ElephantTempReachedZero()
     {
         if (!activateLossStates)
         {
