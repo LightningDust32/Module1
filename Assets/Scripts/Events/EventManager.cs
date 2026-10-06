@@ -41,6 +41,5 @@ public class EventManager : MonoBehaviour
         player.ChangeHandlerFatigue(gameEvent.handlerFatigue);
 
         UIManager.Instance.UpdateStats();
-        UIManager.Instance.ShowEvent(gameEvent);
     }
 }

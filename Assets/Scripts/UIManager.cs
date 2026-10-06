@@ -72,33 +72,14 @@ public class UIManager : MonoBehaviour
         dayText.text = "Day: " + player.GetDay();
     }
 
-    public void ShowEvent(GameEvent gameEvent)
-    {
-        if (eventText == null)
-        {
-            return;
-        }
-
-        if (gameEvent == null)
-        {
-            eventText.text = "";
-            return;
-        }
-
-        eventText.text = gameEvent.eventDescription;
-    }
-
-    public void ClearEvent()
-    {
-        if (eventText != null)
-        {
-            eventText.text = "";
-        }
-    }
-
     public void ShowEventButton(EventTrigger eventTrigger)
     {
         if (eventTrigger == null)
+        {
+            return;
+        }
+
+        if (eventText == null)
         {
             return;
         }
@@ -109,8 +90,11 @@ public class UIManager : MonoBehaviour
 
         if (gameEvent == null)
         {
+            eventText.text = "";
             return;
         }
+
+        eventText.text = gameEvent.eventDescription;
 
         eventButtonText.text = gameEvent.eventName;
 
@@ -125,6 +109,11 @@ public class UIManager : MonoBehaviour
         if (currentEventTrigger != eventTrigger)
         {
             return;
+        }
+
+        if (eventText != null)
+        {
+            eventText.text = "";
         }
 
         currentEventTrigger = null;

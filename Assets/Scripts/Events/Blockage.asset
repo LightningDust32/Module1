@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 033b2f52b3905b243814454b12ed8332, type: 3}
   m_Name: Blockage
   m_EditorClassIdentifier: Assembly-CSharp::GameEvent
-  eventName: Blockage
+  eventName: Clear Blockage
   eventDescription: Use Gisgo's strength to remove the blockage
   timeMinutes: 30
   elephantHunger: -10
@@ -22,3 +22,4 @@ MonoBehaviour:
   handlerHunger: -5
   handlerThirst: -5
   handlerFatigue: -5
+  singleUse: 1

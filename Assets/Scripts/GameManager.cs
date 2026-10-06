@@ -7,6 +7,8 @@ public class GameManager : MonoBehaviour
     [Header("Loss States")]
     [SerializeField] bool activateLossStates = false;
 
+    private bool gameOver = false;
+
     private void Awake()
     {
         if (instance != null && instance != this)
@@ -24,6 +26,8 @@ public class GameManager : MonoBehaviour
         {
             return;
         }
+
+        gameOver = true;
 
         Debug.Log("LOSS STATE: Gisgo starved.");
     }
@@ -45,6 +49,8 @@ public class GameManager : MonoBehaviour
             return;
         }
 
+        gameOver = true;
+
         Debug.Log("Gisgo Collapsed From Exhaustion.");
     }
 
@@ -54,6 +60,8 @@ public class GameManager : MonoBehaviour
         {
             return;
         }
+
+        gameOver = true;
 
         Debug.Log("LOSS STATE: Elephant temperature reached zero.");
     }
@@ -65,6 +73,8 @@ public class GameManager : MonoBehaviour
             return;
         }
 
+        gameOver = true;
+
         Debug.Log("LOSS STATE: Handler hunger reached zero.");
     }
 
@@ -75,6 +85,8 @@ public class GameManager : MonoBehaviour
             return;
         }
 
+        gameOver = true;
+
         Debug.Log("LOSS STATE: Handler thirst reached zero.");
     }
 
@@ -84,6 +96,8 @@ public class GameManager : MonoBehaviour
         {
             return;
         }
+
+        gameOver = true;
 
         Debug.Log("LOSS STATE: Handler fatigue reached zero.");
     }

@@ -76,6 +76,11 @@ public class EventTrigger : MonoBehaviour
         }
 
         EventManager.instance.ApplyEvent(currentEvent);
+
+        if(currentEvent.singleUse = true)
+        {
+            Destroy(gameObject);
+        }
     }
 
     public GameEvent GetGameEvent()
