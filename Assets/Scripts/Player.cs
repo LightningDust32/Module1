@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(CharacterController))]
 public class Player : MonoBehaviour
 {
+
     [Header("References")]
     [SerializeField] private Transform cameraTransform;
 
