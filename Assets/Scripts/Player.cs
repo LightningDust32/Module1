@@ -1,6 +1,8 @@
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.WSA;
+
 
 [RequireComponent(typeof(CharacterController))]
 public class Player : MonoBehaviour
@@ -68,6 +70,12 @@ public class Player : MonoBehaviour
     [Header("Travel Event")]
     [SerializeField] private float distanceUntilWalkEvent = 50f;
     [SerializeField] private GameEvent walkEvent;
+
+    [Header("Wind")]
+    [SerializeField] Vector3 windDirection;
+    [SerializeField] private float windStrength = 0.3f;
+    [SerializeField] bool windActive = false;
+
 
     private float distanceTravelled;
 
@@ -158,6 +166,18 @@ public class Player : MonoBehaviour
         UpdateCamera();
     }
 
+    public void SetWind(float strength)
+    {
+        if (strength == 1f)
+        {
+            windActive = false;
+            return;
+        }
+        windActive = true;
+        windStrength = strength;
+        windDirection = new Vector3 ( Random.Range(-1f, 1f), 0f, Random.Range(-1f, 1f) );
+    }
+
     private void Move()
     {
         // A / D turn the elephant
@@ -172,7 +192,30 @@ public class Player : MonoBehaviour
 
         movement = Vector3.ClampMagnitude(movement, 1f);
 
-        Vector3 horizontalMovement = movement * moveSpeed * speedModifier * Time.deltaTime;
+        if (speedModifier <= 0)
+        {
+            speedModifier = 1;
+        }
+
+        // Wind
+        float windMultiplier = 1f;
+
+        if (windActive)
+        {
+            float windEffect = Vector3.Dot(movement.normalized, windDirection.normalized);
+
+
+            windMultiplier = 1f + (windEffect * windStrength);
+
+            if (windMultiplier <= 0f)
+            {
+                windMultiplier = 0.5f;
+            }
+        }
+
+        Vector3 horizontalMovement = movement * moveSpeed * windMultiplier * speedModifier * Time.deltaTime;
+
+
 
         // Keep the player attached to the terrain.
         if (controller.isGrounded && verticalVelocity < 0f)

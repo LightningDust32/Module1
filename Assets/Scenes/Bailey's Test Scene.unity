@@ -809,6 +809,9 @@ MonoBehaviour:
   sunsetHour: 18
   distanceUntilWalkEvent: 50
   walkEvent: {fileID: 11400000, guid: 9ed59a7c8d934aa4e8bf09212087d212, type: 2}
+  windDirection: {x: 0, y: 0, z: 0}
+  windStrength: 0.3
+  windActive: 0
 --- !u!143 &232604134
 CharacterController:
   m_ObjectHideFlags: 0
