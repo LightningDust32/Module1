@@ -40,5 +40,17 @@ public class Inventory : MonoBehaviour
         }
     }
 
-
+    public bool FindItem(ItemData item)
+    {
+        for (int i = items.Count - 1; i >= 0; i--)
+        {
+            if (items[i].item == item)
+            {
+                Debug.Log("Item Found");
+                return true;
+            }
+        }
+        
+        return false;
+    }
 }

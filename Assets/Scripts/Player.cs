@@ -366,6 +366,11 @@ public class Player : MonoBehaviour
     {
         float previousThirst = elephantThirst;
 
+        if(thirst > 0)
+        {
+            // Add the item search in here and leave if none found
+        }
+
         elephantThirst += thirst;
         elephantThirst = Mathf.Clamp(elephantThirst, 0f, elephantMaxThirst);
 
@@ -452,6 +457,11 @@ public class Player : MonoBehaviour
                 elephantFroze = false;
             }
         }
+    }
+
+    public void SetMoveSpeed(float speed)
+    {
+        moveSpeed = speed;
     }
 
 
