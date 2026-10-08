@@ -25,6 +25,10 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Button eventButton;
     [SerializeField] private TMP_Text eventButtonText;
 
+    [Header("Inventory")]
+    [SerializeField] private GameObject inventoryScreen;
+    [SerializeField] private InventorySlotUI[] slots;
+
     private EventTrigger currentEventTrigger;
 
     private void Awake()
@@ -138,5 +142,25 @@ public class UIManager : MonoBehaviour
 
         eventButton.onClick.RemoveAllListeners();
         eventButton.gameObject.SetActive(false);
+    }
+
+    public void ToggleInventory(Inventory inventory)
+    {
+        inventoryScreen.SetActive(!inventoryScreen.activeSelf);
+
+        DisplayInventory(inventory);
+    }
+
+    public void DisplayInventory(Inventory inventory)
+    {
+        foreach (InventorySlotUI slot in slots)
+        {
+            slot.ClearSlot();
+        }
+
+        for (int i = 0; i < inventory.items.Count && i < slots.Length; i++)
+        {
+            slots[i].SetItem(inventory.items[i]);
+        }
     }
 }
