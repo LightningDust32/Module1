@@ -21,11 +21,12 @@ enum Weather
 public class RandomWeatherEvent : MonoBehaviour
 {
     // chances to genereate each weather event listed in the "Weather" enum
-    float[] weatherEventChances = { 50f, 20f, 10f, 8f, 7f, 5f };
-    string[] events = { "calm", "lightSnowfall", "snowShower", "generalSnowstorm", "blizzard", "iceStorm" };
+    float[] weatherEventChances = { 80f, 10f, 5f, 2.5f, 1.5f, 1f };
+    string[] events = { "calm", "lightSnowfall", "snowShower", "generalSnowstorm", "blizzard", "blizzard + Extreme avalanche risk" };
     float[] moveSpeeds = { 1f, 1f, 0.8f, 0.7f, 0.5f, 0.3f};
     float[] modifier = { 1f, 1f, 1.2f, 1.5f, 2f, 2.2f };
     float[] windSpeeds = { 1f, 2f, 3f, 4f, 5f, 6f };
+    int[] temperatures = { 5, 1, -5, -8, -15, -16 };
 
     [SerializeField] Player player;
     public TMP_Text weatherTypeUI;
@@ -37,6 +38,8 @@ public class RandomWeatherEvent : MonoBehaviour
     [SerializeField] float minTemp = -20f;
     [SerializeField] float maxTemp = 20f;
     public TMP_Text temperatureUI;
+
+    private bool openToElements = true;
 
 
 
@@ -65,6 +68,13 @@ public class RandomWeatherEvent : MonoBehaviour
         player.SetMoveSpeed(moveSpeeds[i]);
         player.SetModifier(modifier[i]);
         player.SetWind(windSpeeds[i]);
+
+        if (openToElements)
+        {
+            int tempVariation = Random.Range(-3, 3);
+            int newTemp = temperatures[i] + tempVariation;
+            temperatureUI.text = newTemp + "°c";
+        }
     }
 
     private void Update()
@@ -82,7 +92,7 @@ public class RandomWeatherEvent : MonoBehaviour
 
     IEnumerator Wait10Seconds()
     {
-        yield return new WaitForSeconds(10);
+        yield return new WaitForSeconds(2);
         pickRandomEvent();
         StartCoroutine(Wait10Seconds());
     }
