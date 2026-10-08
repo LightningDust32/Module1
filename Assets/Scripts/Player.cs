@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -366,9 +367,20 @@ public class Player : MonoBehaviour
     {
         float previousThirst = elephantThirst;
 
-        if(thirst > 0)
+        // If restoring thirst, only work if player has water
+        if (thirst > 0)
         {
-            // Add the item search in here and leave if none found
+            ItemData water = inventory.FindItem("Water");
+
+            if(water == null)
+            {
+                Debug.Log("No Water");
+                return;
+            }
+            else
+            {
+                inventory.RemoveItem(water);
+            }
         }
 
         elephantThirst += thirst;
@@ -393,6 +405,22 @@ public class Player : MonoBehaviour
     public void ChangeElephantHunger(float hunger)
     {
         float previousHunger = elephantHunger;
+
+        // If restoring hunger, only work if player has food
+        if (hunger > 0)
+        {
+            ItemData food = inventory.FindItem("Food");
+
+            if (food == null)
+            {
+                Debug.Log("No Food");
+                return;
+            }
+            else
+            {
+                inventory.RemoveItem(food);
+            }
+        }
 
         elephantHunger += hunger;
         elephantHunger = Mathf.Clamp(elephantHunger, 0f, elephantMaxHunger);
