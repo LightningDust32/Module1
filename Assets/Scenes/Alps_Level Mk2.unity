@@ -5891,6 +5891,8 @@ MonoBehaviour:
   dayText: {fileID: 427970483}
   eventButton: {fileID: 359612152}
   eventButtonText: {fileID: 467801859}
+  inventoryScreen: {fileID: 0}
+  slots: []
 --- !u!114 &890699106
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8832,7 +8834,7 @@ Transform:
   m_GameObject: {fileID: 1270694589}
   serializedVersion: 2
   m_LocalRotation: {x: 0.36964378, y: 0.23911767, z: -0.09904577, w: 0.89239913}
-  m_LocalPosition: {x: 0, y: 2.01, z: -1.3333334}
+  m_LocalPosition: {x: -4.34, y: 11.84, z: -7.56}
   m_LocalScale: {x: 0.5, y: 0.43834937, z: 0.36782083}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -8903,12 +8905,12 @@ Camera:
   m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
-  m_FOVAxisMode: 0
+  m_FOVAxisMode: 1
   m_Iso: 200
   m_ShutterSpeed: 0.005
   m_Aperture: 16
   m_FocusDistance: 10
-  m_FocalLength: 50
+  m_FocalLength: 20.78461
   m_BladeCount: 5
   m_Curvature: {x: 2, y: 11}
   m_BarrelClipping: 0.25
@@ -8921,10 +8923,10 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: -40
-  far clip plane: 1000
-  field of view: 60
-  orthographic: 1
+  near clip plane: 0.01
+  far clip plane: 4000
+  field of view: 60.000004
+  orthographic: 0
   orthographic size: 24.6
   m_Depth: -1
   m_CullingMask:
@@ -14446,7 +14448,7 @@ MonoBehaviour:
   moveSpeed: 20
   turnSpeed: 120
   gravity: -9
-  cameraDistance: 10
+  cameraDistance: 100
   cameraRotationSpeed: 80
   minCameraVerticalAngle: 10
   maxCameraVerticalAngle: 70

@@ -1,5 +1,8 @@
 using Unity.VisualScripting;
 using UnityEngine;
+using TMPro;
+using UnityEngine.UI;
+using System.Collections;
 
 
 
@@ -20,11 +23,10 @@ public class RandomWeatherEvent : MonoBehaviour
     // chances to genereate each weather event listed in the "Weather" enum
     float[] weatherEventChances = { 50f, 20f, 10f, 8f, 7f, 5f };
     string[] events = { "calm", "lightSnowfall", "snowShower", "generalSnowstorm", "blizzard", "iceStorm" };
+    float[] moveSpeeds = { 5f, 5f, 4.5f, 3f, 2f, 1f};
 
-    float[] moveSpeeds = { 5f, 5f, 4.5f };
-
-    [SerializeField] Player player; 
-
+    [SerializeField] Player player;
+    public TMP_Text weatherTypeUI;
 
 
     public void pickRandomEvent()
@@ -47,11 +49,24 @@ public class RandomWeatherEvent : MonoBehaviour
 
     public void TriggerEvent(int i)
     {
-        Debug.Log(events[i]);
+        weatherTypeUI.text = "Weather: " + events[i];
+        player.SetMoveSpeed(moveSpeeds[i]);
     }
 
     private void Update()
     {
+        
+    }
+
+    private void Start()
+    {
+        StartCoroutine(Wait10Seconds());
+    }
+
+    IEnumerator Wait10Seconds()
+    {
+        yield return new WaitForSeconds(10);
         pickRandomEvent();
+        StartCoroutine(Wait10Seconds());
     }
 }
