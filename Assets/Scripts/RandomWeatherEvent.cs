@@ -62,6 +62,7 @@ public class RandomWeatherEvent : MonoBehaviour
 
     private void Start()
     {
+        pickRandomEvent();
         StartCoroutine(Wait10Seconds());
     }
 
