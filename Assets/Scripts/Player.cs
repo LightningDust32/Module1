@@ -21,11 +21,13 @@ public class Player : MonoBehaviour
     [Header("Camera")]
     [SerializeField] private float cameraDistance = 10f;
     [SerializeField] private float cameraRotationSpeed = 80f;
+    [SerializeField] private float zoomSpeed = 300f;
     [SerializeField] private float minCameraVerticalAngle = 10f;
     [SerializeField] private float maxCameraVerticalAngle = 70f;
 
     private float cameraYaw = 0f;
     private float cameraPitch = 25f;
+
 
     [Header("Elephant Stats")]
     [SerializeField] private float elephantHunger = 100f;
@@ -82,6 +84,7 @@ public class Player : MonoBehaviour
     // Input
     private Vector2 moveInput;
     private Vector2 lookInput;
+    private Vector2 zoomInput;
 
     private InputSystem_Actions inputActions;
 
@@ -114,6 +117,8 @@ public class Player : MonoBehaviour
         inputActions.Player.Inventory.performed += ToggleInventory;
         inputActions.Player.Inventory.canceled -= ToggleInventory;
 
+        inputActions.Player.Zoom.performed += OnZoom;
+
         inputActions.Player.Interact.performed += OnInteract;
         inputActions.Player.Interact.canceled += OnInteract;
 
@@ -140,6 +145,8 @@ public class Player : MonoBehaviour
 
         inputActions.Player.Inventory.performed -= ToggleInventory;
         inputActions.Player.Inventory.canceled -= ToggleInventory;
+
+        inputActions.Player.Zoom.performed -= OnZoom;
 
         inputActions.Player.Interact.performed -= OnInteract;
         inputActions.Player.Interact.canceled -= OnInteract;
@@ -285,6 +292,19 @@ public class Player : MonoBehaviour
         cameraPitch -= lookInput.y * cameraRotationSpeed * Time.deltaTime;
 
         cameraPitch = Mathf.Clamp(cameraPitch, minCameraVerticalAngle, maxCameraVerticalAngle);
+
+        if(cameraTransform.TryGetComponent<Camera>(out Camera camera))
+        {
+            if(camera.orthographic)
+            {
+                camera.orthographicSize -= zoomInput.y * zoomSpeed * Time.deltaTime;
+                camera.orthographicSize = Mathf.Clamp(camera.orthographicSize, 2, 100);
+            }
+            else
+            {
+                cameraDistance -= zoomInput.y * zoomSpeed * Time.deltaTime;
+            }
+        }
 
         Quaternion rotation = Quaternion.Euler(cameraPitch, cameraYaw, 0f);
 
@@ -600,6 +620,11 @@ public class Player : MonoBehaviour
     private void ToggleInventory(InputAction.CallbackContext context)
     {
         UIManager.Instance.ToggleInventory(inventory);
+    }
+
+    public void OnZoom(InputAction.CallbackContext context)
+    {
+        zoomInput = context.ReadValue<Vector2>();
     }
 
     public void OnInteract(InputAction.CallbackContext context)
