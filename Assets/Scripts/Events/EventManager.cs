@@ -33,7 +33,7 @@ public class EventManager : MonoBehaviour
         player.ChangeElephantHunger(gameEvent.elephantHunger);
         player.ChangeElephantThirst(gameEvent.elephantThirst);
         player.ChangeElephantFatigue(gameEvent.elephantFatigue);
-        player.ChangeElephantTemp(gameEvent.elephantTemperature);
+       // player.ChangeElephantTemp(gameEvent.elephantTemperature);
 
         // Handler
         player.ChangeHandlerHunger(gameEvent.handlerHunger);

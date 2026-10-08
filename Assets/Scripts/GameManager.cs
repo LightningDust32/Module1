@@ -66,6 +66,18 @@ public class GameManager : MonoBehaviour
         Debug.Log("LOSS STATE: Elephant temperature reached zero.");
     }
 
+    public void ElephantHealthReachedZero()
+    {
+        if (!activateLossStates)
+        {
+            return;
+        }
+
+        gameOver = true;
+
+        Debug.Log("LOSS STATE: Elephant health reached zero.");
+    }
+
     public void HandlerHungerReachedZero()
     {
         if (!activateLossStates)
