@@ -187,8 +187,11 @@ public class Player : MonoBehaviour
         windActive = true;
         windStrength = strength;
         windDirection = new Vector3 ( Random.Range(-1f, 1f), 0f, Random.Range(-1f, 1f) );
+        //windArrow.transform.rotation = Quaternion.LookRotation(windDirection);
     }
 
+
+    //public GameObject windArrow;
     private void Move()
     {
         // A / D turn the elephant
@@ -222,6 +225,7 @@ public class Player : MonoBehaviour
             {
                 windMultiplier = 0.5f;
             }
+         
         }
 
         Vector3 horizontalMovement = movement * moveSpeed * windMultiplier * speedModifier * Time.deltaTime;
