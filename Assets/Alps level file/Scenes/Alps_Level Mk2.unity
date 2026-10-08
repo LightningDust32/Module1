@@ -7664,8 +7664,8 @@ Transform:
   m_GameObject: {fileID: 556870688}
   serializedVersion: 2
   m_LocalRotation: {x: -0.08715578, y: 0, z: 0, w: 0.9961947}
-  m_LocalPosition: {x: 107.02624, y: 254.12708, z: 3751.6592}
-  m_LocalScale: {x: 58.934006, y: -0.054812, z: 235.82872}
+  m_LocalPosition: {x: 107.02624, y: 253.9538, z: 3751.7434}
+  m_LocalScale: {x: 58.934006, y: -0.33888066, z: 235.82872}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -24630,6 +24630,7 @@ MonoBehaviour:
   gravity: -9
   cameraDistance: 10
   cameraRotationSpeed: 80
+  zoomSpeed: 300
   minCameraVerticalAngle: 10
   maxCameraVerticalAngle: 70
   elephantHunger: 70
