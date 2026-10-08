@@ -3813,8 +3813,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 315b73ff787add14094be3222c0c69f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EventTrigger
-  gameEvent: []
-  restEvent: {fileID: 11400000, guid: 452c326c1fe58a745bb3f1d3991db73d, type: 2}
+  gameEvent:
+  - {fileID: 11400000, guid: 452c326c1fe58a745bb3f1d3991db73d, type: 2}
+  restEvent: {fileID: 0}
 --- !u!65 &390871179
 BoxCollider:
   m_ObjectHideFlags: 0
