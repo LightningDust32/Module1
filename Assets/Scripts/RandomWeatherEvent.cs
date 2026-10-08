@@ -23,7 +23,7 @@ public class RandomWeatherEvent : MonoBehaviour
     // chances to genereate each weather event listed in the "Weather" enum
     float[] weatherEventChances = { 50f, 20f, 10f, 8f, 7f, 5f };
     string[] events = { "calm", "lightSnowfall", "snowShower", "generalSnowstorm", "blizzard", "iceStorm" };
-    float[] moveSpeeds = { 5f, 5f, 4.5f, 3f, 2f, 1f};
+    float[] moveSpeeds = { 1f, 1f, 0.8f, 0.7f, 0.5f, 0.3f};
     float[] modifier = { 1f, 1f, 1.2f, 1.5f, 2f, 2.2f };
 
     [SerializeField] Player player;

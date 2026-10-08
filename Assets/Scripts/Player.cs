@@ -82,6 +82,7 @@ public class Player : MonoBehaviour
     private Inventory inventory;
 
     private float tempModifier;
+    private float speedModifier;
 
     private void Awake()
     {
@@ -171,7 +172,7 @@ public class Player : MonoBehaviour
 
         movement = Vector3.ClampMagnitude(movement, 1f);
 
-        Vector3 horizontalMovement = movement * moveSpeed * Time.deltaTime;
+        Vector3 horizontalMovement = movement * moveSpeed * speedModifier * Time.deltaTime;
 
         // Keep the player attached to the terrain.
         if (controller.isGrounded && verticalVelocity < 0f)
@@ -494,9 +495,9 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void SetMoveSpeed(float speed)
+    public void SetMoveSpeed(float speedMod)
     {
-        moveSpeed = speed;
+        speedModifier = speedMod;
     }
 
     public void SetModifier(float modifier)
