@@ -99,6 +99,10 @@ public class RandomWeatherEvent : MonoBehaviour
 
     private void SetTemperatureUI(float temperature)
     {
+        if(temperatureUI  == null)
+        {
+            return;
+        }
         temperatureUI.text = currentTemp + "°c";
     }
 }

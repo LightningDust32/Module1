@@ -688,4 +688,16 @@ public class Player : MonoBehaviour
     {
         // Stub
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        Follower follower = other.GetComponent<Follower>();
+
+        if(follower == null)
+        {
+            return;
+        }
+
+        follower.StartFollowing(transform);
+    }
 }
