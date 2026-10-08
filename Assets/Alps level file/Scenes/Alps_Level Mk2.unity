@@ -2357,8 +2357,8 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 1
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 1.0000002, y: 1.0000001, z: 4.08}
@@ -8589,6 +8589,8 @@ MonoBehaviour:
   dayText: {fileID: 427970483}
   eventButton: {fileID: 359612152}
   eventButtonText: {fileID: 467801859}
+  inventoryScreen: {fileID: 0}
+  slots: []
 --- !u!114 &890699106
 MonoBehaviour:
   m_ObjectHideFlags: 0
