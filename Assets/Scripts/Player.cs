@@ -297,7 +297,7 @@ public class Player : MonoBehaviour
         {
             if(camera.orthographic)
             {
-                camera.orthographicSize -= zoomInput.y * zoomSpeed * Time.deltaTime;
+                camera.orthographicSize -= zoomInput.y * zoomSpeed;
                 camera.orthographicSize = Mathf.Clamp(camera.orthographicSize, 2, 100);
             }
             else
