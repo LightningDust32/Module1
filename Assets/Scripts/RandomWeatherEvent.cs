@@ -24,6 +24,7 @@ public class RandomWeatherEvent : MonoBehaviour
     float[] weatherEventChances = { 50f, 20f, 10f, 8f, 7f, 5f };
     string[] events = { "calm", "lightSnowfall", "snowShower", "generalSnowstorm", "blizzard", "iceStorm" };
     float[] moveSpeeds = { 5f, 5f, 4.5f, 3f, 2f, 1f};
+    float[] modifier = { 1f, 1f, 1.2f, 1.5f, 2f, 2.2f };
 
     [SerializeField] Player player;
     public TMP_Text weatherTypeUI;
@@ -51,6 +52,7 @@ public class RandomWeatherEvent : MonoBehaviour
     {
         weatherTypeUI.text = "Weather: " + events[i];
         player.SetMoveSpeed(moveSpeeds[i]);
+        player.SetModifier(modifier[i]);
     }
 
     private void Update()

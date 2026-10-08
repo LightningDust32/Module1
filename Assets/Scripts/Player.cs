@@ -81,6 +81,8 @@ public class Player : MonoBehaviour
 
     private Inventory inventory;
 
+    private float tempModifier;
+
     private void Awake()
     {
         controller = GetComponent<CharacterController>();
@@ -470,7 +472,7 @@ public class Player : MonoBehaviour
 
         if(temp < 0)
         {
-            // Add multiplier based on severity of weather
+            temp *= tempModifier;
         }
 
         elephantTemperature += temp;
@@ -495,6 +497,12 @@ public class Player : MonoBehaviour
     public void SetMoveSpeed(float speed)
     {
         moveSpeed = speed;
+    }
+
+    public void SetModifier(float modifier)
+    {
+        tempModifier = modifier;
+        Debug.Log(tempModifier);
     }
 
 
