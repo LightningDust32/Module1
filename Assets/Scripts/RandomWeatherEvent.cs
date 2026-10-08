@@ -92,7 +92,7 @@ public class RandomWeatherEvent : MonoBehaviour
 
     IEnumerator Wait10Seconds()
     {
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(10);
         pickRandomEvent();
         StartCoroutine(Wait10Seconds());
     }
