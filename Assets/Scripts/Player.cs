@@ -468,6 +468,11 @@ public class Player : MonoBehaviour
     {
         float previousTemp = elephantTemperature;
 
+        if(temp < 0)
+        {
+            // Add multiplier based on severity of weather
+        }
+
         elephantTemperature += temp;
         elephantTemperature = Mathf.Clamp(elephantTemperature, 0f, elephantMaxTemperature);
 
