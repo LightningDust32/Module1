@@ -82,7 +82,7 @@ public class EventTrigger : MonoBehaviour
             UIManager.Instance.HideEventButton(this);
         }
 
-        if (currentEvent.singleUse = true)
+        if (currentEvent.singleUse == true)
         {
             Destroy(gameObject);
         }
