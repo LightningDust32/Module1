@@ -68,7 +68,7 @@ public class UIManager : MonoBehaviour
 
         thirstFill.fillAmount = player.GetElephantThirst() / player.GetElephantMaxThirst();
 
-        temperatureFill.fillAmount = player.GetElephantTemp() / player.GetElephantMaxTemperature();
+      //  temperatureFill.fillAmount = player.GetElephantTemp() / player.GetElephantMaxTemperature();
 
         fatigueFill.fillAmount = player.GetElephantFatigue() / player.GetElephantMaxFatigue();
 

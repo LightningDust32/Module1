@@ -31,6 +31,16 @@ public class RandomWeatherEvent : MonoBehaviour
     public TMP_Text weatherTypeUI;
 
 
+
+    [SerializeField] float startTemp = 10f;
+    [SerializeField] float currentTemp;
+    [SerializeField] float minTemp = -20f;
+    [SerializeField] float maxTemp = 20f;
+    public TMP_Text temperatureUI;
+
+
+
+
     public void pickRandomEvent()
     {
         // pick a random starting number
@@ -64,6 +74,8 @@ public class RandomWeatherEvent : MonoBehaviour
 
     private void Start()
     {
+        currentTemp = startTemp;
+        SetTemperatureUI(currentTemp);
         pickRandomEvent();
         StartCoroutine(Wait10Seconds());
     }
@@ -73,5 +85,10 @@ public class RandomWeatherEvent : MonoBehaviour
         yield return new WaitForSeconds(10);
         pickRandomEvent();
         StartCoroutine(Wait10Seconds());
+    }
+
+    private void SetTemperatureUI(float temperature)
+    {
+        temperatureUI.text = currentTemp + "°c";
     }
 }

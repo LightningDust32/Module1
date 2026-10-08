@@ -33,13 +33,16 @@ public class Player : MonoBehaviour
     [SerializeField] private float elephantHunger = 100f;
     [SerializeField] private float elephantThirst = 100f;
     [SerializeField] private float elephantFatigue = 100f;
-    [SerializeField] private float elephantTemperature = 100f;
+    [SerializeField] private float elephantHealth = 100f;
+
+    // [SerializeField] private float elephantTemperature = 100f;
 
     [Header("Elephant Maximums")]
     [SerializeField] private float elephantMaxHunger = 100f;
     [SerializeField] private float elephantMaxThirst = 100f;
     [SerializeField] private float elephantMaxFatigue = 100f;
-    [SerializeField] private float elephantMaxTemperature = 100f;
+    [SerializeField] private float elephantMaxHealth = 100f;
+    //  [SerializeField] private float elephantMaxTemperature = 100f;
 
     [Header("Handler Stats")]
     [SerializeField] private float handlerHunger = 100f;
@@ -54,6 +57,7 @@ public class Player : MonoBehaviour
     private bool elephantStarved;
     private bool elephantThirstZeroTriggered;
     private bool elephantFatigueZeroTriggered;
+    private bool elephantHealthZeroTriggered;
     private bool elephantFroze;
 
     private bool handlerHungerZeroTriggered;
@@ -404,10 +408,15 @@ public class Player : MonoBehaviour
         return elephantFatigue;
     }
 
-    public float GetElephantTemp()
+    public float GetElephantHealth()
     {
-        return elephantTemperature;
+        return elephantHealth;
     }
+
+    /* public float GetElephantTemp()
+     {
+         return elephantTemperature;
+     }*/
 
     public float GetElephantMaxHunger()
     {
@@ -424,11 +433,16 @@ public class Player : MonoBehaviour
         return elephantMaxFatigue;
     }
 
-    public float GetElephantMaxTemperature()
+    public float GetElephantMaxHealth()
     {
-        return elephantMaxTemperature;
+        return elephantMaxHealth;
     }
 
+    /*  public float GetElephantMaxTemperature()
+      {
+        //  return elephantMaxTemperature;
+      }
+    */
     public void ChangeElephantThirst(float thirst)
     {
         float previousThirst = elephantThirst;
@@ -530,6 +544,30 @@ public class Player : MonoBehaviour
         }
     }
 
+
+    public void ChangeElephantHealth(float health)
+    {
+        float previousHealth = elephantHealth;
+
+        elephantHealth += health;
+        elephantHealth = Mathf.Clamp(elephantHealth, 0f, elephantMaxHealth);
+
+        if (previousHealth > 0f && elephantHealth <= 0f && !elephantHealthZeroTriggered)
+        {
+            elephantHealthZeroTriggered = true;
+
+            if (GameManager.instance != null)
+            {
+                GameManager.instance.ElephantHealthReachedZero();
+            }
+
+            if (elephantHealth > 0f)
+            {
+                elephantHealthZeroTriggered = false;
+            }
+        }
+    }
+    /*
     public void ChangeElephantTemp(float temp)
     {
         float previousTemp = elephantTemperature;
@@ -556,7 +594,7 @@ public class Player : MonoBehaviour
                 elephantFroze = false;
             }
         }
-    }
+    } */
 
     public void SetMoveSpeed(float speedMod)
     {
