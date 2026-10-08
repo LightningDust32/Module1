@@ -78,11 +78,15 @@ public class Player : MonoBehaviour
 
     private CharacterController controller;
 
+    private Inventory inventory;
+
     private void Awake()
     {
         controller = GetComponent<CharacterController>();
 
         inputActions = new InputSystem_Actions();
+
+        inventory = GetComponent<Inventory>();
     }
 
     private void OnEnable()
@@ -94,6 +98,9 @@ public class Player : MonoBehaviour
 
         inputActions.Player.Look.performed += OnLook;
         inputActions.Player.Look.canceled += OnLook;
+
+        inputActions.Player.Inventory.performed += ToggleInventory;
+        inputActions.Player.Inventory.canceled -= ToggleInventory;
 
         inputActions.Player.Interact.performed += OnInteract;
         inputActions.Player.Interact.canceled += OnInteract;
@@ -118,6 +125,9 @@ public class Player : MonoBehaviour
 
         inputActions.Player.Look.performed -= OnLook;
         inputActions.Player.Look.canceled -= OnLook;
+
+        inputActions.Player.Inventory.performed -= ToggleInventory;
+        inputActions.Player.Inventory.canceled -= ToggleInventory;
 
         inputActions.Player.Interact.performed -= OnInteract;
         inputActions.Player.Interact.canceled -= OnInteract;
@@ -356,6 +366,11 @@ public class Player : MonoBehaviour
     {
         float previousThirst = elephantThirst;
 
+        if(thirst > 0)
+        {
+            // Add the item search in here and leave if none found
+        }
+
         elephantThirst += thirst;
         elephantThirst = Mathf.Clamp(elephantThirst, 0f, elephantMaxThirst);
 
@@ -444,6 +459,11 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void SetMoveSpeed(float speed)
+    {
+        moveSpeed = speed;
+    }
+
 
     // Handler Stats
     public float GetHandlerHunger()
@@ -490,6 +510,11 @@ public class Player : MonoBehaviour
     public void OnLook(InputAction.CallbackContext context)
     {
         lookInput = context.ReadValue<Vector2>();
+    }
+
+    private void ToggleInventory(InputAction.CallbackContext context)
+    {
+        UIManager.Instance.ToggleInventory(inventory);
     }
 
     public void OnInteract(InputAction.CallbackContext context)
