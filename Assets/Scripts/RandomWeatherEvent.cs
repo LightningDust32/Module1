@@ -69,6 +69,11 @@ public class RandomWeatherEvent : MonoBehaviour
         player.SetModifier(modifier[i]);
         player.SetWind(windSpeeds[i]);
 
+        if(temperatureUI == null)
+        {
+            return;
+        }
+
         if (openToElements)
         {
             int tempVariation = Random.Range(-3, 3);

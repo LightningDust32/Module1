@@ -137,12 +137,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1076769229429565353}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7635a3b2d02b2c045a1a89f2f866b270, type: 3}
+  m_Script: {fileID: 11500000, guid: 96c73612e2850454d811e859992de925, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Follower
   followDistance: 3
-  followSpeed: 78.18
-  stoppingDistance: 1
+  followSpeed: 20
+  stoppingDistance: 2
   gravity: -9
 --- !u!4 &5176938097365874320 stripped
 Transform:
