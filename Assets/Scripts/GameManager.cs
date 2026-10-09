@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -27,9 +28,7 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        gameOver = true;
-
-        Debug.Log("LOSS STATE: Gisgo starved.");
+        GameOver();
     }
 
     public void ElephantThirstReachedZero()
@@ -39,7 +38,7 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        Debug.Log("LOSS STATE: Gisgo thirst reached zero.");
+        GameOver();
     }
 
     public void ElephantFatigueReachedZero()
@@ -49,22 +48,9 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        gameOver = true;
-
-        Debug.Log("Gisgo Collapsed From Exhaustion.");
+        GameOver();
     }
 
-    public void ElephantTempReachedZero()
-    {
-        if (!activateLossStates)
-        {
-            return;
-        }
-
-        gameOver = true;
-
-        Debug.Log("LOSS STATE: Elephant temperature reached zero.");
-    }
 
     public void ElephantHealthReachedZero()
     {
@@ -73,9 +59,7 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        gameOver = true;
-
-        Debug.Log("LOSS STATE: Elephant health reached zero.");
+        GameOver();
     }
 
     public void HandlerHungerReachedZero()
@@ -85,9 +69,7 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        gameOver = true;
-
-        Debug.Log("LOSS STATE: Handler hunger reached zero.");
+        GameOver();
     }
 
     public void HandlerThirstReachedZero()
@@ -97,9 +79,7 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        gameOver = true;
-
-        Debug.Log("LOSS STATE: Handler thirst reached zero.");
+        GameOver();
     }
 
     public void HandlerFatigueReachedZero()
@@ -109,8 +89,27 @@ public class GameManager : MonoBehaviour
             return;
         }
 
+        GameOver();
+    }
+
+    public void GameOver()
+    {
+        if (gameOver)
+        {
+            return;
+        }
+
         gameOver = true;
 
-        Debug.Log("LOSS STATE: Handler fatigue reached zero.");
+        Debug.Log("Game Over");
+
+        Restart();
+    }
+
+    public void Restart()
+    {
+        Scene currentScene = SceneManager.GetActiveScene();
+
+        SceneManager.LoadScene(currentScene.buildIndex);
     }
 }

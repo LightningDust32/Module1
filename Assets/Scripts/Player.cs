@@ -35,14 +35,11 @@ public class Player : MonoBehaviour
     [SerializeField] private float elephantFatigue = 100f;
     [SerializeField] private float elephantHealth = 100f;
 
-    // [SerializeField] private float elephantTemperature = 100f;
-
     [Header("Elephant Maximums")]
     [SerializeField] private float elephantMaxHunger = 100f;
     [SerializeField] private float elephantMaxThirst = 100f;
     [SerializeField] private float elephantMaxFatigue = 100f;
     [SerializeField] private float elephantMaxHealth = 100f;
-    //  [SerializeField] private float elephantMaxTemperature = 100f;
 
     [Header("Handler Stats")]
     [SerializeField] private float handlerHunger = 100f;
@@ -86,6 +83,7 @@ public class Player : MonoBehaviour
     [SerializeField] private SphereCollider followerRadius;
 
     private bool followersCalled = true;
+    private int followerTotal = 0;
 
 
     private float distanceTravelled;
@@ -391,11 +389,13 @@ public class Player : MonoBehaviour
         {
             follower.StopFollowing();
         }
+
+        followerTotal = 0;
     }
 
     private void CallNearbyFollowers()
     {
-        // Bug found in testing where if the radius is overlapping when reactivated, it wont always retrigger the follower, this is the fix (doing it manually on all followers within range)
+        // Bug found in testing where if the radius is overlapping when reactivated, it wont retrigger the follower, this is the fix (doing it manually on all followers within range)
         if (followerRadius == null)
         {
             return;
@@ -414,6 +414,7 @@ public class Player : MonoBehaviour
             if (follower != null)
             {
                 follower.StartFollowing(transform);
+                followerTotal += 1;
             }
         }
     }
@@ -463,11 +464,6 @@ public class Player : MonoBehaviour
         return elephantHealth;
     }
 
-    /* public float GetElephantTemp()
-     {
-         return elephantTemperature;
-     }*/
-
     public float GetElephantMaxHunger()
     {
         return elephantMaxHunger;
@@ -488,11 +484,6 @@ public class Player : MonoBehaviour
         return elephantMaxHealth;
     }
 
-    /*  public float GetElephantMaxTemperature()
-      {
-        //  return elephantMaxTemperature;
-      }
-    */
     public void ChangeElephantThirst(float thirst)
     {
         float previousThirst = elephantThirst;
@@ -744,5 +735,6 @@ public class Player : MonoBehaviour
         }
 
         follower.StartFollowing(transform);
+        followerTotal += 1;
     }
 }
