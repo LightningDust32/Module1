@@ -46,8 +46,22 @@ public class Follower : MonoBehaviour
         isFollowing = true;
     }
 
+    public void StopFollowing()
+    {
+        isFollowing = false;
+
+        transform.SetParent(null, true);
+
+        Debug.Log($"{gameObject.name} has stopped following.");
+    }
+
     private void FollowPlayer()
     {
+        if(!isFollowing)
+        {
+            return;
+        }
+
         Vector3 targetPosition = player.position - player.forward * followDistance;
 
         Vector3 direction = targetPosition - transform.position;

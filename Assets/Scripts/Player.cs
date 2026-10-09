@@ -82,6 +82,11 @@ public class Player : MonoBehaviour
     [SerializeField] private float windStrength = 0.3f;
     [SerializeField] bool windActive = false;
 
+    [Header("Followers")]
+    [SerializeField] private SphereCollider followerRadius;
+
+    private bool followersCalled = true;
+
 
     private float distanceTravelled;
 
@@ -106,6 +111,8 @@ public class Player : MonoBehaviour
         inputActions = new InputSystem_Actions();
 
         inventory = GetComponent<Inventory>();
+
+        followerRadius = GetComponent<SphereCollider>();
     }
 
     private void OnEnable()
@@ -122,6 +129,8 @@ public class Player : MonoBehaviour
         inputActions.Player.Inventory.canceled -= ToggleInventory;
 
         inputActions.Player.Zoom.performed += OnZoom;
+
+        inputActions.Player.Call.performed += OnCall;
 
         inputActions.Player.Interact.performed += OnInteract;
         inputActions.Player.Interact.canceled += OnInteract;
@@ -151,6 +160,8 @@ public class Player : MonoBehaviour
         inputActions.Player.Inventory.canceled -= ToggleInventory;
 
         inputActions.Player.Zoom.performed -= OnZoom;
+
+        inputActions.Player.Call.performed -= OnCall;
 
         inputActions.Player.Interact.performed -= OnInteract;
         inputActions.Player.Interact.canceled -= OnInteract;
@@ -372,6 +383,41 @@ public class Player : MonoBehaviour
         currentMinute = 0;
     }
 
+    private void StopFollowingFollowers()
+    {
+        Follower[] followers = FindObjectsByType<Follower>();
+
+        foreach (Follower follower in followers)
+        {
+            follower.StopFollowing();
+        }
+    }
+
+    private void CallNearbyFollowers()
+    {
+        // Bug found in testing where if the radius is overlapping when reactivated, it wont always retrigger the follower, this is the fix (doing it manually on all followers within range)
+        if (followerRadius == null)
+        {
+            return;
+        }
+
+        Vector3 worldCenter = followerRadius.transform.TransformPoint(followerRadius.center);
+
+        float worldRadius = followerRadius.radius * Mathf.Max(followerRadius.transform.lossyScale.x, followerRadius.transform.lossyScale.y, followerRadius.transform.lossyScale.z);
+
+        Collider[] nearbyColliders = Physics.OverlapSphere(worldCenter, worldRadius, Physics.AllLayers, QueryTriggerInteraction.Ignore);
+
+        foreach (Collider nearbyCollider in nearbyColliders)
+        {
+            Follower follower = nearbyCollider.GetComponentInParent<Follower>();
+
+            if (follower != null)
+            {
+                follower.StartFollowing(transform);
+            }
+        }
+    }
+
     public string GetTimeString()
     {
         return $"{currentHour:00}:{currentMinute:00}";
@@ -571,34 +617,7 @@ public class Player : MonoBehaviour
             }
         }
     }
-    /*
-    public void ChangeElephantTemp(float temp)
-    {
-        float previousTemp = elephantTemperature;
-
-        if(temp < 0)
-        {
-            temp *= tempModifier;
-        }
-
-        elephantTemperature += temp;
-        elephantTemperature = Mathf.Clamp(elephantTemperature, 0f, elephantMaxTemperature);
-
-        if( previousTemp > 0f && elephantTemperature <= 0f && !elephantFroze)
-        {
-            elephantFroze = true;
-
-            if(GameManager.instance != null)
-            {
-                GameManager.instance.ElephantTempReachedZero();
-            }
-
-            if( elephantTemperature > 0f)
-            {
-                elephantFroze = false;
-            }
-        }
-    } */
+    
 
     public void SetMoveSpeed(float speedMod)
     {
@@ -667,6 +686,32 @@ public class Player : MonoBehaviour
     public void OnZoom(InputAction.CallbackContext context)
     {
         zoomInput = context.ReadValue<Vector2>();
+    }
+
+    public void OnCall(InputAction.CallbackContext context)
+    {
+        if (!context.performed)
+        {
+            return;
+        }
+
+        followersCalled = !followersCalled;
+
+        if (followerRadius != null)
+        {
+            followerRadius.enabled = followersCalled;
+        }
+
+        if (followersCalled)
+        {
+            CallNearbyFollowers();
+            Debug.Log("Followers called. Follow the player.");
+        }
+        else
+        {
+            StopFollowingFollowers();
+            Debug.Log("Followers halted.");
+        }
     }
 
     public void OnInteract(InputAction.CallbackContext context)

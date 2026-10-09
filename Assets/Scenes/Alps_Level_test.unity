@@ -16203,6 +16203,7 @@ MonoBehaviour:
   windDirection: {x: 0, y: 0, z: 0}
   windStrength: 0.3
   windActive: 0
+  followerRadius: {fileID: 0}
 --- !u!143 &2068752820
 CharacterController:
   m_ObjectHideFlags: 0
