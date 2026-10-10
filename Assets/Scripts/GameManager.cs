@@ -28,7 +28,7 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        GameOver();
+        // Logic for part of health calculation goes here
     }
 
     public void ElephantThirstReachedZero()
@@ -38,7 +38,7 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        GameOver();
+        // Logic for part of health calculation goes here
     }
 
     public void ElephantFatigueReachedZero()
@@ -48,7 +48,7 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        GameOver();
+        // Logic for part of health calculation goes here
     }
 
 
@@ -111,5 +111,10 @@ public class GameManager : MonoBehaviour
         Scene currentScene = SceneManager.GetActiveScene();
 
         SceneManager.LoadScene(currentScene.buildIndex);
+    }
+
+    public void Win()
+    {
+        // Add victory logic to trigger when player reaches end
     }
 }
