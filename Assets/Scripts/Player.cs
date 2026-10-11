@@ -102,6 +102,8 @@ public class Player : MonoBehaviour
     private float tempModifier;
     private float speedModifier;
 
+    private IInteraction currentInteraction;
+
     private void Awake()
     {
         controller = GetComponent<CharacterController>();
@@ -131,7 +133,6 @@ public class Player : MonoBehaviour
         inputActions.Player.Call.performed += OnCall;
 
         inputActions.Player.Interact.performed += OnInteract;
-        inputActions.Player.Interact.canceled += OnInteract;
 
         inputActions.Player.Crouch.performed += OnCrouch;
         inputActions.Player.Crouch.canceled += OnCrouch;
@@ -162,7 +163,6 @@ public class Player : MonoBehaviour
         inputActions.Player.Call.performed -= OnCall;
 
         inputActions.Player.Interact.performed -= OnInteract;
-        inputActions.Player.Interact.canceled -= OnInteract;
 
         inputActions.Player.Crouch.performed -= OnCrouch;
         inputActions.Player.Crouch.canceled -= OnCrouch;
@@ -621,6 +621,11 @@ public class Player : MonoBehaviour
         Debug.Log(tempModifier);
     }
 
+    public void SetCurrentInteraction(IInteraction interaction)
+    {
+        currentInteraction = interaction;
+    }
+
 
     // Handler Stats
     public float GetHandlerHunger()
@@ -707,7 +712,18 @@ public class Player : MonoBehaviour
 
     public void OnInteract(InputAction.CallbackContext context)
     {
-        // Stub
+        if (!context.performed)
+        {
+            return;
+        }
+
+        if (currentInteraction == null)
+        {
+            Debug.Log("Nothing nearby to interact with.");
+            return;
+        }
+
+        currentInteraction.Interact();
     }
 
     public void OnCrouch(InputAction.CallbackContext context)
@@ -729,12 +745,32 @@ public class Player : MonoBehaviour
     {
         Follower follower = other.GetComponent<Follower>();
 
-        if(follower == null)
+        InteractionBase interaction = other.GetComponent<InteractionBase>();
+
+        if (follower != null)
         {
-            return;
+            Debug.Log("Follower trigger");
+            follower.StartFollowing(transform);
+            followerTotal += 1;
         }
 
-        follower.StartFollowing(transform);
-        followerTotal += 1;
+        if (interaction != null)
+        {
+            Debug.Log("Interaction trigger: " + interaction.gameObject.name);
+            SetCurrentInteraction(interaction);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        InteractionBase interaction = other.GetComponentInParent<InteractionBase>();
+
+        if (interaction != null)
+        {
+            if (currentInteraction == interaction)
+            {
+                SetCurrentInteraction(null);
+            }
+        }
     }
 }
