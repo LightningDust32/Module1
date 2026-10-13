@@ -10,6 +10,7 @@ public class Player : MonoBehaviour
 
     [Header("References")]
     [SerializeField] private Transform cameraTransform;
+    private RandomWeatherEvent randomWeatherEvent;
 
     [Header("Movement")]
     [SerializeField] private float moveSpeed = 5f;
@@ -40,6 +41,12 @@ public class Player : MonoBehaviour
     [SerializeField] private float elephantMaxThirst = 100f;
     [SerializeField] private float elephantMaxFatigue = 100f;
     [SerializeField] private float elephantMaxHealth = 100f;
+
+    [Header("Elephant Damages")]
+    [SerializeField] private float hungerDamage = 0.5f;
+    [SerializeField] private float thirstDamage = 1f;
+    [SerializeField] private float fatigueDamage = 0.5f;
+    [SerializeField] private float temperatureDamage = 0.5f;
 
     [Header("Handler Stats")]
     [SerializeField] private float handlerHunger = 100f;
@@ -113,6 +120,9 @@ public class Player : MonoBehaviour
         inventory = GetComponent<Inventory>();
 
         followerRadius = GetComponent<SphereCollider>();
+
+        randomWeatherEvent = FindAnyObjectByType<RandomWeatherEvent>();
+
     }
 
     private void OnEnable()
@@ -184,6 +194,8 @@ public class Player : MonoBehaviour
     {
         Move();
         UpdateCamera();
+        UpdateHealth();
+        RegenerateHealth();
     }
 
     public void SetWind(float strength)
@@ -267,6 +279,58 @@ public class Player : MonoBehaviour
         distanceTravelled += horizontalMovement.magnitude;
 
         CheckTravelEvent();
+    }
+
+
+    void UpdateHealth()
+    {
+        float damagePerSecond = 0f;
+
+        // Add damage if stats are below a certain threshold
+        // Check hunger
+        if (elephantHunger < 25f)
+        {
+            damagePerSecond += hungerDamage;
+        }
+
+        // Check thirst
+        if (elephantThirst < 25f)
+        {
+            damagePerSecond += thirstDamage;
+        }
+
+        // Check fatigue
+        if (elephantFatigue < 25f)
+        {
+            damagePerSecond += fatigueDamage;
+        }
+
+
+
+        // Check temperature
+        if (randomWeatherEvent.currentTemp < -5f)
+        {
+            damagePerSecond += temperatureDamage;
+        }
+
+        // Update the health variable
+        elephantHealth -= damagePerSecond * Time.deltaTime;
+
+
+        // Clamp health between 0 and 100
+        elephantHealth = Mathf.Clamp(elephantHealth, 0f, 100f);
+    }
+
+    void RegenerateHealth()
+    {
+        bool idealConditions = elephantHunger >= 25f && elephantThirst >= 25f && elephantFatigue >= 25f && randomWeatherEvent.currentTemp >= -5f;
+
+        if (idealConditions)
+        {
+            elephantHealth += 0.5f * Time.deltaTime;
+
+            elephantHealth = Mathf.Clamp(elephantHealth, 0f, 100f);
+        }
     }
 
     private void CheckTravelEvent()

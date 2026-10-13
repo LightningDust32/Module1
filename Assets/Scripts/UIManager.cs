@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Runtime.CompilerServices;
 
 public class UIManager : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Image thirstFill;
     [SerializeField] private Image temperatureFill;
     [SerializeField] private Image fatigueFill;
+    [SerializeField] private Image healthFill;
 
     [Header("Event Display")]
     [SerializeField] private TMP_Text eventText;
@@ -71,6 +73,8 @@ public class UIManager : MonoBehaviour
       //  temperatureFill.fillAmount = player.GetElephantTemp() / player.GetElephantMaxTemperature();
 
         fatigueFill.fillAmount = player.GetElephantFatigue() / player.GetElephantMaxFatigue();
+
+        healthFill.fillAmount = player.GetElephantHealth() / player.GetElephantMaxHealth();
 
         timeText.text = player.GetTimeString();
         dayText.text = "Day: " + player.GetDay();

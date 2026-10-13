@@ -798,6 +798,10 @@ MonoBehaviour:
   elephantMaxThirst: 100
   elephantMaxFatigue: 100
   elephantMaxHealth: 100
+  hungerDamage: 0.5
+  thirstDamage: 1
+  fatigueDamage: 0.5
+  temperatureDamage: 0.5
   handlerHunger: 60
   handlerThirst: 100
   handlerFatigue: 100
@@ -813,6 +817,7 @@ MonoBehaviour:
   windDirection: {x: 0, y: 0, z: 0}
   windStrength: 0.3
   windActive: 0
+  followerRadius: {fileID: 0}
 --- !u!143 &232604134
 CharacterController:
   m_ObjectHideFlags: 0
@@ -4186,7 +4191,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 65.8, y: -11.300003}
+  m_AnchoredPosition: {x: 65.79999, y: -11.299988}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1712306775
@@ -4443,6 +4448,7 @@ MonoBehaviour:
   thirstFill: {fileID: 1947201677}
   temperatureFill: {fileID: 0}
   fatigueFill: {fileID: 2025305758}
+  healthFill: {fileID: 1841441269}
   eventText: {fileID: 1970821397}
   timeText: {fileID: 1983946430}
   dayText: {fileID: 162480539}

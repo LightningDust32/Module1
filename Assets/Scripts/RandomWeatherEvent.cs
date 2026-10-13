@@ -34,7 +34,7 @@ public class RandomWeatherEvent : MonoBehaviour
 
 
     [SerializeField] float startTemp = 10f;
-    [SerializeField] float currentTemp;
+    [SerializeField] public float currentTemp;
     [SerializeField] float minTemp = -20f;
     [SerializeField] float maxTemp = 20f;
     public TMP_Text temperatureUI;
