@@ -57,15 +57,8 @@ public class Player : MonoBehaviour
     [SerializeField] private float handlerMaxThirst = 75f;
     [SerializeField] private float handlerMaxFatigue = 75f;
 
-    private bool elephantStarved;
-    private bool elephantThirstZeroTriggered;
-    private bool elephantFatigueZeroTriggered;
-    private bool elephantHealthZeroTriggered;
-    private bool elephantFroze;
+    private bool elephantDied;
 
-    private bool handlerHungerZeroTriggered;
-    private bool handlerThirstZeroTriggered;
-    private bool handlerFatigueZeroTriggered;
 
     [Header("Time")]
     [SerializeField] private int currentHour = 6;
@@ -81,12 +74,13 @@ public class Player : MonoBehaviour
     [SerializeField] private GameEvent walkEvent;
 
     [Header("Wind")]
-    [SerializeField] Vector3 windDirection;
+    [SerializeField] public Vector3 windDirection;
     [SerializeField] private float windStrength = 0.3f;
     [SerializeField] bool windActive = false;
 
     [Header("Followers")]
     [SerializeField] private SphereCollider followerRadius;
+    [SerializeField] private GameObject trunk;
 
     private bool followersCalled = true;
     private int followerTotal = 0;
@@ -143,6 +137,8 @@ public class Player : MonoBehaviour
 
         inputActions.Player.Interact.performed += OnInteract;
 
+        inputActions.Player.Pause.performed += OnPause;
+
         inputActions.Player.Crouch.performed += OnCrouch;
         inputActions.Player.Crouch.canceled += OnCrouch;
 
@@ -172,6 +168,8 @@ public class Player : MonoBehaviour
         inputActions.Player.Call.performed -= OnCall;
 
         inputActions.Player.Interact.performed -= OnInteract;
+
+        inputActions.Player.Pause.performed += OnPause;
 
         inputActions.Player.Crouch.performed -= OnCrouch;
         inputActions.Player.Crouch.canceled -= OnCrouch;
@@ -472,6 +470,8 @@ public class Player : MonoBehaviour
 
         Collider[] nearbyColliders = Physics.OverlapSphere(worldCenter, worldRadius, Physics.AllLayers, QueryTriggerInteraction.Ignore);
 
+        //trunk.transform.rotation -= new Quaternion();
+
         foreach (Collider nearbyCollider in nearbyColliders)
         {
             Follower follower = nearbyCollider.GetComponentInParent<Follower>();
@@ -576,21 +576,6 @@ public class Player : MonoBehaviour
 
         elephantThirst += thirst;
         elephantThirst = Mathf.Clamp(elephantThirst, 0f, elephantMaxThirst);
-
-        if (previousThirst > 0f && elephantThirst <= 0f && !elephantThirstZeroTriggered)
-        {
-            elephantThirstZeroTriggered = true;
-
-            if (GameManager.instance != null)
-            {
-                GameManager.instance.ElephantThirstReachedZero();
-            }
-
-            if (elephantThirst > 0f)
-            {
-                elephantThirstZeroTriggered = false;
-            }
-        }
     }
 
     public void ChangeElephantHunger(float hunger)
@@ -615,21 +600,6 @@ public class Player : MonoBehaviour
 
         elephantHunger += hunger;
         elephantHunger = Mathf.Clamp(elephantHunger, 0f, elephantMaxHunger);
-
-        if(previousHunger > 0f && elephantHunger <= 0f && !elephantStarved)
-        {
-            elephantStarved = true;
-
-            if(GameManager.instance != null)
-            {
-                GameManager.instance.ElephantHungerReachedZero();
-            }
-
-            if(elephantHunger > 0f)
-            {
-                elephantStarved = false;
-            }
-        }
     }
 
     public void ChangeElephantFatigue(float fatigue)
@@ -638,21 +608,6 @@ public class Player : MonoBehaviour
 
         elephantFatigue += fatigue;
         elephantFatigue = Mathf.Clamp(elephantFatigue, 0f, elephantMaxFatigue);
-
-        if(previousFatigue > 0f && elephantFatigue <= 0f && !elephantFatigueZeroTriggered)
-        {
-            elephantFatigueZeroTriggered = true;
-
-            if(GameManager.instance != null)
-            {
-                GameManager.instance.ElephantFatigueReachedZero();
-            }
-
-            if(elephantFatigue > 0f)
-            {
-                elephantFatigueZeroTriggered = false;
-            }
-        }
     }
 
 
@@ -663,18 +618,18 @@ public class Player : MonoBehaviour
         elephantHealth += health;
         elephantHealth = Mathf.Clamp(elephantHealth, 0f, elephantMaxHealth);
 
-        if (previousHealth > 0f && elephantHealth <= 0f && !elephantHealthZeroTriggered)
+        if (previousHealth > 0f && elephantHealth <= 0f && !elephantDied)
         {
-            elephantHealthZeroTriggered = true;
+            elephantDied = true;
 
             if (GameManager.instance != null)
             {
-                GameManager.instance.ElephantHealthReachedZero();
+                GameManager.instance.ElephantDied();
             }
 
             if (elephantHealth > 0f)
             {
-                elephantHealthZeroTriggered = false;
+                elephantDied = false;
             }
         }
     }
@@ -711,6 +666,11 @@ public class Player : MonoBehaviour
     public float GetHandlerFatigue()
     {
         return handlerFatigue;
+    }
+
+    public int GetCurrentTime()
+    {
+        return currentHour;
     }
 
     public void ChangeHandlerHunger(float hunger)
@@ -794,6 +754,16 @@ public class Player : MonoBehaviour
         }
 
         currentInteraction.Interact();
+    }
+
+    public void OnPause(InputAction.CallbackContext context)
+    {
+        if (!context.performed)
+        {
+            return;
+        }
+
+        UIManager.Instance.Pause();
     }
 
     public void OnCrouch(InputAction.CallbackContext context)
