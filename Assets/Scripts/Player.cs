@@ -470,7 +470,7 @@ public class Player : MonoBehaviour
 
         Collider[] nearbyColliders = Physics.OverlapSphere(worldCenter, worldRadius, Physics.AllLayers, QueryTriggerInteraction.Ignore);
 
-        trunk.transform.position -= new Vector3(50, 0, 0);
+        //trunk.transform.rotation -= new Quaternion();
 
         foreach (Collider nearbyCollider in nearbyColliders)
         {

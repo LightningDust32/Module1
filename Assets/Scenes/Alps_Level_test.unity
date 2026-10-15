@@ -22004,7 +22004,7 @@ MonoBehaviour:
   windStrength: 0.3
   windActive: 0
   followerRadius: {fileID: 0}
-  trunk: {fileID: 0}
+  trunk: {fileID: 162148149}
   windArrow: {fileID: 913489106}
 --- !u!143 &2068752820
 CharacterController:
