@@ -74,7 +74,7 @@ public class Player : MonoBehaviour
     [SerializeField] private GameEvent walkEvent;
 
     [Header("Wind")]
-    [SerializeField] Vector3 windDirection;
+    [SerializeField] public Vector3 windDirection;
     [SerializeField] private float windStrength = 0.3f;
     [SerializeField] bool windActive = false;
 
@@ -666,6 +666,11 @@ public class Player : MonoBehaviour
     public float GetHandlerFatigue()
     {
         return handlerFatigue;
+    }
+
+    public int GetCurrentTime()
+    {
+        return currentHour;
     }
 
     public void ChangeHandlerHunger(float hunger)
