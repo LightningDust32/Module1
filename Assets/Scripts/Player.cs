@@ -1,7 +1,6 @@
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.WSA;
 
 
 [RequireComponent(typeof(CharacterController))]
