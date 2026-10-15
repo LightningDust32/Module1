@@ -549,6 +549,11 @@ public class Player : MonoBehaviour
         return elephantMaxHealth;
     }
 
+    public int GetFollowerCount()
+    {
+        return followerTotal;
+    }
+
     public void ChangeElephantThirst(float thirst)
     {
         float previousThirst = elephantThirst;

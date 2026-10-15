@@ -13,7 +13,9 @@ public class Carriage : InteractionBase
 
         if(soldiers != null)
         {
-            Instantiate(soldiers);
+            GameObject soldier = Instantiate(soldiers, transform.position, transform.rotation);
+
+            soldier.transform.SetParent(null);
         }
 
         Destroy(gameObject);

@@ -15,10 +15,11 @@ MonoBehaviour:
   eventName: Eat Food
   eventDescription: 
   timeMinutes: 20
-  elephantHunger: 20
-  elephantThirst: 0
-  elephantFatigue: -10
+  elephantHunger: 40
+  elephantThirst: -5
+  elephantFatigue: 30
   elephantTemperature: 0
   handlerHunger: 10
   handlerThirst: 0
   handlerFatigue: 0
+  singleUse: 0

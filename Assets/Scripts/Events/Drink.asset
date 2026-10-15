@@ -16,9 +16,10 @@ MonoBehaviour:
   eventDescription: 
   timeMinutes: 10
   elephantHunger: -10
-  elephantThirst: 20
-  elephantFatigue: -5
+  elephantThirst: 40
+  elephantFatigue: 30
   elephantTemperature: 0
   handlerHunger: -5
   handlerThirst: 10
   handlerFatigue: 0
+  singleUse: 0
