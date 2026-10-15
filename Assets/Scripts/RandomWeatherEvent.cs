@@ -78,6 +78,7 @@ public class RandomWeatherEvent : MonoBehaviour
         {
             int tempVariation = Random.Range(-3, 3);
             int newTemp = temperatures[i] + tempVariation;
+            currentTemp = newTemp;  
             temperatureUI.text = newTemp + "°c";
         }
     }
