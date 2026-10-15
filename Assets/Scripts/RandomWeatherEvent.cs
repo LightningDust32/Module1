@@ -27,6 +27,8 @@ public class RandomWeatherEvent : MonoBehaviour
     float[] modifier = { 1f, 1f, 1.2f, 1.5f, 2f, 2.2f };
     float[] windSpeeds = { 1f, 2f, 3f, 4f, 5f, 6f };
     int[] temperatures = { 5, 1, -5, -8, -15, -16 };
+    float[] waitUntilNextWeatherChange = { 30, 30, 30, 25, 20, 10 };
+    float waitUntilChange;
 
     [SerializeField] Player player;
     public TMP_Text weatherTypeUI;
@@ -68,6 +70,7 @@ public class RandomWeatherEvent : MonoBehaviour
         player.SetMoveSpeed(moveSpeeds[i]);
         player.SetModifier(modifier[i]);
         player.SetWind(windSpeeds[i]);
+        waitUntilChange = waitUntilNextWeatherChange[i];
 
         if(temperatureUI == null)
         {
@@ -98,7 +101,7 @@ public class RandomWeatherEvent : MonoBehaviour
 
     IEnumerator Wait10Seconds()
     {
-        yield return new WaitForSeconds(10);
+        yield return new WaitForSeconds(waitUntilChange);
         pickRandomEvent();
         StartCoroutine(Wait10Seconds());
     }

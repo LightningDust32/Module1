@@ -208,13 +208,13 @@ public class Player : MonoBehaviour
         windActive = true;
         windStrength = strength;
         windDirection = new Vector3 ( Random.Range(-1f, 1f), 0f, Random.Range(-1f, 1f) );
-     //   float angle = Mathf.Atan2(windDirection.x, windDirection.z) * Mathf.Rad2Deg;
+        float angle = Mathf.Atan2(windDirection.x, windDirection.z) * Mathf.Rad2Deg;
 
-     //   windArrow.transform.rotation = Quaternion.Euler(0f, 0f, -angle + 90f);
+        windArrow.transform.rotation = Quaternion.Euler(0f, 0f, -angle + 90f);
     }
 
 
-  //  public GameObject windArrow;
+    public GameObject windArrow;
     private void Move()
     {
         // A / D turn the elephant
@@ -684,7 +684,7 @@ public class Player : MonoBehaviour
     public void SetModifier(float modifier)
     {
         tempModifier = modifier;
-        Debug.Log(tempModifier);
+
     }
 
     public void SetCurrentInteraction(IInteraction interaction)
