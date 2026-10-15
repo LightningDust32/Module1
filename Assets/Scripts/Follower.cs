@@ -51,8 +51,6 @@ public class Follower : MonoBehaviour
         isFollowing = false;
 
         transform.SetParent(null, true);
-
-        Debug.Log($"{gameObject.name} has stopped following.");
     }
 
     private void FollowPlayer()
