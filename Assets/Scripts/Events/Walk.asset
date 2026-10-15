@@ -15,10 +15,11 @@ MonoBehaviour:
   eventName: Walk
   eventDescription: 
   timeMinutes: 30
-  elephantHunger: -10
-  elephantThirst: -10
-  elephantFatigue: -10
-  elephantTemperature: -1
-  handlerHunger: 10
+  elephantHunger: -1
+  elephantThirst: -1
+  elephantFatigue: -1
+  elephantTemperature: 0
+  handlerHunger: 0
   handlerThirst: 0
   handlerFatigue: 0
+  singleUse: 0

@@ -21,68 +21,8 @@ public class GameManager : MonoBehaviour
         instance = this;
     }
 
-    public void ElephantHungerReachedZero()
-    {
-        if (!activateLossStates)
-        {
-            return;
-        }
 
-        // Logic for part of health calculation goes here
-    }
-
-    public void ElephantThirstReachedZero()
-    {
-        if (!activateLossStates)
-        {
-            return;
-        }
-
-        // Logic for part of health calculation goes here
-    }
-
-    public void ElephantFatigueReachedZero()
-    {
-        if (!activateLossStates)
-        {
-            return;
-        }
-
-        // Logic for part of health calculation goes here
-    }
-
-
-    public void ElephantHealthReachedZero()
-    {
-        if (!activateLossStates)
-        {
-            return;
-        }
-
-        GameOver();
-    }
-
-    public void HandlerHungerReachedZero()
-    {
-        if (!activateLossStates)
-        {
-            return;
-        }
-
-        GameOver();
-    }
-
-    public void HandlerThirstReachedZero()
-    {
-        if (!activateLossStates)
-        {
-            return;
-        }
-
-        GameOver();
-    }
-
-    public void HandlerFatigueReachedZero()
+    public void ElephantDied()
     {
         if (!activateLossStates)
         {
@@ -116,5 +56,10 @@ public class GameManager : MonoBehaviour
     public void Win()
     {
         // Add victory logic to trigger when player reaches end
+    }
+
+    public void Quit()
+    {
+        Application.Quit();
     }
 }

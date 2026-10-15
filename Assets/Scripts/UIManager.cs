@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using System.Runtime.CompilerServices;
 
 public class UIManager : MonoBehaviour
 {
@@ -30,6 +29,9 @@ public class UIManager : MonoBehaviour
     [Header("Inventory")]
     [SerializeField] private GameObject inventoryScreen;
     [SerializeField] private InventorySlotUI[] slots;
+
+    [Header("Pause Menu")]
+    [SerializeField] private GameObject pauseMenu;
 
     private EventTrigger currentEventTrigger;
 
@@ -165,6 +167,20 @@ public class UIManager : MonoBehaviour
         for (int i = 0; i < inventory.items.Count && i < slots.Length; i++)
         {
             slots[i].SetItem(inventory.items[i]);
+        }
+    }
+
+    public void Pause()
+    {
+        if(Time.timeScale != 0)
+        {
+            Time.timeScale = 0;
+            pauseMenu.SetActive(true);
+        }
+        else
+        {
+            Time.timeScale = 1;
+            pauseMenu.SetActive(false);
         }
     }
 }
