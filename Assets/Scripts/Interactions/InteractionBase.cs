@@ -6,6 +6,7 @@ public abstract class InteractionBase : MonoBehaviour, IInteraction
     [Header("Interaction")]
     [SerializeField] private string interactionName = "Interact";
     [SerializeField] private string interactionDescription = "";
+    [SerializeField] protected int followerLimit = 5;
 
     [Header("Trigger")]
     [SerializeField] private bool playerInRange;
@@ -13,6 +14,8 @@ public abstract class InteractionBase : MonoBehaviour, IInteraction
     public string InteractionName => interactionName;
     public string InteractionDescription => interactionDescription;
     public bool PlayerInRange => playerInRange;
+
+    protected Player player;
 
     protected virtual void Awake()
     {
@@ -22,6 +25,8 @@ public abstract class InteractionBase : MonoBehaviour, IInteraction
         {
             Debug.LogWarning($"{name}: Interaction collider should have Is Trigger enabled.", this);
         }
+
+        player = FindAnyObjectByType<Player>();
     }
 
     protected virtual void OnTriggerEnter(Collider other)

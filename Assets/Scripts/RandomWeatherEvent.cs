@@ -13,7 +13,7 @@ enum Weather
     snowShower, // decently lower temperature / slight effect to speed
     generalSnowstorm, // significantly lower temperature / decent effect to speed
     blizzard, // major lower temperature / significant effect to speed
-    iceStorm, // major lower temperature / major effect to speed
+    blizzardExtremeAvalancheRisk, // major lower temperature / major effect to speed
     none,
 }
 
@@ -29,6 +29,10 @@ public class RandomWeatherEvent : MonoBehaviour
     int[] temperatures = { 5, 1, -5, -8, -15, -16 };
     float[] waitUntilNextWeatherChange = { 30, 30, 30, 25, 20, 10 };
     float waitUntilChange;
+    float[] avalancheRisk = { 1f, 3f, 5f, 20f, 30f, 50f };
+
+
+    public float avalancheRiskPercent;
 
     [SerializeField] Player player;
     public TMP_Text weatherTypeUI;
@@ -71,6 +75,7 @@ public class RandomWeatherEvent : MonoBehaviour
         player.SetModifier(modifier[i]);
         player.SetWind(windSpeeds[i]);
         waitUntilChange = waitUntilNextWeatherChange[i];
+        avalancheRiskPercent = avalancheRisk[i];
 
         if(temperatureUI == null)
         {
@@ -101,7 +106,8 @@ public class RandomWeatherEvent : MonoBehaviour
 
     IEnumerator Wait10Seconds()
     {
-        yield return new WaitForSeconds(waitUntilChange);
+        // yield return new WaitForSeconds(waitUntilChange);
+        yield return new WaitForSeconds(1);
         pickRandomEvent();
         StartCoroutine(Wait10Seconds());
     }
