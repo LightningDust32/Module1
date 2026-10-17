@@ -35,6 +35,7 @@ public class RandomWeatherEvent : MonoBehaviour
     float[] waitUntilNextWeatherChange = { 30, 30, 30, 25, 20, 10 };
     float waitUntilChange;
     float[] avalancheRisk = { 1f, 3f, 5f, 20f, 30f, 50f };
+    float[] fogIntensity = { 0f, 0.002f, 0.003f, 0.005f, 0.007f, 0.01f };
 
 
     public float avalancheRiskPercent;
@@ -115,36 +116,30 @@ public class RandomWeatherEvent : MonoBehaviour
         }
     }
 
-    public void SetFog(int i)
+    public void SetFog(int intensity)
     {
-        RenderSettings.fog = true;
         RenderSettings.fogColor = Color.white;
-        switch(i)
+        switch(intensity)
         {
             case 0:
-                RenderSettings.fogDensity = 0.001f;
+                RenderSettings.fogDensity = fogIntensity[intensity];
                 break;
             case 1:
-                RenderSettings.fogDensity = 0.002f;
+                RenderSettings.fogDensity = fogIntensity[intensity];
                 break;
             case 2:
-                RenderSettings.fogDensity = 0.003f;
+                RenderSettings.fogDensity = fogIntensity[intensity];
                 break;
             case 3:
-                RenderSettings.fogDensity = 0.004f;
+                RenderSettings.fogDensity = fogIntensity[intensity];
                 break;
             case 4:
-                RenderSettings.fogDensity = 0.005f;
+                RenderSettings.fogDensity = fogIntensity[intensity];
                 break;
             case 5:
-                RenderSettings.fogDensity = 0.006f;
+                RenderSettings.fogDensity = fogIntensity[intensity];
                 break;
         }
-    }
-
-    private void Update()
-    {
-        
     }
 
     private void Start()
