@@ -29,8 +29,8 @@ public class RandomWeatherEvent : MonoBehaviour
 
     string[] events = { "calm", "lightSnowfall", "snowShower", "generalSnowstorm", "blizzard", "blizzard + Extreme avalanche risk" };
     float[] moveSpeeds = { 1f, 1f, 0.8f, 0.7f, 0.5f, 0.3f};
-    float[] modifier = { 1f, 1f, 1.2f, 1.5f, 2f, 2.2f };
-    float[] windSpeeds = { 1f, 2f, 3f, 4f, 5f, 6f };
+    float[] modifier = { 1f, 1f, 1.1f, 1.2f, 1.3f, 1.4f };
+    float[] windSpeeds = { 1f, 1.1f, 1.2f, 1.4f 1.5f, 1.6f };
     int[] temperatures = { 5, 1, -5, -8, -15, -16 };
     float[] waitUntilNextWeatherChange = { 30, 30, 30, 25, 20, 10 };
     float waitUntilChange;
