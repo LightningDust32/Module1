@@ -104,6 +104,8 @@ public class Player : MonoBehaviour
 
     private IInteraction currentInteraction;
 
+    Animator animator;
+
     private void Awake()
     {
         controller = GetComponent<CharacterController>();
@@ -115,6 +117,8 @@ public class Player : MonoBehaviour
         followerRadius = GetComponent<SphereCollider>();
 
         randomWeatherEvent = FindAnyObjectByType<RandomWeatherEvent>();
+
+        animator = GetComponent<Animator>();
 
     }
 
@@ -454,6 +458,13 @@ public class Player : MonoBehaviour
         }
 
         followerTotal = 0;
+
+        followersCalled = false;
+
+        if(animator != null)
+        {
+            animator.SetBool("Call", followersCalled);
+        }
     }
 
     private void CallNearbyFollowers()
@@ -470,7 +481,12 @@ public class Player : MonoBehaviour
 
         Collider[] nearbyColliders = Physics.OverlapSphere(worldCenter, worldRadius, Physics.AllLayers, QueryTriggerInteraction.Ignore);
 
-        //trunk.transform.rotation -= new Quaternion();
+        followersCalled = true;
+
+        if (animator != null)
+        {
+            animator.SetBool("Call", followersCalled);
+        }
 
         foreach (Collider nearbyCollider in nearbyColliders)
         {
