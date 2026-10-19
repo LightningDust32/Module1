@@ -67,5 +67,5 @@
         "*.sln": "*.csproj",
         "*.slnx": "*.csproj"
     },
-    "dotnet.defaultSolution": "Github uni project hannibal.slnx"
+    "dotnet.defaultSolution": "University project folder.slnx"
 }
