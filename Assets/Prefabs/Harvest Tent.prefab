@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2585263462260716828}
   - component: {fileID: 7740551913986022484}
-  - component: {fileID: 8666833369341754694}
+  - component: {fileID: -5741719589855632853}
   m_Layer: 0
   m_Name: Harvest Tent
   m_TagString: Untagged
@@ -55,7 +55,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &8666833369341754694
+--- !u!114 &-5741719589855632853
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -64,13 +64,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 301794892543429183}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b91bde2e5f78b641aa85ca622db70ae, type: 3}
+  m_Script: {fileID: 11500000, guid: 1985231ed561035479ad83ea90e2a1af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Harvest
   interactionName: Harvest
-  interactionDescription: Send followers to harvest food
-  followerLimit: 3
-  playerInRange: 1
+  interactionDescription: 
+  followerLimit: 5
+  playerInRange: 0
   tree: {fileID: 8898946431945735046, guid: f54e63ef1c5789746a31bbbf2065ff34, type: 3}
 --- !u!1001 &8211197911548816280
 PrefabInstance:
