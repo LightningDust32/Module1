@@ -11,10 +11,10 @@ public class UIManager : MonoBehaviour
     [SerializeField] private EventManager eventManager;
 
     [Header("Elephant Stats")]
-    [SerializeField] private Image hungerFill;
-    [SerializeField] private Image thirstFill;
-    [SerializeField] private Image temperatureFill;
-    [SerializeField] private Image fatigueFill;
+  //  [SerializeField] private Image hungerFill;
+ //   [SerializeField] private Image thirstFill;
+ //   [SerializeField] private Image temperatureFill;
+ //   [SerializeField] private Image fatigueFill;
     [SerializeField] private Image healthFill;
 
     [Header("Event Display")]
@@ -68,13 +68,13 @@ public class UIManager : MonoBehaviour
             return;
         }
 
-        hungerFill.fillAmount = player.GetElephantHunger() / player.GetElephantMaxHunger();
+     //   hungerFill.fillAmount = player.GetElephantHunger() / player.GetElephantMaxHunger();
 
-        thirstFill.fillAmount = player.GetElephantThirst() / player.GetElephantMaxThirst();
+     //   thirstFill.fillAmount = player.GetElephantThirst() / player.GetElephantMaxThirst();
 
       //  temperatureFill.fillAmount = player.GetElephantTemp() / player.GetElephantMaxTemperature();
 
-        fatigueFill.fillAmount = player.GetElephantFatigue() / player.GetElephantMaxFatigue();
+     //   fatigueFill.fillAmount = player.GetElephantFatigue() / player.GetElephantMaxFatigue();
 
         healthFill.fillAmount = player.GetElephantHealth() / player.GetElephantMaxHealth();
 

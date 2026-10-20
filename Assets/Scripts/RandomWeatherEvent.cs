@@ -6,7 +6,7 @@ using System.Collections;
 
 
 
-enum Weather
+public enum Weather
 {
     calm, // average temperature / no effect to speed
     lightSnowfall, // slightly lower temperature / no effect to speed
@@ -28,20 +28,23 @@ public class RandomWeatherEvent : MonoBehaviour
 
 
     string[] events = { "calm", "lightSnowfall", "snowShower", "generalSnowstorm", "blizzard", "blizzard + Extreme avalanche risk" };
-    float[] moveSpeeds = { 1f, 1f, 0.8f, 0.7f, 0.5f, 0.3f};
+    float[] moveSpeeds = { 1f, 1f, 1f, 1f, 1f, 1f};
     float[] modifier = { 1f, 1f, 1.1f, 1.2f, 1.3f, 1.4f };
     float[] windSpeeds = { 1f, 1.1f, 1.2f, 1.4f ,1.5f, 1.6f };
     int[] temperatures = { 5, 1, -5, -8, -15, -16 };
     float[] waitUntilNextWeatherChange = { 30, 30, 30, 25, 20, 10 };
     float waitUntilChange;
     float[] avalancheRisk = { 1f, 3f, 5f, 20f, 30f, 50f };
-    float[] fogIntensity = { 0f, 0.002f, 0.003f, 0.005f, 0.007f, 0.01f };
+    float[] fogIntensity = { 0f, 0.003f, 0.008f, 0.005f, 0.015f, 0.35f };
 
 
     public float avalancheRiskPercent;
 
     [SerializeField] Player player;
+    [SerializeField] ElephantVisualTemperature visualTemp;
     public TMP_Text weatherTypeUI;
+
+    public string currentWeather;
 
 
 
@@ -95,6 +98,7 @@ public class RandomWeatherEvent : MonoBehaviour
 
     public void TriggerEvent(int i)
     {
+        currentWeather = events[i];
         weatherTypeUI.text = "Weather: " + events[i];
         player.SetMoveSpeed(moveSpeeds[i]);
         player.SetModifier(modifier[i]);
@@ -119,7 +123,9 @@ public class RandomWeatherEvent : MonoBehaviour
     public void SetFog(int intensity)
     {
         RenderSettings.fogColor = Color.white;
-        switch(intensity)
+
+       
+        switch (intensity)
         {
             case 0:
                 RenderSettings.fogDensity = fogIntensity[intensity];
@@ -144,6 +150,10 @@ public class RandomWeatherEvent : MonoBehaviour
 
     private void Start()
     {
+        RenderSettings.fog = true;
+        RenderSettings.fogMode = FogMode.Exponential;
+
+        RenderSettings.fogColor = Color.white;
         currentTemp = startTemp;
         SetTemperatureUI(currentTemp);
         pickRandomEvent();

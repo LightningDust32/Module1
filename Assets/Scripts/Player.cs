@@ -1,6 +1,7 @@
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static UnityEngine.EventSystems.EventTrigger;
 
 
 [RequireComponent(typeof(CharacterController))]
@@ -235,6 +236,7 @@ public class Player : MonoBehaviour
             speedModifier = 1;
         }
 
+        /*
         // Wind
         float windMultiplier = 1f;
 
@@ -250,9 +252,14 @@ public class Player : MonoBehaviour
                 windMultiplier = 0.5f;
             }
          
-        }
+        }*/
 
-        Vector3 horizontalMovement = movement * moveSpeed * windMultiplier * speedModifier * Time.deltaTime;
+
+        //update speed based on the elephants fatigue
+        speedModifier = Mathf.Lerp(0.3f, 1f, elephantFatigue / 100f);
+
+        //Vector3 horizontalMovement = movement * moveSpeed * windMultiplier * speedModifier * Time.deltaTime;
+        Vector3 horizontalMovement = movement * moveSpeed * speedModifier * Time.deltaTime;
 
 
 
