@@ -19,7 +19,7 @@ MonoBehaviour:
   elephantThirst: -5
   elephantFatigue: 30
   elephantTemperature: 0
-  handlerHunger: 10
+  handlerHunger: 20
   handlerThirst: 0
   handlerFatigue: 0
   singleUse: 0

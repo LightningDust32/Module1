@@ -1,7 +1,6 @@
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using static UnityEngine.EventSystems.EventTrigger;
 
 
 [RequireComponent(typeof(CharacterController))]
@@ -25,6 +24,10 @@ public class Player : MonoBehaviour
     [SerializeField] private float zoomSpeed = 300f;
     [SerializeField] private float minCameraVerticalAngle = 10f;
     [SerializeField] private float maxCameraVerticalAngle = 70f;
+
+    [Header("Handler")]
+    [SerializeField] GameObject handler;
+    [SerializeField] GameObject handlerPoint;
 
     private float cameraYaw = 0f;
     private float cameraPitch = 25f;
@@ -81,7 +84,6 @@ public class Player : MonoBehaviour
 
     [Header("Followers")]
     [SerializeField] private SphereCollider followerRadius;
-    [SerializeField] private GameObject trunk;
 
     private bool followersCalled = true;
     private int followerTotal = 0;
@@ -401,9 +403,20 @@ public class Player : MonoBehaviour
 
         Vector3 offset = rotation * new Vector3(0f, 0f, -cameraDistance);
 
-        cameraTransform.position = transform.position + offset;
+        if(handler != null)
+        {
+            cameraTransform.position = handler.transform.position + offset;
 
-        cameraTransform.LookAt(transform.position);
+            cameraTransform.LookAt(handler.transform.position);
+        }
+        else
+        {
+            cameraTransform.position = transform.position + offset;
+
+            cameraTransform.LookAt(transform.position);
+        }
+
+        
     }
 
     // Time

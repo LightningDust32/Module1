@@ -37,7 +37,6 @@ public abstract class InteractionBase : MonoBehaviour, IInteraction
         }
 
         playerInRange = true;
-        Debug.Log($"Player can interact with {interactionName}.");
     }
 
     protected virtual void OnTriggerExit(Collider other)
@@ -48,7 +47,6 @@ public abstract class InteractionBase : MonoBehaviour, IInteraction
         }
 
         playerInRange = false;
-        Debug.Log($"Player left {interactionName}.");
     }
 
     public abstract void Interact();

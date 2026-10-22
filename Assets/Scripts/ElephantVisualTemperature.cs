@@ -43,7 +43,6 @@ public class ElephantVisualTemperature : MonoBehaviour
 
     Color GetNewColour(string currentWeather)
     {
-        Debug.Log(currentWeather);
         switch (currentWeather)
         {
             case "calm":
