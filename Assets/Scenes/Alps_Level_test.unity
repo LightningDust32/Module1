@@ -16019,13 +16019,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1456832878}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0.891, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2068752824}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!4 &1459565180 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 198631955826503808, guid: 364008a861c837840b9ebe98c806959c, type: 3}
@@ -23048,6 +23048,7 @@ MonoBehaviour:
   handler: {fileID: 2648492471430930270}
   mountPoint: {fileID: 460953055}
   dismountPoint: {fileID: 1456832878}
+  mountDistance: 5
   elephantHunger: 100
   elephantThirst: 100
   elephantFatigue: 100
@@ -23060,9 +23061,9 @@ MonoBehaviour:
   thirstDamage: 1
   fatigueDamage: 0.5
   temperatureDamage: 0.5
-  handlerHunger: 100
-  handlerThirst: 100
-  handlerFatigue: 100
+  handlerHunger: 75
+  handlerThirst: 75
+  handlerFatigue: 75
   handlerMaxHunger: 75
   handlerMaxThirst: 75
   handlerMaxFatigue: 75

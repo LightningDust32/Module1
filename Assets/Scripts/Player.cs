@@ -30,6 +30,10 @@ public class Player : MonoBehaviour
     [SerializeField] GameObject mountPoint;
     [SerializeField] GameObject dismountPoint;
 
+    [SerializeField] float mountDistance;
+
+    bool isMounted = true;
+
     private float cameraYaw = 0f;
     private float cameraPitch = 25f;
 
@@ -220,18 +224,17 @@ public class Player : MonoBehaviour
         windStrength = strength;
         windDirection = new Vector3 ( Random.Range(-1f, 1f), 0f, Random.Range(-1f, 1f) );
         float angle = Mathf.Atan2(windDirection.x, windDirection.z) * Mathf.Rad2Deg;
-
-      //  windArrow.transform.rotation = Quaternion.Euler(0f, 0f, -angle + 90f);
     }
 
-
-   // public GameObject windArrow;
     private void Move()
     {
         // A / D turn the elephant
         float turn = moveInput.x;
 
-        transform.Rotate(Vector3.up, turn * turnSpeed * Time.deltaTime);
+        if (isMounted)
+        { 
+            transform.Rotate(Vector3.up, turn * turnSpeed * Time.deltaTime);
+        }
 
         // W / S move the elephant forward/backward
         float forward = moveInput.y;
@@ -245,32 +248,10 @@ public class Player : MonoBehaviour
             speedModifier = 1;
         }
 
-        /*
-        // Wind
-        float windMultiplier = 1f;
-
-        if (windActive)
-        {
-            float windEffect = Vector3.Dot(movement.normalized, windDirection.normalized);
-
-
-            windMultiplier = 1f + (windEffect * windStrength);
-
-            if (windMultiplier <= 0f)
-            {
-                windMultiplier = 0.5f;
-            }
-         
-        }*/
-
-
-        //update speed based on the elephants fatigue
+        // Update speed based on the elephants fatigue
         speedModifier = Mathf.Lerp(0.3f, 1f, elephantFatigue / 100f);
 
-        //Vector3 horizontalMovement = movement * moveSpeed * windMultiplier * speedModifier * Time.deltaTime;
         Vector3 horizontalMovement = movement * moveSpeed * speedModifier * Time.deltaTime;
-
-
 
         // Keep the player attached to the terrain.
         if (controller.isGrounded && verticalVelocity < 0f)
@@ -285,17 +266,22 @@ public class Player : MonoBehaviour
 
         Vector3 previousPosition = transform.position;
 
-        controller.Move(movementDelta);
+        if(isMounted)
+        {
+            controller.Move(movementDelta);
 
-        // Measure actual movement after collision resolution.
-        Vector3 actualMovement = transform.position - previousPosition;
-        actualMovement.y = 0f;
+            // Measure actual movement after collision resolution.
+            Vector3 actualMovement = transform.position - previousPosition;
+            actualMovement.y = 0f;
 
-        distanceTravelled += actualMovement.magnitude;
+            distanceTravelled += actualMovement.magnitude;
 
-        distanceTravelled += horizontalMovement.magnitude;
+            distanceTravelled += horizontalMovement.magnitude;
 
-        CheckTravelEvent();
+            CheckTravelEvent();
+        }
+        
+        // Handler movement goes here
     }
 
 
@@ -734,6 +720,21 @@ public class Player : MonoBehaviour
         handlerFatigue = Mathf.Clamp(handlerFatigue, 0f, handlerMaxFatigue);
     }
 
+    private void SetHandlerPosition(Vector3 position, Quaternion rotation, CharacterController controller)
+    {
+        if(controller != null)
+        {
+            controller.enabled = false;
+        }
+
+        handler.transform.SetLocalPositionAndRotation(position, rotation);
+
+        if (controller != null)
+        {
+            controller.enabled = true;
+        }
+    }
+
 
     //Input Stubs
 
@@ -816,7 +817,37 @@ public class Player : MonoBehaviour
 
     private void OnSwitch(InputAction.CallbackContext context)
     {
+        if(handler == null || mountPoint == null || dismountPoint == null)
+        {
+            return;
+        }
 
+        CharacterController handlerController = handler.GetComponent<CharacterController>();
+
+        if(isMounted)
+        {
+            // Dismount logic
+            handler.transform.SetParent(null, true);
+
+            SetHandlerPosition(dismountPoint.transform.position, dismountPoint.transform.rotation, handlerController);
+
+            isMounted = false;
+        }
+        else
+        {
+            float distance = Vector3.Distance(handler.transform.position, mountPoint.transform.position);
+
+            if(distance > mountDistance)
+            {
+                return;
+            }
+
+            SetHandlerPosition(mountPoint.transform.position, mountPoint.transform.rotation, handlerController);
+
+            handler.transform.SetParent(transform, true);
+
+            isMounted = true;
+        }
     }
 
     public void OnCrouch(InputAction.CallbackContext context)
