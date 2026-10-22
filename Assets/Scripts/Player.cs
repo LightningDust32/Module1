@@ -27,7 +27,8 @@ public class Player : MonoBehaviour
 
     [Header("Handler")]
     [SerializeField] GameObject handler;
-    [SerializeField] GameObject handlerPoint;
+    [SerializeField] GameObject mountPoint;
+    [SerializeField] GameObject dismountPoint;
 
     private float cameraYaw = 0f;
     private float cameraPitch = 25f;
@@ -84,6 +85,7 @@ public class Player : MonoBehaviour
 
     [Header("Followers")]
     [SerializeField] private SphereCollider followerRadius;
+    [SerializeField] AudioClip callSound;
 
     private bool followersCalled = true;
     private int followerTotal = 0;
@@ -146,6 +148,8 @@ public class Player : MonoBehaviour
 
         inputActions.Player.Pause.performed += OnPause;
 
+        inputActions.Player.Switch.performed += OnSwitch;
+
         inputActions.Player.Crouch.performed += OnCrouch;
         inputActions.Player.Crouch.canceled += OnCrouch;
 
@@ -156,6 +160,7 @@ public class Player : MonoBehaviour
         inputActions.Player.Sprint.canceled += OnSprint;
 
     }
+
 
     private void OnDisable()
     {
@@ -176,7 +181,9 @@ public class Player : MonoBehaviour
 
         inputActions.Player.Interact.performed -= OnInteract;
 
-        inputActions.Player.Pause.performed += OnPause;
+        inputActions.Player.Pause.performed -= OnPause;
+
+        inputActions.Player.Switch.performed -= OnSwitch;
 
         inputActions.Player.Crouch.performed -= OnCrouch;
         inputActions.Player.Crouch.canceled -= OnCrouch;
@@ -774,6 +781,11 @@ public class Player : MonoBehaviour
             StopFollowingFollowers();
             Debug.Log("Followers halted.");
         }
+
+        if(callSound  != null)
+        {
+            SoundManager.instance.PlaySound(callSound);
+        }
     }
 
     public void OnInteract(InputAction.CallbackContext context)
@@ -800,6 +812,11 @@ public class Player : MonoBehaviour
         }
 
         UIManager.Instance.Pause();
+    }
+
+    private void OnSwitch(InputAction.CallbackContext context)
+    {
+
     }
 
     public void OnCrouch(InputAction.CallbackContext context)

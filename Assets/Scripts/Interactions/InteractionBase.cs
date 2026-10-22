@@ -11,6 +11,8 @@ public abstract class InteractionBase : MonoBehaviour, IInteraction
     [Header("Trigger")]
     [SerializeField] private bool playerInRange;
 
+    [SerializeField] protected bool handlerOnly = false;
+
     public string InteractionName => interactionName;
     public string InteractionDescription => interactionDescription;
     public bool PlayerInRange => playerInRange;
