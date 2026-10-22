@@ -4,18 +4,16 @@ using UnityEngine.InputSystem;
 #endif
 
 /// <summary>
-/// Legless version: a heavy, momentum-based elephant whose weight comes entirely
+/// a heavy, momentum-based elephant whose weight comes entirely
 /// from body motion. Every footstep dips the body and rocks it left/right.
-/// Works with IsometricCameraRig (optional).
 /// </summary>
 [RequireComponent(typeof(CharacterController))]
 public class HeavyElephantLite : MonoBehaviour
 {
     [Header("References")]
     [Tooltip("Child object holding the model. Required.")]
-    public Transform visual;
+    public Transform body;
     public Transform cameraTransform;          // defaults to Camera.main
-    public IsometricCameraRig cameraRig;       // optional
 
     [Header("Movement")]
     public float maxSpeed = 3f;
@@ -44,66 +42,68 @@ public class HeavyElephantLite : MonoBehaviour
     public AudioClip[] footstepClips;
 
     CharacterController controller;
-    float speed, prevSpeed, vertVel;
+    float speed, previousSpeed, verticalVelocity;
     float stepPhase;
     int lastStep, side = 1;
-    float bobPos, bobVel, rollPos, rollVel, leanPos, leanVel;
-    Vector3 restPos, restScale;
-    Quaternion restRot;
+    float bobPosition, bobVelocity, rollPosition, rollVelocity, leanPosition, leanVelocity;
+    Vector3 restPosition, restScale;
+    Quaternion restRotation;
 
     void Awake()
     {
         controller = GetComponent<CharacterController>();
         if (!cameraTransform && Camera.main) cameraTransform = Camera.main.transform;
-        if (visual)
+        if (body)
         {
-            restPos = visual.localPosition;
-            restRot = visual.localRotation;
-            restScale = visual.localScale;
+            restPosition = body.localPosition;
+            restRotation = body.localRotation;
+            restScale = body.localScale;
         }
     }
 
     void Update()
     {
-        float dt = Time.deltaTime;
-        if (dt <= 0f) return;
+        float deltaTime = Time.deltaTime;
+        if (deltaTime <= 0f) return;
 
         // --- input, relative to camera ---
         Vector2 input = ReadInput();
         Vector3 desired = Vector3.zero;
+
         if (input.sqrMagnitude > 0.01f && cameraTransform)
         {
-            Vector3 f = cameraTransform.forward; f.y = 0f; f.Normalize();
-            Vector3 r = cameraTransform.right;   r.y = 0f; r.Normalize();
-            desired = (f * input.y + r * input.x).normalized;
+            Vector3 forward = cameraTransform.forward; forward.y = 0f; forward.Normalize();
+            Vector3 rotation = cameraTransform.right;   rotation.y = 0f; rotation.Normalize();
+            desired = (forward * input.y + rotation * input.x).normalized;
         }
 
         // --- slow turning ---
         float speedNorm = Mathf.Clamp01(speed / maxSpeed);
         float facing = 1f;
+
         if (desired != Vector3.zero)
         {
             float rate = Mathf.Lerp(turnSpeedStanding, turnSpeedMoving, speedNorm);
             transform.rotation = Quaternion.RotateTowards(
-                transform.rotation, Quaternion.LookRotation(desired), rate * dt);
+                transform.rotation, Quaternion.LookRotation(desired), rate * deltaTime);
             facing = Vector3.Dot(transform.forward, desired);
         }
 
         // --- momentum ---
-        float target = desired == Vector3.zero ? 0f :
-            maxSpeed * Mathf.Clamp01(input.magnitude) *
-            Mathf.Lerp(turnAroundSpeedFactor, 1f, Mathf.Clamp01(facing));
-        prevSpeed = speed;
-        speed = Mathf.MoveTowards(speed, target, (target > speed ? acceleration : deceleration) * dt);
+        float target = desired == Vector3.zero ? 0f : maxSpeed * Mathf.Clamp01(input.magnitude) * Mathf.Lerp(turnAroundSpeedFactor, 1f, Mathf.Clamp01(facing));
+
+        previousSpeed = speed;
+
+        speed = Mathf.MoveTowards(speed, target, (target > speed ? acceleration : deceleration) * deltaTime);
 
         // --- move ---
-        if (controller.isGrounded && vertVel < 0f) vertVel = -2f;
-        vertVel += gravity * dt;
-        controller.Move((transform.forward * speed + Vector3.up * vertVel) * dt);
+        if (controller.isGrounded && verticalVelocity < 0f) verticalVelocity = -2f;
+        verticalVelocity += gravity * deltaTime;
+        controller.Move((transform.forward * speed + Vector3.up * verticalVelocity) * deltaTime);
 
         // --- footsteps: one every stepLength metres, alternating sides ---
         speedNorm = Mathf.Clamp01(speed / maxSpeed);
-        stepPhase += speed * dt / Mathf.Max(0.01f, stepLength);
+        stepPhase += speed * deltaTime / Mathf.Max(0.01f, stepLength);
         int step = Mathf.FloorToInt(stepPhase);
         if (step != lastStep)
         {
@@ -112,66 +112,70 @@ public class HeavyElephantLite : MonoBehaviour
             Footfall(Mathf.Max(0.25f, speedNorm));
         }
 
-        Animate(dt, speedNorm);
+        Animate(deltaTime, speedNorm);
     }
 
-    void Animate(float dt, float speedNorm)
+    void Animate(float deltaTime, float speedNorm)
     {
         // damped springs: dip, side rock, and acceleration lean
-        bobVel  += (-springStiffness * bobPos  - springDamping * bobVel)  * dt;
-        bobPos  += bobVel * dt;
-        rollVel += (-springStiffness * rollPos - springDamping * rollVel) * dt;
-        rollPos += rollVel * dt;
+        bobVelocity  += (-springStiffness * bobPosition  - springDamping * bobVelocity)  * deltaTime;
+        bobPosition  += bobVelocity * deltaTime;
 
-        float accel = (speed - prevSpeed) / dt;
+        rollVelocity += (-springStiffness * rollPosition - springDamping * rollVelocity) * deltaTime;
+        rollPosition += rollVelocity * deltaTime;
+
+        float accel = (speed - previousSpeed) / deltaTime;
         float leanTarget = Mathf.Clamp(accel * leanPerAcceleration, -maxLean, maxLean);
-        leanVel += (40f * (leanTarget - leanPos) - 8f * leanVel) * dt;
-        leanPos += leanVel * dt;
+        leanVelocity += (40f * (leanTarget - leanPosition) - 8f * leanVelocity) * deltaTime;
+        leanPosition += leanVelocity * deltaTime;
 
-        if (!visual) return;
-        visual.localPosition = restPos + Vector3.up * bobPos;
-        visual.localRotation = restRot * Quaternion.Euler(leanPos, 0f, rollPos);
+        if (!body) return;
+        body.localPosition = restPosition + Vector3.up * bobPosition;
+        body.localRotation = restRotation * Quaternion.Euler(leanPosition, 0f, rollPosition);
 
         float breath = 1f + Mathf.Sin(Time.time * 0.9f) * 0.012f * (1f - speedNorm);
-        visual.localScale = new Vector3(restScale.x, restScale.y * breath, restScale.z);
+        body.localScale = new Vector3(restScale.x, restScale.y * breath, restScale.z);
     }
 
-    void Footfall(float s)
+    void Footfall(float step)
     {
-        bobVel  -= dipKick * s;
-        rollVel += side * rollKick * s;
-        if (cameraRig) cameraRig.AddImpulse(cameraKick * s);
+        bobVelocity  -= dipKick * step;
+        rollVelocity += side * rollKick * step;
 
         if (footDust)
         {
-            footDust.transform.position = transform.position +
-                transform.right * side * 0.6f + transform.forward * 0.8f;
-            footDust.Emit(Mathf.RoundToInt(dustPerStep * s));
+            footDust.transform.position = transform.position + transform.right * side * 0.6f + transform.forward * 0.8f;
+            footDust.Emit(Mathf.RoundToInt(dustPerStep * step));
         }
 
         if (audioSource && footstepClips != null && footstepClips.Length > 0)
         {
             audioSource.pitch = Random.Range(0.7f, 0.85f);
-            audioSource.PlayOneShot(footstepClips[Random.Range(0, footstepClips.Length)],
-                                    Mathf.Lerp(0.5f, 1f, s));
+            audioSource.PlayOneShot(footstepClips[Random.Range(0, footstepClips.Length)], Mathf.Lerp(0.5f, 1f, step));
         }
     }
 
     Vector2 ReadInput()
     {
 #if ENABLE_INPUT_SYSTEM
-        Vector2 v = Vector2.zero;
-        var k = Keyboard.current;
-        if (k != null)
+        Vector2 velocity = Vector2.zero;
+        Keyboard keyboard = Keyboard.current;
+        if (keyboard != null)
         {
-            if (k.wKey.isPressed || k.upArrowKey.isPressed)    v.y += 1f;
-            if (k.sKey.isPressed || k.downArrowKey.isPressed)  v.y -= 1f;
-            if (k.dKey.isPressed || k.rightArrowKey.isPressed) v.x += 1f;
-            if (k.aKey.isPressed || k.leftArrowKey.isPressed)  v.x -= 1f;
+            if (keyboard.wKey.isPressed || keyboard.upArrowKey.isPressed)    velocity.y += 1f;
+            if (keyboard.sKey.isPressed || keyboard.downArrowKey.isPressed)  velocity.y -= 1f;
+            if (keyboard.dKey.isPressed || keyboard.rightArrowKey.isPressed) velocity.x += 1f;
+            if (keyboard.aKey.isPressed || keyboard.leftArrowKey.isPressed)  velocity.x -= 1f;
         }
-        var g = Gamepad.current;
-        if (g != null) v += g.leftStick.ReadValue();
-        return Vector2.ClampMagnitude(v, 1f);
+
+        Gamepad gamepad = Gamepad.current;
+
+        if (gamepad != null)
+        { 
+            velocity += gamepad.leftStick.ReadValue(); 
+        }
+
+        return Vector2.ClampMagnitude(velocity, 1f);
 #else
         return Vector2.ClampMagnitude(
             new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")), 1f);

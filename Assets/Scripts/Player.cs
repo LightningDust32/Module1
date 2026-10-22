@@ -842,7 +842,6 @@ public class Player : MonoBehaviour
 
         if (follower != null)
         {
-            Debug.Log("Follower trigger");
             follower.StartFollowing(transform);
             followerTotal += 1;
         }
