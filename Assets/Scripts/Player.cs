@@ -12,7 +12,8 @@ public class Player : MonoBehaviour
     private RandomWeatherEvent randomWeatherEvent;
 
     [Header("Movement")]
-    [SerializeField] private float moveSpeed = 5f;
+    [SerializeField] private float elephantMoveSpeed = 50f;
+    [SerializeField] private float handlerMoveSpeed = 20f;
     [SerializeField] private float turnSpeed = 120f;
     [SerializeField] private float gravity = -9f;
 
@@ -104,7 +105,8 @@ public class Player : MonoBehaviour
 
     private InputSystem_Actions inputActions;
 
-    private CharacterController controller;
+    private CharacterController elephantController;
+    private CharacterController handlerController;
 
     private Inventory inventory;
 
@@ -117,7 +119,8 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
-        controller = GetComponent<CharacterController>();
+        elephantController = GetComponent<CharacterController>();
+        handlerController = handler.GetComponent<CharacterController>();
 
         inputActions = new InputSystem_Actions();
 
@@ -228,60 +231,64 @@ public class Player : MonoBehaviour
 
     private void Move()
     {
-        // A / D turn the elephant
-        float turn = moveInput.x;
+        // Select which character is being controlled.
+        Transform mover = isMounted ? transform : handler.transform;
 
-        if (isMounted)
+        CharacterController activeController = isMounted ? elephantController : handlerController;
+
+        if (activeController == null)
         { 
-            transform.Rotate(Vector3.up, turn * turnSpeed * Time.deltaTime);
+            return;
         }
 
-        // W / S move the elephant forward/backward
+        // A / D turn the controlled character.
+        float turn = moveInput.x;
+        mover.Rotate(Vector3.up, turn * turnSpeed * Time.deltaTime);
+
+        // W / S move forward/backward relative to facing direction.
         float forward = moveInput.y;
-
-        Vector3 movement = transform.forward * forward;
-
+        Vector3 movement = mover.forward * forward;
         movement = Vector3.ClampMagnitude(movement, 1f);
 
-        if (speedModifier <= 0)
+        // Use elephant fatigue only while mounted.
+        float currentSpeed;
+
+        if (isMounted)
         {
-            speedModifier = 1;
+            speedModifier = Mathf.Lerp(0.3f, 1f, elephantFatigue / 100f);
+            currentSpeed = elephantMoveSpeed * speedModifier;
+        }
+        else
+        {
+            currentSpeed = handlerMoveSpeed;
         }
 
-        // Update speed based on the elephants fatigue
-        speedModifier = Mathf.Lerp(0.3f, 1f, elephantFatigue / 100f);
+        Vector3 horizontalMovement = movement * currentSpeed * Time.deltaTime;
 
-        Vector3 horizontalMovement = movement * moveSpeed * speedModifier * Time.deltaTime;
-
-        // Keep the player attached to the terrain.
-        if (controller.isGrounded && verticalVelocity < 0f)
+        // Ground detection and gravity for the currently controlled character.
+        if (activeController.isGrounded && verticalVelocity < 0f)
         {
             verticalVelocity = -2f;
         }
 
-        // Apply gravity.
         verticalVelocity += gravity * Time.deltaTime;
 
         Vector3 movementDelta = horizontalMovement + Vector3.up * verticalVelocity * Time.deltaTime;
 
-        Vector3 previousPosition = transform.position;
+        Vector3 previousPosition = mover.position;
 
-        if(isMounted)
+        activeController.Move(movementDelta);
+
+        // Track travel events only while riding the elephant.
+        if (isMounted)
         {
-            controller.Move(movementDelta);
-
-            // Measure actual movement after collision resolution.
-            Vector3 actualMovement = transform.position - previousPosition;
+            Vector3 actualMovement = mover.position - previousPosition;
             actualMovement.y = 0f;
 
             distanceTravelled += actualMovement.magnitude;
 
-            distanceTravelled += horizontalMovement.magnitude;
-
             CheckTravelEvent();
         }
-        
-        // Handler movement goes here
     }
 
 
@@ -832,6 +839,8 @@ public class Player : MonoBehaviour
             SetHandlerPosition(dismountPoint.transform.position, dismountPoint.transform.rotation, handlerController);
 
             isMounted = false;
+            handlerController.enabled = true;
+            elephantController.enabled = false;
         }
         else
         {
@@ -847,6 +856,8 @@ public class Player : MonoBehaviour
             handler.transform.SetParent(transform, true);
 
             isMounted = true;
+            handlerController.enabled = false;
+            elephantController.enabled = true;
         }
     }
 

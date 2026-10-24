@@ -2082,7 +2082,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1425190277}
-  m_Father: {fileID: 895847452}
+  m_Father: {fileID: 2068752824}
   m_LocalEulerAnglesHint: {x: -55.3, y: 0, z: 0}
 --- !u!136 &162148151
 CapsuleCollider:
@@ -9744,7 +9744,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 162148150}
   - {fileID: 301539073}
   - {fileID: 292861421}
   - {fileID: 299366673}
@@ -23037,7 +23036,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraTransform: {fileID: 1270694590}
-  moveSpeed: 20
+  elephantMoveSpeed: 50
+  handlerMoveSpeed: 20
   turnSpeed: 120
   gravity: -9
   cameraDistance: 50
@@ -23076,7 +23076,7 @@ MonoBehaviour:
   windDirection: {x: 0, y: 0, z: 0}
   windStrength: 0.3
   windActive: 0
-  followerRadius: {fileID: 0}
+  followerRadius: {fileID: 2068752826}
   callSound: {fileID: 8300000, guid: e5b1ef2ae81298e4d90cf56a3e6477dd, type: 3}
 --- !u!143 &2068752820
 CharacterController:
@@ -23137,6 +23137,7 @@ Transform:
   m_LocalScale: {x: 2, y: 2, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 162148150}
   - {fileID: 895847452}
   - {fileID: 7919593084268727911}
   - {fileID: 460953056}
