@@ -127,17 +127,5 @@ public class HeavyElephantLite : MonoBehaviour
     {
         bobVelocity  -= dipKick * step;
         rollVelocity += side * rollKick * step;
-
-        if (footDust)
-        {
-            footDust.transform.position = transform.position + transform.right * side * 0.6f + transform.forward * 0.8f;
-            footDust.Emit(Mathf.RoundToInt(dustPerStep * step));
-        }
-
-        if (audioSource && footstepClips != null && footstepClips.Length > 0)
-        {
-            audioSource.pitch = Random.Range(0.7f, 0.85f);
-            audioSource.PlayOneShot(footstepClips[Random.Range(0, footstepClips.Length)], Mathf.Lerp(0.5f, 1f, step));
-        }
     }
 }
