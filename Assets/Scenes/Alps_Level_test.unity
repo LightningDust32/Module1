@@ -2082,7 +2082,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1425190277}
-  m_Father: {fileID: 2068752824}
+  m_Father: {fileID: 895847452}
   m_LocalEulerAnglesHint: {x: -55.3, y: 0, z: 0}
 --- !u!136 &162148151
 CapsuleCollider:
@@ -9750,6 +9750,7 @@ Transform:
   - {fileID: 1774251126}
   - {fileID: 1431217886}
   - {fileID: 2117084368}
+  - {fileID: 162148150}
   m_Father: {fileID: 2068752824}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &902806350
@@ -23040,6 +23041,17 @@ MonoBehaviour:
   handlerMoveSpeed: 20
   turnSpeed: 120
   gravity: -9
+  elephantBody: {fileID: 895847452}
+  elephantAcceleration: 1.6
+  elephantDeceleration: 2.8
+  reverseSpeedFactor: 0.2
+  stepLength: 2.5
+  bobKick: 0.08
+  bodySpringStiffness: 25
+  bodySpringDamping: 6
+  maxForwardLean: 4
+  maxTurnLean: 5
+  leanSmoothness: 5
   cameraDistance: 50
   cameraRotationSpeed: 80
   zoomSpeed: 300
@@ -23137,7 +23149,6 @@ Transform:
   m_LocalScale: {x: 2, y: 2, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 162148150}
   - {fileID: 895847452}
   - {fileID: 7919593084268727911}
   - {fileID: 460953056}

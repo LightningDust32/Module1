@@ -1,12 +1,5 @@
 using UnityEngine;
-#if ENABLE_INPUT_SYSTEM
-using UnityEngine.InputSystem;
-#endif
 
-/// <summary>
-/// a heavy, momentum-based elephant whose weight comes entirely
-/// from body motion. Every footstep dips the body and rocks it left/right.
-/// </summary>
 [RequireComponent(typeof(CharacterController))]
 public class HeavyElephantLite : MonoBehaviour
 {
@@ -35,12 +28,6 @@ public class HeavyElephantLite : MonoBehaviour
     public float leanPerAcceleration = 3f;
     public float cameraKick = 1.2f;
 
-    [Header("Feedback (optional)")]
-    public ParticleSystem footDust;
-    public int dustPerStep = 6;
-    public AudioSource audioSource;
-    public AudioClip[] footstepClips;
-
     CharacterController controller;
     float speed, previousSpeed, verticalVelocity;
     float stepPhase;
@@ -66,8 +53,7 @@ public class HeavyElephantLite : MonoBehaviour
         float deltaTime = Time.deltaTime;
         if (deltaTime <= 0f) return;
 
-        // --- input, relative to camera ---
-        Vector2 input = ReadInput();
+        Vector2 input = Vector2.zero;
         Vector3 desired = Vector3.zero;
 
         if (input.sqrMagnitude > 0.01f && cameraTransform)
@@ -153,32 +139,5 @@ public class HeavyElephantLite : MonoBehaviour
             audioSource.pitch = Random.Range(0.7f, 0.85f);
             audioSource.PlayOneShot(footstepClips[Random.Range(0, footstepClips.Length)], Mathf.Lerp(0.5f, 1f, step));
         }
-    }
-
-    Vector2 ReadInput()
-    {
-#if ENABLE_INPUT_SYSTEM
-        Vector2 velocity = Vector2.zero;
-        Keyboard keyboard = Keyboard.current;
-        if (keyboard != null)
-        {
-            if (keyboard.wKey.isPressed || keyboard.upArrowKey.isPressed)    velocity.y += 1f;
-            if (keyboard.sKey.isPressed || keyboard.downArrowKey.isPressed)  velocity.y -= 1f;
-            if (keyboard.dKey.isPressed || keyboard.rightArrowKey.isPressed) velocity.x += 1f;
-            if (keyboard.aKey.isPressed || keyboard.leftArrowKey.isPressed)  velocity.x -= 1f;
-        }
-
-        Gamepad gamepad = Gamepad.current;
-
-        if (gamepad != null)
-        { 
-            velocity += gamepad.leftStick.ReadValue(); 
-        }
-
-        return Vector2.ClampMagnitude(velocity, 1f);
-#else
-        return Vector2.ClampMagnitude(
-            new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")), 1f);
-#endif
     }
 }

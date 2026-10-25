@@ -19,6 +19,38 @@ public class Player : MonoBehaviour
 
     private float verticalVelocity;
 
+    [Header("Elephant Visuals")]
+    [SerializeField] private Transform elephantBody;
+
+    [Header("Elephant Momentum")]
+    [SerializeField] private float elephantAcceleration = 1.6f;
+    [SerializeField] private float elephantDeceleration = 2.8f;
+    [SerializeField] private float reverseSpeedFactor = 0.2f;
+
+    [Header("Elephant Bobbing")]
+    [SerializeField] private float stepLength = 2.5f;
+    [SerializeField] private float bobKick = 0.08f;
+    [SerializeField] private float bodySpringStiffness = 25f;
+    [SerializeField] private float bodySpringDamping = 6f;
+
+    [Header("Elephant Lean")]
+    [SerializeField] private float maxForwardLean = 4f;
+    [SerializeField] private float maxTurnLean = 5f;
+    [SerializeField] private float leanSmoothness = 5f;
+
+    private float elephantCurrentSpeed;
+    private float previousElephantSpeed;
+
+    private Vector3 bodyRestPosition;
+    private Quaternion bodyRestRotation;
+
+    private float bobPosition;
+    private float bobVelocity;
+    private float stepDistance;
+
+    private float currentForwardLean;
+    private float currentTurnLean;
+
     [Header("Camera")]
     [SerializeField] private float cameraDistance = 10f;
     [SerializeField] private float cameraRotationSpeed = 80f;
@@ -132,6 +164,13 @@ public class Player : MonoBehaviour
 
         animator = GetComponent<Animator>();
 
+        // Store these for returning to normal after bounce/lean animations
+        if (elephantBody != null)
+        {
+            bodyRestPosition = elephantBody.localPosition;
+            bodyRestRotation = elephantBody.localRotation;
+        }
+
     }
 
     private void OnEnable()
@@ -231,64 +270,135 @@ public class Player : MonoBehaviour
 
     private void Move()
     {
-        // Select which character is being controlled.
-        Transform mover = isMounted ? transform : handler.transform;
-
-        CharacterController activeController = isMounted ? elephantController : handlerController;
-
-        if (activeController == null)
-        { 
-            return;
-        }
-
-        // A / D turn the controlled character.
-        float turn = moveInput.x;
-        mover.Rotate(Vector3.up, turn * turnSpeed * Time.deltaTime);
-
-        // W / S move forward/backward relative to facing direction.
-        float forward = moveInput.y;
-        Vector3 movement = mover.forward * forward;
-        movement = Vector3.ClampMagnitude(movement, 1f);
-
-        // Use elephant fatigue only while mounted.
-        float currentSpeed;
+        float deltaTime = Time.deltaTime;
 
         if (isMounted)
         {
-            speedModifier = Mathf.Lerp(0.3f, 1f, elephantFatigue / 100f);
-            currentSpeed = elephantMoveSpeed * speedModifier;
+            MoveElephant(deltaTime);
         }
         else
         {
-            currentSpeed = handlerMoveSpeed;
+            MoveHandler(deltaTime);
+        }
+    }
+
+    private void MoveElephant(float deltaTime)
+    {
+        // Turn the elephant.
+        float turn = moveInput.x;
+        transform.Rotate(Vector3.up, turn * turnSpeed * deltaTime);
+
+        // Apply fatigue to the elephant's maximum speed.
+        speedModifier = Mathf.Lerp(0.3f, 1f, elephantFatigue / 100f);
+
+        float maxElephantSpeed = elephantMoveSpeed * speedModifier;
+
+        // Smoothly accelerate and decelerate.
+        float targetSpeed = moveInput.y * maxElephantSpeed;
+
+        // Reduce speed when reversing direction.
+        if (Mathf.Sign(targetSpeed) != Mathf.Sign(elephantCurrentSpeed) && Mathf.Abs(elephantCurrentSpeed) > 0.01f)
+        {
+            targetSpeed *= reverseSpeedFactor;
         }
 
-        Vector3 horizontalMovement = movement * currentSpeed * Time.deltaTime;
+        previousElephantSpeed = elephantCurrentSpeed;
 
-        // Ground detection and gravity for the currently controlled character.
-        if (activeController.isGrounded && verticalVelocity < 0f)
+        float accelerationRate = Mathf.Abs(targetSpeed) > Mathf.Abs(elephantCurrentSpeed) && Mathf.Sign(targetSpeed) == Mathf.Sign(elephantCurrentSpeed) ? elephantAcceleration : elephantDeceleration;
+
+        // When starting from rest, use acceleration.
+        if (Mathf.Abs(elephantCurrentSpeed) < 0.01f || Mathf.Sign(targetSpeed) == Mathf.Sign(elephantCurrentSpeed))
+        {
+            accelerationRate = Mathf.Abs(targetSpeed) > Mathf.Abs(elephantCurrentSpeed) ? elephantAcceleration : elephantDeceleration;
+        }
+
+        elephantCurrentSpeed = Mathf.MoveTowards(elephantCurrentSpeed, targetSpeed, accelerationRate * deltaTime);
+
+        // Gravity and movement remain on the parent controller.
+        if (elephantController.isGrounded && verticalVelocity < 0f)
         {
             verticalVelocity = -2f;
         }
 
-        verticalVelocity += gravity * Time.deltaTime;
+        verticalVelocity += gravity * deltaTime;
 
-        Vector3 movementDelta = horizontalMovement + Vector3.up * verticalVelocity * Time.deltaTime;
+        Vector3 movementDelta = transform.forward * elephantCurrentSpeed * deltaTime + Vector3.up * verticalVelocity * deltaTime;
 
-        Vector3 previousPosition = mover.position;
+        Vector3 previousPosition = transform.position;
 
-        activeController.Move(movementDelta);
+        elephantController.Move(movementDelta);
 
-        // Track travel events only while riding the elephant.
-        if (isMounted)
+        // Use actual displacement for travel events and footsteps.
+        Vector3 actualMovement = transform.position - previousPosition;
+        actualMovement.y = 0f;
+
+        distanceTravelled += actualMovement.magnitude;
+
+        CheckTravelEvent();
+
+        // Trigger a visual dip at regular intervals while moving.
+        if (actualMovement.magnitude > 0f)
         {
-            Vector3 actualMovement = mover.position - previousPosition;
-            actualMovement.y = 0f;
+            stepDistance += actualMovement.magnitude;
 
-            distanceTravelled += actualMovement.magnitude;
-
-            CheckTravelEvent();
+            while (stepDistance >= stepLength)
+            {
+                stepDistance -= stepLength;
+                bobVelocity -= bobKick;
+            }
         }
+
+        AnimateElephant(deltaTime);
+    }
+
+    private void MoveHandler(float deltaTime)
+    {
+        Transform mover = handler.transform;
+
+        if (handlerController == null)
+            return;
+
+        mover.Rotate(Vector3.up, moveInput.x * turnSpeed * deltaTime);
+
+        Vector3 horizontalMovement = mover.forward * moveInput.y * handlerMoveSpeed * deltaTime;
+
+        if (handlerController.isGrounded && verticalVelocity < 0f)
+        {
+            verticalVelocity = -2f;
+        }
+
+        verticalVelocity += gravity * deltaTime;
+
+        Vector3 movementDelta = horizontalMovement + Vector3.up * verticalVelocity * deltaTime;
+        handlerController.Move(movementDelta);
+    }
+
+    private void AnimateElephant(float deltaTime)
+    {
+        if (elephantBody == null)
+            return;
+
+        // Damped spring for the vertical body bob.
+        bobVelocity += (-bodySpringStiffness * bobPosition - bodySpringDamping * bobVelocity) * deltaTime;
+
+        bobPosition += bobVelocity * deltaTime;
+
+        // Lean forward while accelerating and backward while slowing.
+        float acceleration = (elephantCurrentSpeed - previousElephantSpeed) / deltaTime;
+
+        float forwardLeanTarget = Mathf.Clamp(-acceleration * 1.5f, -maxForwardLean, maxForwardLean);
+
+        // Lean sideways into turns.
+        float turnLeanTarget = -moveInput.x * maxTurnLean;
+
+        currentForwardLean = Mathf.Lerp(currentForwardLean, forwardLeanTarget, leanSmoothness * deltaTime);
+
+        currentTurnLean = Mathf.Lerp(currentTurnLean, turnLeanTarget, leanSmoothness * deltaTime);
+
+        // Apply animation only to the visual element, not the controller.
+        elephantBody.localPosition = bodyRestPosition + Vector3.up * bobPosition;
+
+        elephantBody.localRotation = bodyRestRotation * Quaternion.Euler(currentForwardLean, 0f, currentTurnLean);
     }
 
 
