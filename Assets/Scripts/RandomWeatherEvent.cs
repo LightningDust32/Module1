@@ -42,7 +42,7 @@ public class RandomWeatherEvent : MonoBehaviour
 
     [SerializeField] Player player;
     [SerializeField] ElephantVisualTemperature visualTemp;
-    public TMP_Text weatherTypeUI;
+  //  public TMP_Text weatherTypeUI;
 
     public string currentWeather;
 
@@ -52,7 +52,7 @@ public class RandomWeatherEvent : MonoBehaviour
     [SerializeField] public float currentTemp;
     [SerializeField] float minTemp = -20f;
     [SerializeField] float maxTemp = 20f;
-    public TMP_Text temperatureUI;
+  //  public TMP_Text temperatureUI;
 
     private bool openToElements = true;
 
@@ -99,24 +99,24 @@ public class RandomWeatherEvent : MonoBehaviour
     public void TriggerEvent(int i)
     {
         currentWeather = events[i];
-        weatherTypeUI.text = "Weather: " + events[i];
+      //  weatherTypeUI.text = "Weather: " + events[i];
         player.SetMoveSpeed(moveSpeeds[i]);
         player.SetModifier(modifier[i]);
         player.SetWind(windSpeeds[i]);
         waitUntilChange = waitUntilNextWeatherChange[i];
         avalancheRiskPercent = avalancheRisk[i];
 
-        if(temperatureUI == null)
-        {
-            return;
-        }
+      //  if(temperatureUI == null)
+      // {
+       //     return;
+      //  }
 
         if (openToElements)
         {
             int tempVariation = Random.Range(-3, 3);
             int newTemp = temperatures[i] + tempVariation;
             currentTemp = newTemp;  
-            temperatureUI.text = newTemp + "°c";
+         //   temperatureUI.text = newTemp + "°c";
         }
     }
 
@@ -170,10 +170,10 @@ public class RandomWeatherEvent : MonoBehaviour
 
     private void SetTemperatureUI(float temperature)
     {
-        if(temperatureUI  == null)
-        {
-            return;
-        }
-        temperatureUI.text = currentTemp + "°c";
+     //   if(temperatureUI  == null)
+     //   {
+      //      return;
+     //   }
+      //  temperatureUI.text = currentTemp + "°c";
     }
 }

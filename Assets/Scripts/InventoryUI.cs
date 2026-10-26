@@ -3,7 +3,7 @@ using UnityEngine.InputSystem;
 
 public class InventoryUI : MonoBehaviour
 {
-    public GameObject inventoryPanel;
+  //  public GameObject inventoryPanel;
 
     private InputSystem_Actions inputActions;
 
@@ -30,7 +30,7 @@ public class InventoryUI : MonoBehaviour
 
     private void ToggleInventory(InputAction.CallbackContext context)
     {
-        inventoryPanel.SetActive(!inventoryPanel.activeSelf);
+      //  inventoryPanel.SetActive(!inventoryPanel.activeSelf);
 
         DisplayInventory();
     }
