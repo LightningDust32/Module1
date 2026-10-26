@@ -183,8 +183,8 @@ public class Player : MonoBehaviour
         inputActions.Player.Look.performed += OnLook;
         inputActions.Player.Look.canceled += OnLook;
 
-        inputActions.Player.Inventory.performed += ToggleInventory;
-        inputActions.Player.Inventory.canceled -= ToggleInventory;
+       // inputActions.Player.Inventory.performed += ToggleInventory;
+       // inputActions.Player.Inventory.canceled -= ToggleInventory;
 
         inputActions.Player.Zoom.performed += OnZoom;
 
@@ -218,8 +218,8 @@ public class Player : MonoBehaviour
         inputActions.Player.Look.performed -= OnLook;
         inputActions.Player.Look.canceled -= OnLook;
 
-        inputActions.Player.Inventory.performed -= ToggleInventory;
-        inputActions.Player.Inventory.canceled -= ToggleInventory;
+      //  inputActions.Player.Inventory.performed -= ToggleInventory;
+      //  inputActions.Player.Inventory.canceled -= ToggleInventory;
 
         inputActions.Player.Zoom.performed -= OnZoom;
 

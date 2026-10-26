@@ -67,9 +67,59 @@
                     "priority": 0
                 },
                 {
-                    "name": "Inventory",
+                    "name": "InventorySlot1",
                     "type": "Button",
                     "id": "ac91e4e3-3224-430d-a345-36871a01e806",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false,
+                    "priority": 0
+                },
+                {
+                    "name": "InventorySlot2",
+                    "type": "Button",
+                    "id": "dc0c3911-a276-47f6-b272-56d1b7ed07cd",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false,
+                    "priority": 0
+                },
+                {
+                    "name": "InventorySlot3",
+                    "type": "Button",
+                    "id": "87eafe66-e7da-46f2-a575-3b3e39702b63",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false,
+                    "priority": 0
+                },
+                {
+                    "name": "InventorySlot4",
+                    "type": "Button",
+                    "id": "779c0fa6-be3d-4cdc-8a83-7d6d5fa17b98",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false,
+                    "priority": 0
+                },
+                {
+                    "name": "InventorySlot5",
+                    "type": "Button",
+                    "id": "fb04a39b-3f31-4dff-9e8d-4eccc3d521f9",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false,
+                    "priority": 0
+                },
+                {
+                    "name": "InventorySlot6",
+                    "type": "Button",
+                    "id": "57c39106-1dbf-4a67-954c-72e5cb8e3de2",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -461,11 +511,66 @@
                 {
                     "name": "",
                     "id": "48997938-7552-4718-bd32-f606068d2852",
-                    "path": "<Keyboard>/e",
+                    "path": "<Keyboard>/1",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Inventory",
+                    "action": "InventorySlot1",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9f29f95c-2451-4ed7-903a-ca1b80fd8aa6",
+                    "path": "<Keyboard>/2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "InventorySlot2",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "30eff234-a934-4620-b3d2-f5c05e5ff220",
+                    "path": "<Keyboard>/3",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "InventorySlot3",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7eff5c51-1540-4fff-a238-0142988108b2",
+                    "path": "<Keyboard>/4",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Touch",
+                    "action": "InventorySlot4",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7c444e48-876c-4199-be2f-f81a6ae6f705",
+                    "path": "<Keyboard>/5",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Touch",
+                    "action": "InventorySlot5",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "13a7ad9d-8929-461f-a986-d8c37fdbe639",
+                    "path": "<Keyboard>/6",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Touch",
+                    "action": "InventorySlot6",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

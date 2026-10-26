@@ -1,58 +1,155 @@
-using NUnit.Framework;
+
 using UnityEngine;
+using System;
 using System.Collections.Generic;
+using UnityEngine.InputSystem;
 
 public class Inventory : MonoBehaviour
 {
-
     public List<InventorySlot> items = new List<InventorySlot>();
+
+    public event Action OnInventoryChanged;
+    private InputSystem_Actions inputActions;
+
+    [SerializeField] private GameEvent eatEvent;
+    [SerializeField] private GameEvent drinkEvent;
+
+    private void Awake()
+    {
+        inputActions = new InputSystem_Actions();
+    }
 
     public void AddItem(ItemData item)
     {
-        Debug.Log("Added" +  item.itemName);
+        if (item == null) return;
+
+        Debug.Log("Added " + item.itemName);
+
         for (int i = 0; i < items.Count; i++)
         {
-            if (items[i].item == item && items[i].quantity < item.maxStack)
+            if (items[i].item == item &&
+                items[i].quantity < item.maxStack)
             {
                 items[i].quantity++;
+                OnInventoryChanged?.Invoke();
                 return;
             }
         }
+
         InventorySlot slot = new InventorySlot();
         slot.item = item;
         slot.quantity = 1;
         items.Add(slot);
+
+        OnInventoryChanged?.Invoke();
     }
 
     public void RemoveItem(ItemData item)
     {
-        for (int i = items.Count - 1; i >= 0; i--)
+        for (int i = 0; i < items.Count; i++)
         {
             if (items[i].item == item)
             {
-                Debug.Log("Removed" + item.itemName);
                 items[i].quantity--;
+
                 if (items[i].quantity <= 0)
                 {
                     items.RemoveAt(i);
                 }
+
+                OnInventoryChanged?.Invoke();
+                Debug.Log("Removed " + item.itemName);
+                return;
             }
         }
     }
 
     public ItemData FindItem(string name)
     {
-        ItemData itemToFind = null;
-        for (int i = items.Count - 1; i >= 0; i--)
+        foreach (InventorySlot slot in items)
         {
-            if (items[i].item.name == name)
+            if (slot.item != null &&
+                slot.item.name == name)
             {
-                itemToFind = items[i].item;
                 Debug.Log("Item Found");
-                return itemToFind;
+                return slot.item;
             }
         }
-        
+
         return null;
+    }
+    private void OnEnable()
+    {
+        inputActions.Player.InventorySlot1.performed += OnSlot1;
+        inputActions.Player.InventorySlot2.performed += OnSlot2;
+        inputActions.Player.InventorySlot3.performed += OnSlot3;
+        inputActions.Player.InventorySlot4.performed += OnSlot4;
+        inputActions.Player.InventorySlot5.performed += OnSlot5;
+        inputActions.Player.InventorySlot6.performed += OnSlot6;
+
+        inputActions.Enable();
+    }
+
+    private void OnDisable()
+    {
+        inputActions.Player.InventorySlot1.performed -= OnSlot1;
+        inputActions.Player.InventorySlot2.performed -= OnSlot2;
+        inputActions.Player.InventorySlot3.performed -= OnSlot3;
+        inputActions.Player.InventorySlot4.performed -= OnSlot4;
+        inputActions.Player.InventorySlot5.performed -= OnSlot5;
+        inputActions.Player.InventorySlot6.performed -= OnSlot6;
+
+        inputActions.Disable();
+    }
+
+
+    private void UseSlot(int slotIndex)
+    {
+        if (items.Count <= slotIndex)
+            return;
+
+        if (items[slotIndex].item == null)
+            return;
+
+        string itemName = items[slotIndex].item.itemName;
+
+        if (itemName == "Water")
+        {
+            EventManager.instance.ApplyEvent(drinkEvent);
+        }
+        else if (itemName == "Food")
+        {
+            EventManager.instance.ApplyEvent(eatEvent);
+        }
+    }
+
+    private void OnSlot1(InputAction.CallbackContext context)
+    {
+        UseSlot(0);
+    }
+
+    private void OnSlot2(InputAction.CallbackContext context)
+    {
+        UseSlot(1);
+    }
+
+    private void OnSlot3(InputAction.CallbackContext context)
+    {
+        UseSlot(2);
+    }
+
+    private void OnSlot4(InputAction.CallbackContext context)
+    {
+        UseSlot(3);
+    }
+
+    private void OnSlot5(InputAction.CallbackContext context)
+    {
+        UseSlot(4);
+    }
+
+    private void OnSlot6(InputAction.CallbackContext context)
+    {
+        UseSlot(5);
     }
 }
