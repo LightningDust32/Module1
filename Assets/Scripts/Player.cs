@@ -62,6 +62,7 @@ public class Player : MonoBehaviour
     [SerializeField] GameObject handler;
     [SerializeField] GameObject mountPoint;
     [SerializeField] GameObject dismountPoint;
+    [SerializeField] Collider handlerCollider;
 
     [SerializeField] float mountDistance;
 
@@ -153,6 +154,8 @@ public class Player : MonoBehaviour
     {
         elephantController = GetComponent<CharacterController>();
         handlerController = handler.GetComponent<CharacterController>();
+
+        handlerCollider = handler.GetComponent<Collider>();
 
         inputActions = new InputSystem_Actions();
 
@@ -264,6 +267,11 @@ public class Player : MonoBehaviour
 
     private void Move()
     {
+        if (Time.timeScale < 1)
+        {
+            return;
+        }
+
         float deltaTime = Time.deltaTime;
 
         if (isMounted)
@@ -864,8 +872,6 @@ public class Player : MonoBehaviour
         lookInput = context.ReadValue<Vector2>();
     }
 
-
-
     public void OnZoom(InputAction.CallbackContext context)
     {
         zoomInput = context.ReadValue<Vector2>();
@@ -896,7 +902,7 @@ public class Player : MonoBehaviour
             Debug.Log("Followers halted.");
         }
 
-        if(callSound  != null)
+        if(callSound != null && SoundManager.instance != null)
         {
             SoundManager.instance.PlaySound(callSound);
         }
@@ -937,7 +943,7 @@ public class Player : MonoBehaviour
 
         CharacterController handlerController = handler.GetComponent<CharacterController>();
 
-        if(isMounted)
+        if (isMounted)
         {
             // Dismount logic
             handler.transform.SetParent(null, true);
@@ -947,6 +953,7 @@ public class Player : MonoBehaviour
             isMounted = false;
             handlerController.enabled = true;
             elephantController.enabled = false;
+            handlerCollider.enabled = true;
         }
         else
         {
@@ -964,6 +971,7 @@ public class Player : MonoBehaviour
             isMounted = true;
             handlerController.enabled = false;
             elephantController.enabled = true;
+            handlerCollider.enabled = false;
         }
     }
 
@@ -980,6 +988,11 @@ public class Player : MonoBehaviour
     public void OnSprint(InputAction.CallbackContext context)
     {
         // Stub
+    }
+
+    public GameObject GetHandler()
+    {
+        return handler;
     }
 
     private void OnTriggerEnter(Collider other)
