@@ -791,6 +791,11 @@ public class Player : MonoBehaviour
         currentInteraction = interaction;
     }
 
+    public bool GetIsMounted()
+    {
+        return isMounted;
+    }
+
 
     // Handler Stats
     public float GetHandlerHunger()
