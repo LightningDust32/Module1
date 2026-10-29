@@ -246,6 +246,11 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
+        if (Time.timeScale < 1)
+        {
+            return;
+        }
+
         Move();
         UpdateCamera();
         UpdateHealth();
@@ -267,11 +272,6 @@ public class Player : MonoBehaviour
 
     private void Move()
     {
-        if (Time.timeScale < 1)
-        {
-            return;
-        }
-
         float deltaTime = Time.deltaTime;
 
         if (isMounted)
@@ -306,12 +306,29 @@ public class Player : MonoBehaviour
 
         previousElephantSpeed = elephantCurrentSpeed;
 
-        float accelerationRate = Mathf.Abs(targetSpeed) > Mathf.Abs(elephantCurrentSpeed) && Mathf.Sign(targetSpeed) == Mathf.Sign(elephantCurrentSpeed) ? elephantAcceleration : elephantDeceleration;
+        float accelerationRate;
+
+        // If less than max speed and moving forward, accelerate
+        if(Mathf.Abs(targetSpeed) > Mathf.Abs(elephantCurrentSpeed) && Mathf.Sign(targetSpeed) == Mathf.Sign(elephantCurrentSpeed))
+        {
+            accelerationRate = elephantAcceleration;
+        }
+        else
+        {
+            accelerationRate = elephantDeceleration;
+        }
 
         // When starting from rest, use acceleration.
         if (Mathf.Abs(elephantCurrentSpeed) < 0.01f || Mathf.Sign(targetSpeed) == Mathf.Sign(elephantCurrentSpeed))
         {
-            accelerationRate = Mathf.Abs(targetSpeed) > Mathf.Abs(elephantCurrentSpeed) ? elephantAcceleration : elephantDeceleration;
+            if(Mathf.Abs(targetSpeed) > Mathf.Abs(elephantCurrentSpeed))
+            {
+                accelerationRate = elephantAcceleration;
+            }
+            else
+            {
+                accelerationRate = elephantDeceleration;
+            }
         }
 
         elephantCurrentSpeed = Mathf.MoveTowards(elephantCurrentSpeed, targetSpeed, accelerationRate * deltaTime);
@@ -357,7 +374,7 @@ public class Player : MonoBehaviour
     {
         Transform mover = handler.transform;
 
-        if (handlerController == null)
+        if (handlerController == null || deltaTime <= 0)
             return;
 
         mover.Rotate(Vector3.up, moveInput.x * turnSpeed * deltaTime);
@@ -377,7 +394,7 @@ public class Player : MonoBehaviour
 
     private void AnimateElephant(float deltaTime)
     {
-        if (elephantBody == null)
+        if (elephantBody == null || deltaTime <= 0)
             return;
 
         // Damped spring for the vertical body bob.
@@ -858,7 +875,6 @@ public class Player : MonoBehaviour
             controller.enabled = true;
         }
     }
-
 
     //Input Stubs
 

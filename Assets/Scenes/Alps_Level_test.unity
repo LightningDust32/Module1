@@ -7235,7 +7235,7 @@ GameObject:
   - component: {fileID: 683483558}
   - component: {fileID: 683483557}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: Small Snow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7249,12 +7249,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 683483555}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.014698802, y: -0.26439714, z: 0.004030197, w: 0.9642935}
-  m_LocalPosition: {x: 2.7699997, y: 0.0000006870325, z: 1.1700007}
+  m_LocalRotation: {x: -0.014698802, y: -0.26439714, z: 0.004030197, w: 0.9642934}
+  m_LocalPosition: {x: 2.7699997, y: 0, z: 1.1700007}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1270694590}
+  m_Father: {fileID: 1348295187}
   m_LocalEulerAnglesHint: {x: -1.502, y: -30.678, z: 0.891}
 --- !u!199 &683483557
 ParticleSystemRenderer:
@@ -7282,7 +7282,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: ad839e89826f5a0438ad1039b58079f1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -16335,7 +16335,7 @@ GameObject:
   - component: {fileID: 1025918830}
   - component: {fileID: 1025918829}
   m_Layer: 0
-  m_Name: GameObject (1)
+  m_Name: Large Snow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16349,12 +16349,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1025918827}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.014698802, y: -0.26439714, z: 0.004030197, w: 0.9642935}
-  m_LocalPosition: {x: 2.7699997, y: 0.0000006870325, z: 1.1700007}
+  m_LocalRotation: {x: -0.014698802, y: -0.26439714, z: 0.004030197, w: 0.9642934}
+  m_LocalPosition: {x: 2.7699997, y: 0, z: 1.1700007}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1270694590}
+  m_Father: {fileID: 1348295187}
   m_LocalEulerAnglesHint: {x: -1.502, y: -30.678, z: 0.891}
 --- !u!199 &1025918829
 ParticleSystemRenderer:
@@ -16382,7 +16382,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: ad839e89826f5a0438ad1039b58079f1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -23473,8 +23473,7 @@ Transform:
   m_LocalScale: {x: 1.1250002, y: 1.0410799, z: 0.8735743}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 683483556}
-  - {fileID: 1025918828}
+  - {fileID: 1348295187}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 45, y: 30, z: 0}
 --- !u!114 &1270694591
@@ -24135,6 +24134,39 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1348208827}
   m_CullTransparentMesh: 1
+--- !u!1 &1348295186
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1348295187}
+  m_Layer: 0
+  m_Name: Snow
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1348295187
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1348295186}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 683483556}
+  - {fileID: 1025918828}
+  m_Father: {fileID: 1270694590}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1349469109 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2438029568468583401, guid: d9ec05aefe95f2a4393196080b23e91a, type: 3}
@@ -32855,7 +32887,7 @@ MonoBehaviour:
   gravity: -9
   elephantBody: {fileID: 895847452}
   elephantAcceleration: 3.2
-  elephantDeceleration: 2.8
+  elephantDeceleration: 14
   reverseSpeedFactor: 0.2
   stepLength: 2.5
   bobKick: 0.08
@@ -32983,6 +33015,8 @@ MonoBehaviour:
   items: []
   eatEvent: {fileID: 11400000, guid: a5f110ddcd1bba649a1d285a8a803dde, type: 2}
   drinkEvent: {fileID: 11400000, guid: b3507e16326e151479ccf9cab3125ed3, type: 2}
+  inventoryUseMethod: 0
+  localCampfire: {fileID: 0}
 --- !u!135 &2068752826
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -34024,6 +34058,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1493020629139371441, guid: ab5265bb0a146f346bae1adb27ff4124, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.5425
+      objectReference: {fileID: 0}
     - target: {fileID: 5869773004966882483, guid: ab5265bb0a146f346bae1adb27ff4124, type: 3}
       propertyPath: m_LocalScale.y
       value: 29.22
