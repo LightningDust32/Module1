@@ -35,7 +35,7 @@ public class RandomWeatherEvent : MonoBehaviour
     float[] waitUntilNextWeatherChange = { 30, 30, 30, 25, 20, 10 };
     float waitUntilChange;
     float[] avalancheRisk = { 1f, 3f, 5f, 20f, 30f, 50f };
-    float[] fogIntensity = { 0f, 0.003f, 0.008f, 0.005f, 0.015f, 0.35f };
+    float[] fogIntensity = { 0f, 0.003f, 0.008f, 0.005f, 0.015f, 0.035f };
 
 
     public float avalancheRiskPercent;

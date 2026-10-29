@@ -6,7 +6,7 @@ public class Harvest : InteractionBase
 
     public override void Interact()
     {
-        if (!PlayerInRange)
+        if (!ElephantInRange)
         {
             return;
         }
@@ -22,5 +22,7 @@ public class Harvest : InteractionBase
 
             harvestTree.transform.SetParent(null);
         }
+
+        // Once spawned, move a follower to it
     }
 }

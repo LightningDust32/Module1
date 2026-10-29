@@ -14,10 +14,10 @@ OcclusionCullingSettings:
 RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 10
-  m_Fog: 0
-  m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  m_Fog: 1
+  m_FogColor: {r: 1, g: 0.9858491, b: 0.9858491, a: 1}
   m_FogMode: 3
-  m_FogDensity: 0.01
+  m_FogDensity: 0.002
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
   m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
@@ -6099,6 +6099,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Inventory
   items: []
+  eatEvent: {fileID: 0}
+  drinkEvent: {fileID: 0}
 --- !u!143 &507197371
 CharacterController:
   m_ObjectHideFlags: 0
@@ -19372,13 +19374,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 507197365}
   eventManager: {fileID: 1707734327}
-  healthFill: {fileID: 405372110}
-  eventText: {fileID: 1744225395}
-  timeText: {fileID: 1000817397}
-  dayText: {fileID: 950416469}
-  eventButton: {fileID: 1858219078}
-  eventButtonText: {fileID: 728689775}
-  inventoryScreen: {fileID: 1708973015}
   slots:
   - {fileID: 2077282065}
   - {fileID: 2001642333}
@@ -19386,6 +19381,16 @@ MonoBehaviour:
   - {fileID: 1738998474}
   - {fileID: 1710225556}
   - {fileID: 403298159}
+  inventory: {fileID: 0}
+  hungerFill: {fileID: 0}
+  thirstFill: {fileID: 0}
+  healthFill: {fileID: 405372110}
+  eventText: {fileID: 1744225395}
+  timeText: {fileID: 1000817397}
+  dayText: {fileID: 950416469}
+  eventButton: {fileID: 1858219078}
+  eventButtonText: {fileID: 728689775}
+  inventoryScreen: {fileID: 1708973015}
   pauseMenu: {fileID: 497936925}
 --- !u!114 &1707734327
 MonoBehaviour:
@@ -19415,13 +19420,11 @@ MonoBehaviour:
   avalancheRiskPercent: 0
   player: {fileID: 507197365}
   visualTemp: {fileID: 507197368}
-  weatherTypeUI: {fileID: 1486314293}
   currentWeather: 
   startTemp: 10
   currentTemp: 0
   minTemp: -20
   maxTemp: 20
-  temperatureUI: {fileID: 552402892}
 --- !u!4 &1707734329
 Transform:
   m_ObjectHideFlags: 0

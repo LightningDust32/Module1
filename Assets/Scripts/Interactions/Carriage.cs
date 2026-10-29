@@ -6,7 +6,7 @@ public class Carriage : InteractionBase
 
     public override void Interact()
     {
-        if (!PlayerInRange)
+        if (!ElephantInRange)
         {
             return;
         }

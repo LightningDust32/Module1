@@ -9,13 +9,15 @@ public abstract class InteractionBase : MonoBehaviour, IInteraction
     [SerializeField] protected int followerLimit = 5;
 
     [Header("Trigger")]
-    [SerializeField] private bool playerInRange;
+    [SerializeField] private bool elephantInRange;
+    [SerializeField] private bool handlerInRange;
 
     [SerializeField] protected bool handlerOnly = false;
 
     public string InteractionName => interactionName;
     public string InteractionDescription => interactionDescription;
-    public bool PlayerInRange => playerInRange;
+    public bool ElephantInRange => elephantInRange;
+    public bool HandlerInRange => handlerInRange;
 
     protected Player player;
 
@@ -33,22 +35,30 @@ public abstract class InteractionBase : MonoBehaviour, IInteraction
 
     protected virtual void OnTriggerEnter(Collider other)
     {
-        if (!other.CompareTag("Player"))
+        if (other.CompareTag("Player"))
         {
-            return;
+            elephantInRange = true;
         }
 
-        playerInRange = true;
+        if(other.CompareTag("Handler"))
+        {
+            handlerInRange = true;
+            Debug.Log("Handler enter");
+        }
     }
 
     protected virtual void OnTriggerExit(Collider other)
     {
-        if (!other.CompareTag("Player"))
+        if (other.CompareTag("Player"))
         {
-            return;
+            elephantInRange = false;
         }
 
-        playerInRange = false;
+        if (other.CompareTag("Handler"))
+        {
+            handlerInRange = false;
+            Debug.Log("Handler exit");
+        }
     }
 
     public abstract void Interact();
