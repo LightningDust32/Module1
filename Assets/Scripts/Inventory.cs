@@ -3,6 +3,13 @@ using UnityEngine;
 using System;
 using System.Collections.Generic;
 using UnityEngine.InputSystem;
+using UnityEditor.Rendering;
+
+public enum InventoryUseMode
+{
+    consume,
+    campfire,
+}
 
 public class Inventory : MonoBehaviour
 {
@@ -14,9 +21,17 @@ public class Inventory : MonoBehaviour
     [SerializeField] private GameEvent eatEvent;
     [SerializeField] private GameEvent drinkEvent;
 
+    public InventoryUseMode inventoryUseMethod;
+
+    public GameObject localCampfire;
+    Campfire campfire;
+
+
+
     private void Awake()
     {
         inputActions = new InputSystem_Actions();
+        inventoryUseMethod = InventoryUseMode.consume;
     }
 
     public void AddItem(ItemData item)
@@ -113,14 +128,32 @@ public class Inventory : MonoBehaviour
 
         string itemName = items[slotIndex].item.itemName;
 
-        if (itemName == "Water")
+        if (inventoryUseMethod == InventoryUseMode.consume)
         {
-            EventManager.instance.ApplyEvent(drinkEvent);
+            if (itemName == "Water")
+            {
+                EventManager.instance.ApplyEvent(drinkEvent);
+            }
+            else if (itemName == "Food")
+            {
+                EventManager.instance.ApplyEvent(eatEvent);
+            }
         }
-        else if (itemName == "Food")
+        else if (inventoryUseMethod == InventoryUseMode.campfire)
         {
-            EventManager.instance.ApplyEvent(eatEvent);
+            if (itemName == "Wood")
+            {
+                Campfire campfire = localCampfire.GetComponent<Campfire>();
+                campfire.ToggleCampfire(true);
+                ItemData wood = FindItem("Wood");
+                RemoveItem(wood);
+            }
         }
+
+
+
+
+
     }
 
     private void OnSlot1(InputAction.CallbackContext context)

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0570b5262fd27540bfb42cb1f970613, type: 3}
   m_Name: CookedAlpineChamois
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
-  itemName: Cooked Alpine Chamois
+  itemName: CookedChamois
   maxStack: 1
   weight: 20
   icon: {fileID: 21300000, guid: 0773625414d1058488fcc83fdcba0aeb, type: 3}
