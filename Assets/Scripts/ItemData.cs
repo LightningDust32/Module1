@@ -10,4 +10,12 @@ public class ItemData : ScriptableObject
 
 
     public Sprite icon;
+
+    public bool isDrink;
+    public bool isFood;
+    public bool isMaterial;
+
+    public int regenAmount;
+
+    public bool isRaw;
 }
