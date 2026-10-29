@@ -8,7 +8,7 @@ public class Avalanche : MonoBehaviour
     GameObject avalancheObject;
     private void Start()
     {
-        avalancheObject = transform.parent.gameObject;
+        avalancheObject = transform.parent.parent.gameObject;
         randomWeatherEvent = FindAnyObjectByType<RandomWeatherEvent>();   
     }
     private void OnTriggerStay(Collider other)
