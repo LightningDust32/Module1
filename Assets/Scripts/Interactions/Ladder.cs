@@ -7,7 +7,13 @@ public class Ladder : InteractionBase
 
     public override void Interact()
     {
-        if (!PlayerInRange)
+        if (HandlerInRange)
+        {
+            Debug.Log("Handler found in Ladder");
+            return;
+        }
+
+        if (!HandlerInRange)
         {
             return;
         }
