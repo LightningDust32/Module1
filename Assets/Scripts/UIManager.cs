@@ -10,14 +10,9 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Player player;
     [SerializeField] private EventManager eventManager;
 
-    public InventorySlotUI[] slots;
-    public Inventory inventory;
-
     [Header("Elephant Stats")]
     [SerializeField] private Image hungerFill;
     [SerializeField] private Image thirstFill;
- //   [SerializeField] private Image temperatureFill;
- //   [SerializeField] private Image fatigueFill;
     [SerializeField] private Image healthFill;
 
     [Header("Event Display")]
@@ -30,7 +25,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TMP_Text eventButtonText;
 
     [Header("Inventory")]
-    [SerializeField] private GameObject inventoryScreen;
+    public InventorySlotUI[] slots;
+    public Inventory inventory;
 
     [Header("Pause Menu")]
     [SerializeField] private GameObject pauseMenu;
