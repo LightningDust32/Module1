@@ -40,10 +40,13 @@ public abstract class InteractionBase : MonoBehaviour, IInteraction
             elephantInRange = true;
         }
 
-        if(other.CompareTag("Handler"))
+        if(handlerOnly && !elephantInRange)
         {
-            handlerInRange = true;
-            Debug.Log("Handler enter");
+            if (other.CompareTag("Handler"))
+            {
+                handlerInRange = true;
+                Debug.Log("Handler enter");
+            }
         }
     }
 

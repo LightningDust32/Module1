@@ -172,7 +172,9 @@ MonoBehaviour:
   interactionName: Climb
   interactionDescription: 
   followerLimit: 0
-  playerInRange: 0
+  elephantInRange: 0
+  handlerInRange: 0
+  handlerOnly: 1
   ladderBase: {fileID: 7599061231879911219}
   ladderTop: {fileID: 1448276139372754761}
 --- !u!65 &6677530110738564944

@@ -7,37 +7,35 @@ public class Ladder : InteractionBase
 
     public override void Interact()
     {
-        if (HandlerInRange)
-        {
-            Debug.Log("Handler found in Ladder");
-            return;
-        }
-
         if (!HandlerInRange)
         {
+            Debug.Log("No handler");
             return;
         }
 
         if(ladderBase == null ||  ladderTop == null)
         {
+            Debug.Log("Missing ladder points");
             return;
         }
 
-        float baseDistance = Vector3.Distance(player.transform.position, ladderBase.transform.position);
-        float topDistance = Vector3.Distance(player.transform.position, ladderTop.transform.position);
-        CharacterController controller = player.GetComponent<CharacterController>();
+        GameObject handler = player.GetHandler();
+
+        float baseDistance = Vector3.Distance(handler.transform.position, ladderBase.transform.position);
+        float topDistance = Vector3.Distance(handler.transform.position, ladderTop.transform.position);
+        CharacterController controller = handler.GetComponent<CharacterController>();
 
         if(baseDistance < topDistance)
         {
             controller.enabled = false;
-            player.transform.position = ladderTop.transform.position;
+            handler.transform.position = ladderTop.transform.position;
             Debug.Log("climb up");
             controller.enabled = true;
         }
         else
         {
             controller.enabled = false;
-            player.transform.position = ladderBase.transform.position;
+            handler.transform.position = ladderBase.transform.position;
             Debug.Log("climb down");
             controller.enabled = true;
         }
