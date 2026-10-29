@@ -183,9 +183,6 @@ public class Player : MonoBehaviour
         inputActions.Player.Look.performed += OnLook;
         inputActions.Player.Look.canceled += OnLook;
 
-       // inputActions.Player.Inventory.performed += ToggleInventory;
-       // inputActions.Player.Inventory.canceled -= ToggleInventory;
-
         inputActions.Player.Zoom.performed += OnZoom;
 
         inputActions.Player.Call.performed += OnCall;
@@ -217,9 +214,6 @@ public class Player : MonoBehaviour
 
         inputActions.Player.Look.performed -= OnLook;
         inputActions.Player.Look.canceled -= OnLook;
-
-      //  inputActions.Player.Inventory.performed -= ToggleInventory;
-      //  inputActions.Player.Inventory.canceled -= ToggleInventory;
 
         inputActions.Player.Zoom.performed -= OnZoom;
 
@@ -865,10 +859,7 @@ public class Player : MonoBehaviour
         lookInput = context.ReadValue<Vector2>();
     }
 
-    private void ToggleInventory(InputAction.CallbackContext context)
-    {
-        UIManager.Instance.ToggleInventory(inventory);
-    }
+
 
     public void OnZoom(InputAction.CallbackContext context)
     {

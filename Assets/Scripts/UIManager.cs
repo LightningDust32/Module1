@@ -10,6 +10,9 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Player player;
     [SerializeField] private EventManager eventManager;
 
+    public InventorySlotUI[] slots;
+    public Inventory inventory;
+
     [Header("Elephant Stats")]
     [SerializeField] private Image hungerFill;
     [SerializeField] private Image thirstFill;
@@ -28,7 +31,6 @@ public class UIManager : MonoBehaviour
 
     [Header("Inventory")]
     [SerializeField] private GameObject inventoryScreen;
-    [SerializeField] private InventorySlotUI[] slots;
 
     [Header("Pause Menu")]
     [SerializeField] private GameObject pauseMenu;
@@ -54,6 +56,23 @@ public class UIManager : MonoBehaviour
         }
 
         UpdateStats();
+        DisplayInventory();
+    }
+
+    private void OnEnable()
+    {
+        if (inventory != null)
+        {
+            inventory.OnInventoryChanged += DisplayInventory;
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (inventory != null)
+        {
+            inventory.OnInventoryChanged -= DisplayInventory;
+        }
     }
 
     private void Update()
@@ -150,25 +169,7 @@ public class UIManager : MonoBehaviour
         eventButton.gameObject.SetActive(false);
     }
 
-    public void ToggleInventory(Inventory inventory)
-    {
-        inventoryScreen.SetActive(!inventoryScreen.activeSelf);
 
-        DisplayInventory(inventory);
-    }
-
-    public void DisplayInventory(Inventory inventory)
-    {
-        foreach (InventorySlotUI slot in slots)
-        {
-            slot.ClearSlot();
-        }
-
-        for (int i = 0; i < inventory.items.Count && i < slots.Length; i++)
-        {
-            slots[i].SetItem(inventory.items[i]);
-        }
-    }
 
     public void Pause()
     {
@@ -181,6 +182,27 @@ public class UIManager : MonoBehaviour
         {
             Time.timeScale = 1;
             pauseMenu.SetActive(false);
+        }
+    }
+
+    public void DisplayInventory()
+    {
+        if (inventory == null)
+        {
+            Debug.LogError("InventoryUI: Inventory reference is missing!");
+            return;
+        }
+
+        foreach (InventorySlotUI slot in slots)
+        {
+            slot.ClearSlot();
+        }
+
+        for (int i = 0;
+             i < inventory.items.Count && i < slots.Length;
+             i++)
+        {
+            slots[i].SetItem(inventory.items[i]);
         }
     }
 }
