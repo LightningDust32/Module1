@@ -13,7 +13,7 @@ public class Follower : MonoBehaviour
 
     private CharacterController controller;
 
-    private Transform player;
+    private Transform target;
 
     private float verticalVelocity;
 
@@ -26,23 +26,23 @@ public class Follower : MonoBehaviour
 
     private void Update()
     {
-        if(!isFollowing && player == null)
+        if(!isFollowing && target == null)
         {
             ApplyGravity();
             return;
         }
 
-        FollowPlayer();
+        FollowTarget();
     }
 
-    public void StartFollowing(Transform playerTransform)
+    public void StartFollowing(Transform targetTransform)
     {
-        if(playerTransform == null)
+        if(targetTransform == null)
         {
             return;
         }
 
-        player = playerTransform;
+        target = targetTransform;
         isFollowing = true;
     }
 
@@ -53,14 +53,14 @@ public class Follower : MonoBehaviour
         transform.SetParent(null, true);
     }
 
-    private void FollowPlayer()
+    private void FollowTarget()
     {
         if(!isFollowing)
         {
             return;
         }
 
-        Vector3 targetPosition = player.position - player.forward * followDistance;
+        Vector3 targetPosition = target.position - target.forward * followDistance;
 
         Vector3 direction = targetPosition - transform.position;
 
