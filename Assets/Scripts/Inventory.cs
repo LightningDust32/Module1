@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine.InputSystem;
 using UnityEditor.Rendering;
+using System.Collections;
 
 public enum InventoryUseMode
 {
@@ -11,8 +12,14 @@ public enum InventoryUseMode
     campfire,
 }
 
+
 public class Inventory : MonoBehaviour
 {
+    [Header("Cooked Foods")]
+    public ItemData cookedIbex;
+    public ItemData cookedChamois;
+
+
     public List<InventorySlot> items = new List<InventorySlot>();
 
     public event Action OnInventoryChanged;
@@ -148,10 +155,40 @@ public class Inventory : MonoBehaviour
                 ItemData wood = FindItem("Wood");
                 RemoveItem(wood);
             }
+            else if (itemName == "RawIbex")
+            {
+                ItemData rawIbex = FindItem("RawIbex");
+                RemoveItem(rawIbex);
+                StartCoroutine(Cook(5, "RawIbex"));
+            }
+            else if (itemName == "RawChamois")
+            {
+                ItemData rawChamois = FindItem("RawChamois");
+                RemoveItem(rawChamois);
+                StartCoroutine(Cook(5, "RawChamois"));
+            }
         }
 
 
 
+
+
+    }
+
+    IEnumerator Cook(int time, string cookItem)
+    {
+        yield return new WaitForSeconds(time);
+
+
+        if (cookItem == "RawIbex")
+        {
+            Debug.Log("Added cooked Ibex");
+            AddItem(cookedIbex);
+        }
+        else if (cookItem == "RawChamois")
+        {
+            AddItem(cookedChamois);
+        }
 
 
     }
