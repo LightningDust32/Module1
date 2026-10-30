@@ -6956,14 +6956,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 2068752819}
   eventManager: {fileID: 654650284}
-  slots:
-  - {fileID: 249102478}
-  - {fileID: 1801408526}
-  - {fileID: 1415603021}
-  - {fileID: 1731009009}
-  - {fileID: 868375610}
-  - {fileID: 850151350}
-  inventory: {fileID: 2068752825}
   hungerFill: {fileID: 881399024}
   thirstFill: {fileID: 1184669560}
   healthFill: {fileID: 2018021879}
@@ -6972,7 +6964,14 @@ MonoBehaviour:
   dayText: {fileID: 1387217519}
   eventButton: {fileID: 965177511}
   eventButtonText: {fileID: 1717384218}
-  inventoryScreen: {fileID: 0}
+  slots:
+  - {fileID: 249102478}
+  - {fileID: 1801408526}
+  - {fileID: 1415603021}
+  - {fileID: 1731009009}
+  - {fileID: 868375610}
+  - {fileID: 850151350}
+  inventory: {fileID: 2068752825}
   pauseMenu: {fileID: 1032150913}
 --- !u!114 &654650284
 MonoBehaviour:
@@ -33012,6 +33011,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef7be0a5d8626994e9ecddee9072f276, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Inventory
+  cookedIbex: {fileID: 0}
+  cookedChamois: {fileID: 0}
   items: []
   eatEvent: {fileID: 11400000, guid: a5f110ddcd1bba649a1d285a8a803dde, type: 2}
   drinkEvent: {fileID: 11400000, guid: b3507e16326e151479ccf9cab3125ed3, type: 2}
@@ -34549,7 +34550,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2648492471430930270}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 626232bd93cff4845b8637ab0aa1364c, type: 3}
+  m_Script: {fileID: 11500000, guid: a044ef8ffcedf654ca600d1d2775602c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Handler
 --- !u!1001 &8048216730668510764

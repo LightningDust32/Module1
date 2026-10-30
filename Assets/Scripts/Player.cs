@@ -1,4 +1,6 @@
 using Unity.VisualScripting;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -125,6 +127,7 @@ public class Player : MonoBehaviour
     [SerializeField] private SphereCollider followerRadius;
     [SerializeField] AudioClip callSound;
 
+    List<Follower> activeFollowers;
     private bool followersCalled = true;
     private int followerTotal = 0;
 
@@ -166,6 +169,8 @@ public class Player : MonoBehaviour
         randomWeatherEvent = FindAnyObjectByType<RandomWeatherEvent>();
 
         animator = GetComponent<Animator>();
+
+        activeFollowers = new List<Follower> { null};
 
         // Store these for returning to normal after bounce/lean animations
         if (elephantBody != null)
@@ -606,6 +611,8 @@ public class Player : MonoBehaviour
             follower.StopFollowing();
         }
 
+        activeFollowers.Clear();
+
         followerTotal = 0;
 
         followersCalled = false;
@@ -618,7 +625,6 @@ public class Player : MonoBehaviour
 
     private void CallNearbyFollowers()
     {
-        // Bug found in testing where if the radius is overlapping when reactivated, it wont retrigger the follower, this is the fix (doing it manually on all followers within range)
         if (followerRadius == null)
         {
             return;
@@ -644,6 +650,7 @@ public class Player : MonoBehaviour
             if (follower != null)
             {
                 follower.StartFollowing(transform);
+                activeFollowers.Add(follower);
                 followerTotal += 1;
             }
         }
@@ -717,6 +724,11 @@ public class Player : MonoBehaviour
     public int GetFollowerCount()
     {
         return followerTotal;
+    }
+
+    public List<Follower> GetFollowers()
+    {
+        return activeFollowers;
     }
 
     public void ChangeElephantThirst(float thirst)
