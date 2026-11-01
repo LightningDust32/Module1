@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public class Carriage : InteractionBase
+public class LiftObject : InteractionBase
 {
-    [SerializeField] GameObject soldiers;
+    [SerializeField] GameObject reward;
 
     public override void Interact()
     {
@@ -11,9 +11,9 @@ public class Carriage : InteractionBase
             return;
         }
 
-        if(soldiers != null)
+        if(reward != null)
         {
-            GameObject soldier = Instantiate(soldiers, transform.position, transform.rotation);
+            GameObject soldier = Instantiate(reward, transform.position, transform.rotation);
 
             soldier.transform.SetParent(null);
         }

@@ -70,8 +70,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Carriage
   interactionName: Lift Carriage
   interactionDescription: Use Gisgo's strength to lift the carriage
-  playerInRange: 0
-  soldiers: {fileID: 1076769229429565353, guid: 657045125efb87b41a009902f3cee6fb, type: 3}
+  followerLimit: 5
+  elephantInRange: 0
+  handlerInRange: 0
+  handlerOnly: 0
+  reward: {fileID: 1076769229429565353, guid: 657045125efb87b41a009902f3cee6fb, type: 3}
 --- !u!1001 &4711564480284776464
 PrefabInstance:
   m_ObjectHideFlags: 0
