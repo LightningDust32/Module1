@@ -726,6 +726,11 @@ public class Player : MonoBehaviour
         return followerTotal;
     }
 
+    public void ChangeFollowerCount(int change)
+    {
+        followerTotal += change;
+    }
+
     public List<Follower> GetFollowers()
     {
         return activeFollowers;
@@ -1032,7 +1037,8 @@ public class Player : MonoBehaviour
         if (follower != null)
         {
             follower.StartFollowing(transform);
-            followerTotal += 1;
+            followerTotal = followerTotal + 1;
+            Debug.Log(followerTotal);
         }
 
         if (interaction != null)
