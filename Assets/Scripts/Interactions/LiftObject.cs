@@ -6,16 +6,27 @@ public class LiftObject : InteractionBase
 
     public override void Interact()
     {
-        if (!ElephantInRange)
+        if(!handlerOnly)
+        {
+            if (!ElephantInRange)
+            {
+                return;
+            }
+        }
+        else
+        {
+
+        }
+        if (!HandlerInRange)
         {
             return;
         }
 
-        if(reward != null)
+        if (reward != null)
         {
-            GameObject soldier = Instantiate(reward, transform.position, transform.rotation);
+            GameObject rewardSpawn = Instantiate(reward, transform.position, transform.rotation);
 
-            soldier.transform.SetParent(null);
+            rewardSpawn.transform.SetParent(null);
         }
 
         Destroy(gameObject);

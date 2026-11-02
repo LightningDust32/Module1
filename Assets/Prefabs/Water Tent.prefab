@@ -71,11 +71,11 @@ MonoBehaviour:
   interactionDescription: 
   followerLimit: 5
   elephantInRange: 0
-  handlerInRange: 0
+  handlerInRange: 1
   handlerOnly: 0
   tree: {fileID: 8122037163683169344, guid: 9c07a861ff4c71b45aeb9f709ec10685, type: 3}
   scoutRadius: 100
-  scoutDuration: 30
+  scoutDuration: 5
   treeSpawnRadius: 100
 --- !u!1001 &8211197911548816280
 PrefabInstance:

@@ -11,6 +11,8 @@ public class Follower : MonoBehaviour
     [Header("Gravity")]
     [SerializeField] private float gravity = -9f;
 
+    private TrudgingBob trudgingBob;
+
     private CharacterController controller;
 
     private Transform target;
@@ -22,6 +24,7 @@ public class Follower : MonoBehaviour
     private void Awake()
     {
         controller = GetComponent<CharacterController>();
+        trudgingBob = GetComponent<TrudgingBob>();
     }
 
     private void Update()
@@ -76,7 +79,13 @@ public class Follower : MonoBehaviour
             Vector3 movement = direction * followSpeed * Time.deltaTime;
 
             controller.Move(movement);
-             // Face towards movement direction
+
+            if (trudgingBob != null)
+            {
+                trudgingBob.AddMovement(movement.magnitude);
+            }
+
+            // Face towards movement direction
             transform.forward = direction;
         }
 
