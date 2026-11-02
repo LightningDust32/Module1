@@ -6147,6 +6147,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef7be0a5d8626994e9ecddee9072f276, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Inventory
+  cookedIbex: {fileID: 0}
+  cookedChamois: {fileID: 0}
   items: []
   eatEvent: {fileID: 11400000, guid: a5f110ddcd1bba649a1d285a8a803dde, type: 2}
   drinkEvent: {fileID: 11400000, guid: b3507e16326e151479ccf9cab3125ed3, type: 2}
@@ -15011,7 +15013,7 @@ MonoBehaviour:
   eastMarker: {fileID: 1240270952}
   southMarker: {fileID: 1380490411}
   westMarker: {fileID: 113736027}
-  cameraObjectTransform: {fileID: 0}
+  cameraObjectTransform: {fileID: 425635755}
   objectiveTransform: {fileID: 0}
 --- !u!114 &1316122240
 MonoBehaviour:
