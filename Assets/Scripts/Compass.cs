@@ -17,7 +17,11 @@ public class Compass : MonoBehaviour
 
     private void Update()
     {
-        SetMarkerPosition(objectiveMarker, objectiveTransform.position);
+        if(objectiveMarker != null)
+        {
+            SetMarkerPosition(objectiveMarker, objectiveTransform.position);
+        }
+
         SetMarkerPosition(northMarker, Vector3.forward * 1000000);
         SetMarkerPosition(eastMarker, Vector3.right * 1000000);
         SetMarkerPosition(southMarker, Vector3.back * 1000000);

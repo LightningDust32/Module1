@@ -7218,6 +7218,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf31ce407f8a80c4fa3c51fb08dfa20f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RandomWeatherEvent
+  largeSnow: {fileID: 1025918830}
+  smallSnow: {fileID: 683483558}
+  snowfall: {fileID: 1348295186}
   avalancheRiskPercent: 0
   player: {fileID: 2068752819}
   visualTemp: {fileID: 2068752828}
@@ -30518,6 +30521,7 @@ MonoBehaviour:
   eastMarker: {fileID: 1804767052}
   southMarker: {fileID: 379581994}
   westMarker: {fileID: 911946288}
+  objectiveMarker: {fileID: 0}
   cameraObjectTransform: {fileID: 1270694590}
   objectiveTransform: {fileID: 1842480698}
 --- !u!114 &1879938622
