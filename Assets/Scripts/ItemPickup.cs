@@ -12,8 +12,24 @@ public class ItemPickup : MonoBehaviour
             // Add item to inventory
             Inventory inventory = other.GetComponent<Inventory>();
 
-            inventory.AddItem(itemData);
-            Destroy(gameObject);
+            bool canPickup = inventory.items.Count < 6;
+
+            foreach (var item in inventory.items)
+            {
+                if (item.item == itemData && item.quantity < item.item.maxStack)
+                {
+                    canPickup = true;
+                    break;
+                }
+            }
+
+            if (canPickup)
+            {
+                inventory.AddItem(itemData);
+                Destroy(gameObject);
+            }
+
+
         }
     }
 }

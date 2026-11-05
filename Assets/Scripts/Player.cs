@@ -432,15 +432,23 @@ public class Player : MonoBehaviour
 
         // Add damage if stats are below a certain threshold
         // Check hunger
-        if (elephantHunger < 25f)
+        if (elephantHunger < 50f && elephantHunger > 25f)
         {
             damagePerSecond += hungerDamage;
         }
+        else if (elephantHunger < 25f)
+        {
+            damagePerSecond += hungerDamage * 2;
+        }
 
         // Check thirst
-        if (elephantThirst < 25f)
+        if (elephantThirst < 50f && elephantThirst > 25f)
         {
             damagePerSecond += thirstDamage;
+        }
+        else if (elephantThirst < 25f)
+        {
+            damagePerSecond += thirstDamage * 2;
         }
 
         // Check fatigue
