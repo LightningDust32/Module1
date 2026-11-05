@@ -1,10 +1,5 @@
-using Unity.VisualScripting;
 using UnityEngine;
-using TMPro;
-using UnityEngine.UI;
 using System.Collections;
-
-
 
 public enum Weather
 {
@@ -20,6 +15,11 @@ public enum Weather
 
 public class RandomWeatherEvent : MonoBehaviour
 {
+    [SerializeField] ParticleSystem largeSnow;
+    [SerializeField] ParticleSystem smallSnow;
+    [SerializeField] GameObject snowfall;
+    bool snowActive = false;
+
     // chances to genereate each weather event listed in the "Weather" enum
     float[] weatherEventChancesEarlyMorning = { 60f, 30f, 5f, 2.5f, 1.5f, 1f };
     float[] weatherEventChancesAfternoon = { 80f, 10f, 5f, 2.5f, 1.5f, 1f };
@@ -36,28 +36,22 @@ public class RandomWeatherEvent : MonoBehaviour
     float waitUntilChange;
     float[] avalancheRisk = { 1f, 3f, 5f, 20f, 30f, 50f };
     float[] fogIntensity = { 0f, 0.003f, 0.008f, 0.005f, 0.015f, 0.035f };
+    bool[] isSnowing = { false, true, true, true, true, true };
 
 
     public float avalancheRiskPercent;
 
     [SerializeField] Player player;
     [SerializeField] ElephantVisualTemperature visualTemp;
-  //  public TMP_Text weatherTypeUI;
 
     public string currentWeather;
-
-
 
     [SerializeField] float startTemp = 10f;
     [SerializeField] public float currentTemp;
     [SerializeField] float minTemp = -20f;
     [SerializeField] float maxTemp = 20f;
-  //  public TMP_Text temperatureUI;
 
     private bool openToElements = true;
-
-
-
 
     public void pickRandomEvent()
     {
@@ -91,6 +85,7 @@ public class RandomWeatherEvent : MonoBehaviour
                 // trigger the event that crossed random over 0
                 TriggerEvent(i);
                 SetFog(i);
+                SetSnow(i);
                 break;
             }
         }
@@ -99,31 +94,23 @@ public class RandomWeatherEvent : MonoBehaviour
     public void TriggerEvent(int i)
     {
         currentWeather = events[i];
-      //  weatherTypeUI.text = "Weather: " + events[i];
         player.SetMoveSpeed(moveSpeeds[i]);
         player.SetModifier(modifier[i]);
         player.SetWind(windSpeeds[i]);
         waitUntilChange = waitUntilNextWeatherChange[i];
         avalancheRiskPercent = avalancheRisk[i];
 
-      //  if(temperatureUI == null)
-      // {
-       //     return;
-      //  }
-
         if (openToElements)
         {
             int tempVariation = Random.Range(-3, 3);
             int newTemp = temperatures[i] + tempVariation;
             currentTemp = newTemp;  
-         //   temperatureUI.text = newTemp + "°c";
         }
     }
 
     public void SetFog(int intensity)
     {
         RenderSettings.fogColor = Color.white;
-
        
         switch (intensity)
         {
@@ -148,6 +135,16 @@ public class RandomWeatherEvent : MonoBehaviour
         }
     }
 
+    public void SetSnow(int i)
+    {
+        if(snowfall == null)
+        {
+            return;
+        }
+
+        snowfall.SetActive(isSnowing[i]);
+    }
+
     private void Start()
     {
         RenderSettings.fog = true;
@@ -157,15 +154,14 @@ public class RandomWeatherEvent : MonoBehaviour
         currentTemp = startTemp;
         SetTemperatureUI(currentTemp);
         pickRandomEvent();
-        StartCoroutine(Wait10Seconds());
+        StartCoroutine(WaitForTime());
     }
 
-    IEnumerator Wait10Seconds()
+    IEnumerator WaitForTime()
     {
         yield return new WaitForSeconds(waitUntilChange);
-        //yield return new WaitForSeconds(1);
         pickRandomEvent();
-        StartCoroutine(Wait10Seconds());
+        StartCoroutine(WaitForTime());
     }
 
     private void SetTemperatureUI(float temperature)
