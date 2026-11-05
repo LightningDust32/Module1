@@ -74,9 +74,9 @@ MonoBehaviour:
   handlerInRange: 1
   handlerOnly: 0
   tree: {fileID: 8122037163683169344, guid: 9c07a861ff4c71b45aeb9f709ec10685, type: 3}
-  scoutRadius: 100
+  scoutRadius: 20
   scoutDuration: 5
-  treeSpawnRadius: 100
+  treeSpawnRadius: 20
 --- !u!1001 &817593313250579141
 PrefabInstance:
   m_ObjectHideFlags: 0
