@@ -18,7 +18,6 @@ public class RandomWeatherEvent : MonoBehaviour
     [SerializeField] ParticleSystem largeSnow;
     [SerializeField] ParticleSystem smallSnow;
     [SerializeField] GameObject snowfall;
-    bool snowActive = false;
 
     // chances to genereate each weather event listed in the "Weather" enum
     float[] weatherEventChancesEarlyMorning = { 60f, 30f, 5f, 2.5f, 1.5f, 1f };
@@ -35,8 +34,11 @@ public class RandomWeatherEvent : MonoBehaviour
     float[] waitUntilNextWeatherChange = { 30, 30, 30, 25, 20, 10 };
     float waitUntilChange;
     float[] avalancheRisk = { 1f, 3f, 5f, 20f, 30f, 50f };
+
     float[] fogIntensity = { 0f, 0.003f, 0.008f, 0.005f, 0.015f, 0.035f };
+
     bool[] isSnowing = { false, true, true, true, true, true };
+    float[] snowIntensity = { 0f, 10f, 20f, 50f, 100f, 150f };
 
 
     public float avalancheRiskPercent;
@@ -143,6 +145,11 @@ public class RandomWeatherEvent : MonoBehaviour
         }
 
         snowfall.SetActive(isSnowing[i]);
+
+        ParticleSystem.EmissionModule largeEmission = largeSnow.emission;
+        ParticleSystem.EmissionModule smallEmission = smallSnow.emission;
+        largeEmission.rateOverTime = snowIntensity[i];
+        smallEmission.rateOverTime = snowIntensity[i];
     }
 
     private void Start()
