@@ -6131,13 +6131,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraTransform: {fileID: 425635755}
-  elephantMoveSpeed: 50
-  handlerMoveSpeed: 20
+  elephantMoveSpeed: 30
+  handlerMoveSpeed: 15
   turnSpeed: 120
   gravity: -9
   elephantBody: {fileID: 577435461}
-  elephantAcceleration: 1.6
-  elephantDeceleration: 2.8
+  elephantAcceleration: 8
+  elephantDeceleration: 14
   reverseSpeedFactor: 0.2
   stepLength: 2.5
   bobKick: 0.08
@@ -30573,7 +30573,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3b2fd09034aefb4eb53400c4e590fb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
-  activateLossStates: 0
+  activateLossStates: 1
 --- !u!114 &1707734326
 MonoBehaviour:
   m_ObjectHideFlags: 0
