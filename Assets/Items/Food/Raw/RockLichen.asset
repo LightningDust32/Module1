@@ -15,7 +15,7 @@ MonoBehaviour:
   itemName: Rock Lichen
   maxStack: 10
   weight: 1
-  icon: {fileID: 21300000, guid: 0773625414d1058488fcc83fdcba0aeb, type: 3}
+  icon: {fileID: 21300000, guid: b8fc4a9339376ae41a4fa24c556c32a7, type: 3}
   isDrink: 0
   isFood: 1
   isMaterial: 0

@@ -15,7 +15,7 @@ MonoBehaviour:
   itemName: Pine Nut
   maxStack: 20
   weight: 1
-  icon: {fileID: 21300000, guid: 0773625414d1058488fcc83fdcba0aeb, type: 3}
+  icon: {fileID: 21300000, guid: ccdf7f876cfef814b9bc186a836ef729, type: 3}
   isDrink: 0
   isFood: 1
   isMaterial: 0
