@@ -1038,7 +1038,7 @@ public class Player : MonoBehaviour
         {
             follower.StartFollowing(transform);
             followerTotal = followerTotal + 1;
-            Debug.Log(followerTotal);
+            activeFollowers.Add(follower);
         }
 
         if (interaction != null)

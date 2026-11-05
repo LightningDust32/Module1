@@ -63,6 +63,11 @@ public class Follower : MonoBehaviour
             return;
         }
 
+        if(target == null)
+        {
+            return;
+        }
+
         Vector3 targetPosition = target.position - target.forward * followDistance;
 
         Vector3 direction = targetPosition - transform.position;
