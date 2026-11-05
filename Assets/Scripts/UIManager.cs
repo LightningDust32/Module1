@@ -30,6 +30,7 @@ public class UIManager : MonoBehaviour
 
     [Header("Pause Menu")]
     [SerializeField] private GameObject pauseMenu;
+    [SerializeField] private GameObject controlsMenu;
 
     private EventTrigger currentEventTrigger;
 
@@ -173,10 +174,26 @@ public class UIManager : MonoBehaviour
         {
             Time.timeScale = 0;
             pauseMenu.SetActive(true);
+            controlsMenu.SetActive(false);
         }
         else
         {
             Time.timeScale = 1;
+            pauseMenu.SetActive(false);
+            controlsMenu.SetActive(false);
+        }
+    }
+
+    public void Controls()
+    {
+        if (controlsMenu.activeSelf)
+        {
+            controlsMenu.SetActive(false);
+            pauseMenu.SetActive(true);
+        }
+        else
+        {
+            controlsMenu.SetActive(true);
             pauseMenu.SetActive(false);
         }
     }

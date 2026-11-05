@@ -15,12 +15,12 @@ public class LiftObject : InteractionBase
         }
         else
         {
-
+            if (!HandlerInRange)
+            {
+                return;
+            }
         }
-        if (!HandlerInRange)
-        {
-            return;
-        }
+        
 
         if (reward != null)
         {

@@ -59,6 +59,8 @@ public class Player : MonoBehaviour
     [SerializeField] private float zoomSpeed = 300f;
     [SerializeField] private float minCameraVerticalAngle = 10f;
     [SerializeField] private float maxCameraVerticalAngle = 70f;
+    [SerializeField] private float minZoom = 5f;
+    [SerializeField] private float maxZoom = 30f;
 
     [Header("Handler")]
     [SerializeField] GameObject handler;
@@ -530,6 +532,8 @@ public class Player : MonoBehaviour
             else
             {
                 cameraDistance -= zoomInput.y * zoomSpeed * Time.deltaTime;
+
+                cameraDistance = Mathf.Clamp(cameraDistance, minZoom, maxZoom);
             }
         }
 
