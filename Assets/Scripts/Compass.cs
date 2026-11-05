@@ -9,7 +9,7 @@ public class Compass : MonoBehaviour
     public RectTransform southMarker;
     public RectTransform westMarker;
 
-  //  public RectTransform objectiveMarker;
+    public RectTransform objectiveMarker;
 
 
     public Transform cameraObjectTransform;
@@ -17,7 +17,7 @@ public class Compass : MonoBehaviour
 
     private void Update()
     {
-   //     SetMarkerPosition(objectiveMarker, objectiveTransform.position);
+        SetMarkerPosition(objectiveMarker, objectiveTransform.position);
         SetMarkerPosition(northMarker, Vector3.forward * 1000000);
         SetMarkerPosition(eastMarker, Vector3.right * 1000000);
         SetMarkerPosition(southMarker, Vector3.back * 1000000);
@@ -29,7 +29,7 @@ public class Compass : MonoBehaviour
         Vector3 directionToTarget = worldPos - cameraObjectTransform.position;
         float angle = Vector3.SignedAngle(new Vector3(cameraObjectTransform.forward.x, 0, cameraObjectTransform.forward.z), new Vector3(directionToTarget.x, 0, directionToTarget.z), Vector3.up);
         float compassPos = angle / Camera.main.fieldOfView;
-       // compassPos = Mathf.Clamp(compassPos, -0.5f, 0.5f);
+        compassPos = Mathf.Clamp(compassPos, -0.5f, 0.5f);
 
 
         // dont render when off to side
