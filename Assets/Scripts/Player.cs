@@ -760,14 +760,14 @@ public class Player : MonoBehaviour
         elephantThirst = Mathf.Clamp(elephantThirst, 0f, elephantMaxThirst);
     }
 
-    public void ChangeElephantHunger(float hunger)
+    public void ChangeElephantHunger(float hunger, string name)
     {
         float previousHunger = elephantHunger;
 
         // If restoring hunger, only work if player has food
-        if (hunger > 0)
+        if (hunger > 0 && name != null)
         {
-            ItemData food = inventory.FindItem("Food");
+            ItemData food = inventory.FindItem(name);
 
             if (food == null)
             {

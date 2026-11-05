@@ -25,7 +25,7 @@ public class Inventory : MonoBehaviour
     public event Action OnInventoryChanged;
     private InputSystem_Actions inputActions;
 
-    [SerializeField] private GameEvent eatEvent;
+    [SerializeField] private GameEvent[] eatEvents;
     [SerializeField] private GameEvent drinkEvent;
 
     public InventoryUseMode inventoryUseMethod;
@@ -100,6 +100,52 @@ public class Inventory : MonoBehaviour
 
         return null;
     }
+
+    public ItemData FindFood()
+    {
+        foreach (InventorySlot slot in items)
+        {
+            if (slot.item != null &&
+                slot.item.isFood)
+            {
+                Debug.Log("Item Found");
+                return slot.item;
+            }
+        }
+
+        return null;
+    }
+
+    public ItemData FindDrink()
+    {
+        foreach (InventorySlot slot in items)
+        {
+            if (slot.item != null &&
+                slot.item.isDrink)
+            {
+                Debug.Log("Item Found");
+                return slot.item;
+            }
+        }
+
+        return null;
+    }
+
+    public ItemData FindMaterial()
+    {
+        foreach (InventorySlot slot in items)
+        {
+            if (slot.item != null &&
+                slot.item.isMaterial)
+            {
+                Debug.Log("Item Found");
+                return slot.item;
+            }
+        }
+
+        return null;
+    }
+
     private void OnEnable()
     {
         inputActions.Player.InventorySlot1.performed += OnSlot1;
@@ -135,15 +181,24 @@ public class Inventory : MonoBehaviour
 
         string itemName = items[slotIndex].item.itemName;
 
+
         if (inventoryUseMethod == InventoryUseMode.consume)
         {
             if (itemName == "Water")
             {
                 EventManager.instance.ApplyEvent(drinkEvent);
             }
-            else if (itemName == "Food")
+            else if (items[slotIndex].item.isFood)
             {
-                EventManager.instance.ApplyEvent(eatEvent);
+                for (int i = 0; i < eatEvents.Length; i++)
+                {
+                    if (eatEvents[i].eventItem == items[slotIndex].item)
+                    {
+                        EventManager.instance.ApplyEvent(eatEvents[i]);
+                        break;
+                    }
+                }
+                
             }
         }
         else if (inventoryUseMethod == InventoryUseMode.campfire)
