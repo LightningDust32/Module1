@@ -3431,6 +3431,7 @@ GameObject:
   - component: {fileID: 322307096}
   - component: {fileID: 322307095}
   - component: {fileID: 322307094}
+  - component: {fileID: 322307098}
   m_Layer: 0
   m_Name: Handler
   m_TagString: Untagged
@@ -3559,6 +3560,23 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 322307092}
   m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &322307098
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 322307092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9e2e830621bf23439e402dfe12df4a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TrudgingBob
+  visualRoot: {fileID: 0}
+  stepLength: 1.2
+  bobAmount: 0.035
+  springStiffness: 30
+  springDamping: 7
 --- !u!1001 &327831114
 PrefabInstance:
   m_ObjectHideFlags: 0
