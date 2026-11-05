@@ -6,6 +6,8 @@ public class Avalanche : MonoBehaviour
     bool slide = false;
     float slideSpeed = 20;
     GameObject avalancheObject;
+
+    public GameObject[] particles;
     private void Start()
     {
         avalancheObject = transform.parent.parent.gameObject;
@@ -21,6 +23,10 @@ public class Avalanche : MonoBehaviour
             if (avalancheChance < randomWeatherEvent.avalancheRiskPercent)
             {
                 slide = true;
+                for (int i = 0; i < particles.Length; i++)
+                {
+                    particles[i].SetActive(true);
+                }
             }
         }
     }
