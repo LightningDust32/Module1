@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 033b2f52b3905b243814454b12ed8332, type: 3}
+  m_Name: CookedIbex
+  m_EditorClassIdentifier: 
+  eventName: Eat Cooked Ibex
+  eventDescription: 
+  timeMinutes: 20
+  elephantHunger: 45
+  elephantThirst: -5
+  elephantFatigue: 20
+  elephantTemperature: 0
+  handlerHunger: 0
+  handlerThirst: 0
+  handlerFatigue: 0
+  eventItem: {fileID: 11400000, guid: 54642dcbbac6ad04e93f8e3619d29bbb, type: 2}
+  singleUse: 0

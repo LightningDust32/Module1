@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class EventManager : MonoBehaviour
@@ -25,20 +26,30 @@ public class EventManager : MonoBehaviour
             Debug.LogWarning("EventManager: Player reference is missing.");
             return;
         }
-
         // Advance time
         player.AdvanceTime(gameEvent.timeMinutes);
 
         // Elephant
-        player.ChangeElephantHunger(gameEvent.elephantHunger);
+        if(gameEvent.eventItem == null)
+        {
+            player.ChangeElephantHunger(gameEvent.elephantHunger, "");
+        }
+
         player.ChangeElephantThirst(gameEvent.elephantThirst);
         player.ChangeElephantFatigue(gameEvent.elephantFatigue);
-       // player.ChangeElephantTemp(gameEvent.elephantTemperature);
+
+        // player.ChangeElephantTemp(gameEvent.elephantTemperature);
 
         // Handler
         player.ChangeHandlerHunger(gameEvent.handlerHunger);
         player.ChangeHandlerThirst(gameEvent.handlerThirst);
         player.ChangeHandlerFatigue(gameEvent.handlerFatigue);
+
+        if (gameEvent.eventItem != null)
+        {
+            player.ChangeElephantHunger(gameEvent.elephantHunger, gameEvent.eventItem.name);
+            player.ChangeElephantHealth(gameEvent.eventItem.regenAmount);
+        }
 
         UIManager.Instance.UpdateStats();
     }

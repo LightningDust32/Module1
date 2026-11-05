@@ -10,16 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 033b2f52b3905b243814454b12ed8332, type: 3}
-  m_Name: Eat Food
+  m_Name: Berries
   m_EditorClassIdentifier: 
-  eventName: Eat Food
+  eventName: Eat Berries
   eventDescription: 
-  timeMinutes: 20
-  elephantHunger: 40
-  elephantThirst: -5
-  elephantFatigue: 30
+  timeMinutes: 10
+  elephantHunger: 20
+  elephantThirst: 5
+  elephantFatigue: 10
   elephantTemperature: 0
-  handlerHunger: 20
+  handlerHunger: 0
   handlerThirst: 0
   handlerFatigue: 0
+  eventItem: {fileID: 11400000, guid: 46c7ddf6cb839d64f86c155170e529c4, type: 2}
   singleUse: 0

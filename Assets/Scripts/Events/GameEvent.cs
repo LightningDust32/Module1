@@ -21,5 +21,7 @@ public class GameEvent : ScriptableObject
     public float handlerThirst;
     public float handlerFatigue;
 
+    public ItemData eventItem;
+
     public bool singleUse;
 }
