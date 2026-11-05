@@ -44,6 +44,7 @@ public class Inventory : MonoBehaviour
     public void AddItem(ItemData item)
     {
         if (item == null) return;
+        
 
         Debug.Log("Added " + item.itemName);
 
