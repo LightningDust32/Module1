@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 033b2f52b3905b243814454b12ed8332, type: 3}
   m_Name: Mushroom
   m_EditorClassIdentifier: 
-  eventName: Eat Nuts
+  eventName: Eat Mushroom
   eventDescription: 
   timeMinutes: 10
   elephantHunger: 20
@@ -22,5 +22,5 @@ MonoBehaviour:
   handlerHunger: 0
   handlerThirst: 0
   handlerFatigue: 0
-  eventItem: {fileID: 11400000, guid: eaa043314c0b33140b0eee3dec0f35c7, type: 2}
+  eventItem: {fileID: 11400000, guid: fef7eeaa82ebd924193ace20cfd5e771, type: 2}
   singleUse: 0

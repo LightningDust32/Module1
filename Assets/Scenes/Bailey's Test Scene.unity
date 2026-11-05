@@ -6487,6 +6487,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a59bcc926c04ede4eb9f91d1db58b780, type: 2}
   - {fileID: 11400000, guid: fae0dc236131b8b41ad5c801c41c0a98, type: 2}
   - {fileID: 11400000, guid: 834bdf6237be43147a366c2aad129e80, type: 2}
+  - {fileID: 11400000, guid: a84930075914839469dbb1cfb938e2e0, type: 2}
   drinkEvent: {fileID: 11400000, guid: b3507e16326e151479ccf9cab3125ed3, type: 2}
   inventoryUseMethod: 0
   localCampfire: {fileID: 0}
