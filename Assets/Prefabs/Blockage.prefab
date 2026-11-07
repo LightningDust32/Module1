@@ -70,6 +70,9 @@ MonoBehaviour:
   gameEvent:
   - {fileID: 11400000, guid: 452c326c1fe58a745bb3f1d3991db73d, type: 2}
   restEvent: {fileID: 11400000, guid: e4545f12a9cd34f40a0251e10adf6f94, type: 2}
+  buttonEvent: 0
+  movementEvent: 1
+  triggerCount: 3
 --- !u!1001 &3050978961387711816
 PrefabInstance:
   m_ObjectHideFlags: 0

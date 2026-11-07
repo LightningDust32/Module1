@@ -11,6 +11,12 @@ public class EventTrigger : MonoBehaviour
     private bool playerInside;
     private Player player;
 
+    [SerializeField] bool buttonEvent = true;
+    [SerializeField] bool movementEvent = false;
+
+    [SerializeField] int triggerCount = 3;
+    int timesTriggered = 0;
+
     private void Start()
     {
         currentEvent = gameEvent[Random.Range(0, gameEvent.Length)];
@@ -26,9 +32,19 @@ public class EventTrigger : MonoBehaviour
         playerInside = true;
         player = other.GetComponent<Player>();
 
-        if (UIManager.Instance != null)
+        if (UIManager.Instance != null && buttonEvent)
         {
             UIManager.Instance.ShowEventButton(this);
+        }
+        else if (movementEvent == true)
+        {
+            timesTriggered++;
+            Debug.Log(timesTriggered);
+
+            if (timesTriggered >= triggerCount)
+            {
+                ActivateEvent();
+            }
         }
     }
 
@@ -41,12 +57,11 @@ public class EventTrigger : MonoBehaviour
 
         playerInside = false;
 
-        if (UIManager.Instance != null)
+        if (UIManager.Instance != null && buttonEvent)
         {
             UIManager.Instance.HideEventButton(this);
+            currentEvent = gameEvent[Random.Range(0, gameEvent.Length)];
         }
-
-        currentEvent = gameEvent[Random.Range(0, gameEvent.Length)];
     }
 
     public void ActivateEvent()
@@ -77,8 +92,8 @@ public class EventTrigger : MonoBehaviour
 
         EventManager.instance.ApplyEvent(currentEvent);
 
-        if (UIManager.Instance != null)
-        {
+        if (UIManager.Instance != null && buttonEvent)
+        {  
             UIManager.Instance.HideEventButton(this);
         }
 
@@ -86,6 +101,7 @@ public class EventTrigger : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
     }
 
     public GameEvent GetGameEvent()
