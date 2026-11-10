@@ -3,7 +3,6 @@ using UnityEngine;
 using System;
 using System.Collections.Generic;
 using UnityEngine.InputSystem;
-using UnityEditor.Rendering;
 using System.Collections;
 
 public enum InventoryUseMode
@@ -50,8 +49,7 @@ public class Inventory : MonoBehaviour
 
         for (int i = 0; i < items.Count; i++)
         {
-            if (items[i].item == item &&
-                items[i].quantity < item.maxStack)
+            if (items[i].item == item && items[i].quantity < item.maxStack)
             {
                 items[i].quantity++;
                 OnInventoryChanged?.Invoke();
@@ -91,8 +89,7 @@ public class Inventory : MonoBehaviour
     {
         foreach (InventorySlot slot in items)
         {
-            if (slot.item != null &&
-                slot.item.name == name)
+            if (slot.item != null && slot.item.name == name)
             {
                 Debug.Log("Item Found");
                 return slot.item;
@@ -106,8 +103,7 @@ public class Inventory : MonoBehaviour
     {
         foreach (InventorySlot slot in items)
         {
-            if (slot.item != null &&
-                slot.item.isFood)
+            if (slot.item != null && slot.item.isFood)
             {
                 Debug.Log("Item Found");
                 return slot.item;
@@ -121,8 +117,7 @@ public class Inventory : MonoBehaviour
     {
         foreach (InventorySlot slot in items)
         {
-            if (slot.item != null &&
-                slot.item.isDrink)
+            if (slot.item != null && slot.item.isDrink)
             {
                 Debug.Log("Item Found");
                 return slot.item;
@@ -136,8 +131,7 @@ public class Inventory : MonoBehaviour
     {
         foreach (InventorySlot slot in items)
         {
-            if (slot.item != null &&
-                slot.item.isMaterial)
+            if (slot.item != null && slot.item.isMaterial)
             {
                 Debug.Log("Item Found");
                 return slot.item;
