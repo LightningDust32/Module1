@@ -11,13 +11,12 @@ public class Compass : MonoBehaviour
 
     public RectTransform objectiveMarker;
 
-
     public Transform cameraObjectTransform;
     public Transform objectiveTransform;
 
     private void Update()
     {
-        if(objectiveMarker != null)
+        if (objectiveMarker != null)
         {
             SetMarkerPosition(objectiveMarker, objectiveTransform.position);
         }
@@ -33,10 +32,8 @@ public class Compass : MonoBehaviour
         Vector3 directionToTarget = worldPos - cameraObjectTransform.position;
         float angle = Vector3.SignedAngle(new Vector3(cameraObjectTransform.forward.x, 0, cameraObjectTransform.forward.z), new Vector3(directionToTarget.x, 0, directionToTarget.z), Vector3.up);
         float compassPos = angle / Camera.main.fieldOfView;
-        compassPos = Mathf.Clamp(compassPos, -0.5f, 0.5f);
 
 
-        // dont render when off to side
         if (compassPos >= -0.5f && compassPos <= 0.5f)
         {
             markerPosition.gameObject.SetActive(true);
@@ -46,7 +43,8 @@ public class Compass : MonoBehaviour
             markerPosition.gameObject.SetActive(false);
         }
 
-        markerPosition.anchoredPosition = new Vector2((compassBar.rect.width * compassPos) + 95f, -10f);
+        compassPos = Mathf.Clamp(compassPos, -0.5f, 0.5f);
 
+        markerPosition.anchoredPosition = new Vector2((compassBar.rect.width * compassPos) + 95f, -10f);
     }
 }
